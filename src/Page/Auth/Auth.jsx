@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   wrapper: {
-    width: "95%",
+    width: "90%",
   },
 
   buttonSignUp: {
@@ -97,6 +97,7 @@ const Auth = (props) => {
     setOpenLogIn(false);
   };
 
+  console.log("AUTH props", props);
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -152,9 +153,9 @@ const Auth = (props) => {
         </Grid>
       </Grid>
 
-      <SignUp open={openSignUp} handleClose={handleSignUpClose} />
+      <SignUp open={openSignUp} handleClose={handleSignUpClose} {...props} />
 
-      <LogIn open={openLogIn} handleClose={handleLogInClose} />
+      <LogIn open={openLogIn} handleClose={handleLogInClose} {...props} />
     </div>
   );
 };

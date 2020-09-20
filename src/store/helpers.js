@@ -3,11 +3,10 @@ import http from "./httpService";
 
 export const setAuthorizationHeader = (token) => {
   localStorage.setItem("IdToken", token);
-  const decodedToken = jwtDecode(token, { complete: true });
 
   localStorage.setItem(
     "expirationDate",
-    new Date(new Date().getTime() + 100000000)
+    new Date(new Date().getTime() + 1000000000)
   );
 
   http.setJwt(token);
@@ -18,3 +17,14 @@ export const removeAuthorizationHeader = () => {
   localStorage.removeItem("expirationDate");
   http.deleteJwt();
 };
+
+export function getCurrentUser() {
+  try {
+    const jwt = localStorage.getItem("IdToken");
+    const user = jwtDecode(jwt);
+    console.log("getCurrentUser", user);
+    return user;
+  } catch (ex) {
+    console.log("no valid web token_key given");
+  }
+}

@@ -10,7 +10,7 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
     case actions.apiCallBegan.type:
-      console.log("user submit siginUp form");
+      console.log("user submit/login siginUp form");
       return {
         ...state,
         loading: true,
@@ -18,9 +18,9 @@ export default function (state = initialState, action) {
       };
 
     case actions.apiCallSuccess.type:
-      console.log("siginUp successfully ");
+      console.log("siginUp/login successfully ");
       setAuthorizationHeader(action.payload); //payload is token
-      //   window.location = "/home";
+      // window.location = "/home";
       return {
         ...state,
         loading: false,
@@ -28,7 +28,7 @@ export default function (state = initialState, action) {
       };
 
     case actions.apiCallFailed.type:
-      console.log("siginUp failed : ", action.payload);
+      console.log("siginUp/login failed : ", action.payload);
       return {
         ...state,
         loading: false,

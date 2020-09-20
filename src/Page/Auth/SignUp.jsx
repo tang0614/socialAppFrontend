@@ -45,7 +45,7 @@ const SignUp = (props) => {
       repeat_password,
       handle,
     };
-    props.signup("./users", userData);
+    props.signup("./users", userData, props.history);
   };
   const handleSignUpSubmit = (event) => {
     event.preventDefault();
@@ -182,7 +182,8 @@ const mapStateToProps = (state) => ({
 //takes dispatch from the store and dispatch an action
 const mapActionsToProps = (dispatch) => {
   return {
-    signup: (url, userData) => dispatch(apiCallBegan({ userData, url })),
+    signup: (url, userData, history) =>
+      dispatch(apiCallBegan({ userData, url, history })),
   };
 };
 
