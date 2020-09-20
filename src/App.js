@@ -11,12 +11,13 @@ import store from "./store/store";
 //redux
 import { logoutUser } from "./store/actions";
 import { checkExpiration } from "./store/helpers";
+import Profile from "./Page/Profile/Profile";
 
 function App() {
   useEffect(() => {
     if (checkExpiration()) return store.dispatch(logoutUser());
   });
-  
+
   return (
     <React.Fragment>
       <Provider store={store}>
@@ -26,6 +27,11 @@ function App() {
               path="/home"
               exact={true}
               component={Home}
+            ></ProtectedRoute>
+            <ProtectedRoute
+              path="/profile"
+              exact={true}
+              component={Profile}
             ></ProtectedRoute>
 
             <Route path="/auth" exact={true} component={Auth}></Route>

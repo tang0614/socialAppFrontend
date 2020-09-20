@@ -17,15 +17,17 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import MenuIcon from "@material-ui/icons/Menu";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
-
+import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
+import ContactsOutlinedIcon from "@material-ui/icons/ContactsOutlined";
 //redux
 import { connect } from "react-redux";
 import { logoutUser } from "../../store/actions";
+import ProfileList from "../Profile/ProfileList";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor: "rgb(0,15,45,0.9)",
+    backgroundColor: "#fff",
 
     margin: "0 auto",
     width: "100%",
@@ -38,17 +40,17 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   title: {
-    color: "white",
+    color: "#1DA1F2",
     fontWeight: "600",
   },
   grid: {
     paddingTop: "1rem",
   },
   list: {
-    backgroundColor: "rgb(0,15,45,0.9)",
+    backgroundColor: "#fff",
     width: "20rem",
     height: "100vh",
-    color: "white",
+    color: "black",
   },
   fullList: {
     width: "auto",
@@ -57,10 +59,10 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     bottom: "2rem",
     right: "1rem",
-    color: "white",
+    color: "#1DA1F2",
   },
   menuIcon: {
-    color: "white",
+    color: "#1DA1F2",
   },
 }));
 
@@ -73,6 +75,10 @@ const Home = (props) => {
   const handleLogout = () => {
     props.logout();
   };
+  const handleProfile = () => {
+    props.history.push("/profile");
+  };
+
   const toggleDrawer = (anchor, open) => (event) => {
     if (
       event.type === "keydown" &&
@@ -94,14 +100,20 @@ const Home = (props) => {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {["Logout"].map((text, index) => (
-          <ListItem button key={text} onClick={handleLogout}>
-            <ListItemIcon>
-              {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        <ProfileList />
+        <ListItem button key={"Profile"} onClick={handleProfile}>
+          <ListItemIcon>
+            <ContactsOutlinedIcon />
+          </ListItemIcon>
+          <ListItemText primary={"Profile"} />
+        </ListItem>
+
+        <ListItem button key={"Logout"} onClick={handleLogout}>
+          <ListItemIcon>
+            <ExitToAppOutlinedIcon />
+          </ListItemIcon>
+          <ListItemText primary={"Logout"} />
+        </ListItem>
       </List>
       <Divider />
     </div>
@@ -133,6 +145,7 @@ const Home = (props) => {
       </Drawer>
 
       <Screams />
+
       <Button className={classes.addIcon}>
         <AddCircleOutlineIcon fontSize="large" />
       </Button>
