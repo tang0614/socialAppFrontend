@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import "./App.css";
 import Auth from "./Page/Auth/Auth";
@@ -6,11 +6,17 @@ import Home from "./Page/Home/Home";
 import NotFound from "./Page/NotFound";
 import ProtectedRoute from "./component/common/protectedRoute";
 //redux
-
 import { Provider } from "react-redux";
 import store from "./store/store";
+//redux
+import { logoutUser } from "./store/actions";
+import { checkExpiration } from "./store/helpers";
 
 function App() {
+  useEffect(() => {
+    if (checkExpiration()) return store.dispatch(logoutUser());
+  });
+  
   return (
     <React.Fragment>
       <Provider store={store}>
@@ -21,6 +27,7 @@ function App() {
               exact={true}
               component={Home}
             ></ProtectedRoute>
+
             <Route path="/auth" exact={true} component={Auth}></Route>
             <Route path="/" exact={true}>
               <Redirect to="/auth" />

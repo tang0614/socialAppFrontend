@@ -1,6 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
+
 //Material UI
 import { makeStyles } from "@material-ui/core/styles";
 import { IconButton, CssBaseline } from "@material-ui/core";
@@ -97,7 +96,7 @@ const Auth = (props) => {
     setOpenLogIn(false);
   };
 
-  console.log("AUTH props", props);
+  
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -160,6 +159,6 @@ const Auth = (props) => {
   );
 };
 
-Auth.propTypes = {};
+
 
 export default Auth;

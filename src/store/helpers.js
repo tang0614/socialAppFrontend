@@ -28,3 +28,15 @@ export function getCurrentUser() {
     console.log("no valid web token_key given");
   }
 }
+
+export function checkExpiration() {
+  const token = localStorage.getItem("IdToken");
+  if (token) {
+    const expirationDate = localStorage.getItem("expirationDate");
+    if (expirationDate < Date.now()) {
+      console.log("token expired ....");
+
+      return true;
+    }
+  }
+}

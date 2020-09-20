@@ -35,6 +35,16 @@ export default function (state = initialState, action) {
         errors: action.payload,
       };
 
+    case actions.logoutUser.type:
+      console.log("logging out user");
+      removeAuthorizationHeader();
+      window.location.replace("/auth");
+
+      return {
+        ...state,
+        authenticated: false,
+      };
+
     default:
       return state;
   }
