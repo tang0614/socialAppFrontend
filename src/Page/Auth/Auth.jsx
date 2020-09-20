@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 //Material UI
 import { makeStyles } from "@material-ui/core/styles";
-import { IconButton } from "@material-ui/core";
+import { IconButton, CssBaseline } from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
@@ -77,6 +77,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Auth = (props) => {
+  const classes = useStyles(props);
   const [openSignUp, setOpenSignUp] = React.useState(false);
   const [openLogIn, setOpenLogIn] = React.useState(false);
 
@@ -96,9 +97,9 @@ const Auth = (props) => {
     setOpenLogIn(false);
   };
 
-  const classes = useStyles(props);
   return (
     <div className={classes.root}>
+      <CssBaseline />
       <Grid container>
         <Grid item xs={12} sm={6} container>
           <IconButton>
