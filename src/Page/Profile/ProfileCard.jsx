@@ -10,7 +10,6 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import AvatarImage from "../Home/AvatarImage";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import LinkOffOutlinedIcon from "@material-ui/icons/LinkOffOutlined";
 import DateRangeOutlinedIcon from "@material-ui/icons/DateRangeOutlined";
@@ -66,30 +65,15 @@ const ProfileCard = (props) => {
           </Typography>
 
           <Typography className={classes.notes}>
-            <Typography
-              variant="body2"
-              color="textSecondary"
-              component="p"
-              className={classes.note}
-            >
+            <Typography variant="body2" color="textSecondary" component="p">
               <LocationOnOutlinedIcon />
               location
             </Typography>
-            <Typography
-              variant="body2"
-              color="textSecondary"
-              component="p"
-              className={classes.note}
-            >
+            <Typography variant="body2" color="textSecondary" component="p">
               <LinkOffOutlinedIcon />
               website
             </Typography>
-            <Typography
-              variant="body2"
-              color="textSecondary"
-              component="p"
-              className={classes.note}
-            >
+            <Typography variant="body2" color="textSecondary" component="p">
               <DateRangeOutlinedIcon />
               dateCreated
             </Typography>

@@ -18,6 +18,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
 import ContactsOutlinedIcon from "@material-ui/icons/ContactsOutlined";
+
 //redux
 import { connect } from "react-redux";
 import { logoutUser } from "../../store/actions";
@@ -63,6 +64,11 @@ const useStyles = makeStyles((theme) => ({
   },
   menuIcon: {
     color: "#1DA1F2",
+  },
+  addNew: {
+    position: "absolute",
+    color: "#1DA1F2",
+    right: 0,
   },
 }));
 
