@@ -22,7 +22,7 @@ export function getCurrentUser() {
   try {
     const jwt = localStorage.getItem("IdToken");
     const user = jwtDecode(jwt);
-    console.log("getCurrentUser", user);
+
     return user;
   } catch (ex) {
     console.log("no valid web token_key given");

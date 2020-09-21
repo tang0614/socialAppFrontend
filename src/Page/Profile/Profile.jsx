@@ -31,6 +31,7 @@ const useStyles = makeStyles({
 const Profile = (props) => {
   const classes = useStyles(props);
   const [open, setOpen] = React.useState(false);
+  const { currentUser } = props;
 
   const handleOpen = () => {
     setOpen(true);
@@ -43,7 +44,7 @@ const Profile = (props) => {
   return (
     <div className={classes.root}>
       <ProfileHeader {...props} />
-      <ProfileCard />
+      <ProfileCard currentUser={currentUser} />
       <AvatarImage />
       <Button
         variant="outlined"

@@ -1,4 +1,4 @@
-import axios from "axios";
+import http from "../httpService";
 import * as actions from "../actions";
 
 export const post_api = ({ dispatch, getState }) => (next) => (action) => {
@@ -8,12 +8,11 @@ export const post_api = ({ dispatch, getState }) => (next) => (action) => {
 
   const { url, userData, history } = action.payload;
 
-  axios
+  http
     .post(`${url}`, userData, history)
     .then((res) => {
       dispatch(actions.apiCallSuccess(res.data.token));
       history.push("/home");
-      //   dispatch(actions.apiGetUserBegan({ url: "./users" }));
     })
     .catch((error) => {
       dispatch(actions.apiCallFailed(error.response.data.message));

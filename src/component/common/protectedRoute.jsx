@@ -14,7 +14,11 @@ function ProtectedRoute({ path, component: Component, render, ...rest }) {
               to={{ pathname: "/auth", state: { from: props.location } }}
             />
           );
-        return Component ? <Component {...props} /> : render(props);
+        return Component ? (
+          <Component currentUser={getCurrentUser()} {...props} />
+        ) : (
+          render(props)
+        );
       }}
     />
   );

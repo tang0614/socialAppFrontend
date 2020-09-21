@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Screams from "./Screams";
 //Material UI
@@ -21,7 +21,7 @@ import ContactsOutlinedIcon from "@material-ui/icons/ContactsOutlined";
 
 //redux
 import { connect } from "react-redux";
-import { logoutUser } from "../../store/actions";
+import { logoutUser, apiGetUserBegan } from "../../store/actions";
 import ProfileList from "../Profile/ProfileList";
 import AvatarImage from "./AvatarImage";
 
@@ -70,13 +70,25 @@ const useStyles = makeStyles((theme) => ({
     color: "#1DA1F2",
     right: 0,
   },
+  errorMessage: {
+    fontSize: "0.8rem",
+    color: "red",
+    textAlign: "center",
+  },
 }));
 
 const Home = (props) => {
+  const { currentUser } = props;
+  console.log("currentUser is ", currentUser);
   const classes = useStyles(props);
   const [state, setState] = React.useState({
     left: false,
   });
+
+  useEffect(() => {
+    console.log("HOME DID MOUNT ");
+    props.getUser(`/users/${currentUser._id}`);
+  }, []);
 
   const handleLogout = () => {
     props.logout();
@@ -106,7 +118,11 @@ const Home = (props) => {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        <ProfileList />
+        <ProfileList
+          name={props.user.handle}
+          following={props.user.following}
+          followedBy={props.user.followedBy}
+        />
         <ListItem button key={"Profile"} onClick={handleProfile}>
           <ListItemIcon>
             <ContactsOutlinedIcon />
@@ -150,6 +166,11 @@ const Home = (props) => {
         {list("left")}
       </Drawer>
 
+      {props.fetching_errors && (
+        <Typography variant="body2" className={classes.errorMessage}>
+          {props.fetching_errors}
+        </Typography>
+      )}
       <Screams />
 
       <Button className={classes.addIcon}>
@@ -163,12 +184,19 @@ Home.propTypes = {
   logout: PropTypes.func.isRequired,
 };
 
+const mapStateToProps = (state) => ({
+  user: state.user.user,
+  fetch_loading: state.user.fetch_loading,
+  fetch_errors: state.user.fetch_errors,
+});
+
 //takes dispatch from the store and dispatch an action
 const mapActionsToProps = (dispatch) => {
   return {
     logout: () => dispatch(logoutUser()),
+    getUser: (url) => dispatch(apiGetUserBegan({ url })),
   };
 };
 
 //connect subscribe/unsubscribe the redux store
-export default connect(null, mapActionsToProps)(Home);
+export default connect(mapStateToProps, mapActionsToProps)(Home);

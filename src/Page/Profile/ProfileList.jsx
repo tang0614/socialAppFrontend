@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
+//Material UI
 import { makeStyles } from "@material-ui/core/styles";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -11,17 +11,27 @@ const useStyles = makeStyles((theme) => ({
   inline: {
     display: "inline",
   },
+  notes: {
+    display: "flex",
+    flexDirection: "row",
+    paddingTop: "1em",
+  },
+  note: {
+    padding: "0 1rem",
+  },
 }));
 
 const ProfileList = (props) => {
   const classes = useStyles();
+  const { name, following, followedBy } = props;
+
   return (
     <ListItem alignItems="flex-start">
       <ListItemAvatar>
         <Avatar alt="self" src="image/icon.png" />
       </ListItemAvatar>
       <ListItemText
-        primary="Bulb"
+        primary={name}
         secondary={
           <React.Fragment>
             <Typography
@@ -30,16 +40,32 @@ const ProfileList = (props) => {
               className={classes.inline}
               color="textPrimary"
             >
-              @Bulb
+              @ {name}
             </Typography>
-            {" — I'll be in your neighborhood doing errands this…"}
+
+            <Typography className={classes.notes}>
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                component="p"
+                className={classes.note}
+              >
+                {following.length} Followings
+              </Typography>
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                component="p"
+                className={classes.note}
+              >
+                {followedBy.length} Followers
+              </Typography>
+            </Typography>
           </React.Fragment>
         }
       />
     </ListItem>
   );
 };
-
-ProfileList.propTypes = {};
 
 export default ProfileList;
