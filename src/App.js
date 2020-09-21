@@ -28,6 +28,7 @@ function App() {
               exact={true}
               component={Home}
             ></ProtectedRoute>
+
             <ProtectedRoute
               path="/profile"
               exact={true}
@@ -35,9 +36,11 @@ function App() {
             ></ProtectedRoute>
 
             <Route path="/auth" exact={true} component={Auth}></Route>
+
             <Route path="/" exact={true}>
               <Redirect to="/auth" />
             </Route>
+            
             <Route path="/" component={NotFound}></Route>
           </Switch>
         </div>

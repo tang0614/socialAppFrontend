@@ -15,7 +15,6 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import MenuIcon from "@material-ui/icons/Menu";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
 import ContactsOutlinedIcon from "@material-ui/icons/ContactsOutlined";
@@ -23,6 +22,7 @@ import ContactsOutlinedIcon from "@material-ui/icons/ContactsOutlined";
 import { connect } from "react-redux";
 import { logoutUser } from "../../store/actions";
 import ProfileList from "../Profile/ProfileList";
+import AvatarImage from "./AvatarImage";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -127,7 +127,7 @@ const Home = (props) => {
             onClick={toggleDrawer("left", true)}
             className={classes.menuIcon}
           >
-            <MenuIcon />
+            <AvatarImage />
           </Button>
 
           <Typography variant="h6" className={classes.title}>
