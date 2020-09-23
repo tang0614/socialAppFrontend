@@ -1,0 +1,13 @@
+.Home {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-around;
+  width: 100%;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .Section {
+    width: 200px;
+  }
+}
