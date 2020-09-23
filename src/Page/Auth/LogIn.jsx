@@ -40,7 +40,7 @@ const LogIn = (props) => {
       email,
       password,
     };
-    props.login("./auth", userData, props.history);
+    props.login("./api/auth", userData, props.history);
   };
   const handleLogInSubmit = (event) => {
     event.preventDefault();

@@ -6,6 +6,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
+import AvatarImage from "./AvatarImage";
 
 const useStyles = makeStyles((theme) => ({
   inline: {
@@ -23,12 +24,12 @@ const useStyles = makeStyles((theme) => ({
 
 const ProfileList = (props) => {
   const classes = useStyles();
-  const { name, following, followedBy } = props;
+  const { name, following, followedBy, imageUrl } = props;
 
   return (
     <ListItem alignItems="flex-start">
       <ListItemAvatar>
-        <Avatar alt="self" src="image/icon.png" />
+        <AvatarImage imageUrl={imageUrl} />
       </ListItemAvatar>
       <ListItemText
         primary={name}

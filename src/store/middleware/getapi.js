@@ -1,7 +1,7 @@
 import http from "../httpService";
 import * as actions from "../actions";
 
-export const request_api = ({ dispatch }) => (next) => (action) => {
+export const get_api = ({ dispatch }) => (next) => (action) => {
   if (action.type !== actions.apiGetUserBegan.type) return next(action);
   next(action);
 
@@ -11,7 +11,7 @@ export const request_api = ({ dispatch }) => (next) => (action) => {
       .get(`${url}`)
       .then((res) => dispatch(actions.apiGetUserSuccess(res.data)))
       .catch((error) => {
-        dispatch(actions.apiCallFailed(error.response.data.message));
+        dispatch(actions.apiGetUserFailed(error.response.data.message));
       });
   }
 };

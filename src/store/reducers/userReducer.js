@@ -25,7 +25,7 @@ export default function (state = initialState, action) {
     case actions.apiCallSuccess.type:
       console.log("siginUp/login successfully ");
       setAuthorizationHeader(action.payload); //payload is token
-      // window.location = "/home";
+     
       return {
         ...state,
         loading: false,
@@ -75,6 +75,34 @@ export default function (state = initialState, action) {
         ...state,
         fetch_loading: false,
         fetch_errors: action.payload,
+      };
+
+    //put request
+
+    case actions.apiPutUserBegan.type:
+      console.log("user start updating data");
+      return {
+        ...state,
+        loading: true,
+        errors: "",
+      };
+
+    case actions.apiPutUserSuccess.type:
+      console.log("user data successfully updated as", action.payload);
+
+      return {
+        ...state,
+        user: action.payload.target,
+        loading: false,
+        errors: "",
+      };
+
+    case actions.apiPutUserFailed.type:
+      console.log("user data updated failed and error is : ", action.payload);
+      return {
+        ...state,
+        loading: false,
+        errors: action.payload,
       };
 
     default:

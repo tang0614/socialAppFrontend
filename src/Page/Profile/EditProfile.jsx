@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 // MUI Stuff
 import { makeStyles } from "@material-ui/core/styles";
@@ -9,9 +9,12 @@ import DialogContent from "@material-ui/core/DialogContent";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+
 import AvatarImage from "../Home/AvatarImage";
-import AddIcon from "@material-ui/icons/Add";
+
+//redux
+import { connect } from "react-redux";
+import { apiPutUserBegan } from "../../store/actions";
 
 const useStyles = makeStyles((theme) => ({
   errorMessage: {
@@ -33,57 +36,82 @@ const EditProfile = (props) => {
   const classes = useStyles(props);
   const { open, handleClose } = props;
 
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
+  const [bio, setBio] = useState("");
+  const [location, setLocation] = useState("");
+  const [website, setWebsite] = useState("");
 
-  // const [emailError, setEmailError] = useState("");
-  // const [passwordError, setPasswordError] = useState("");
+  const [bioError, setBioError] = useState("");
+  const [locationError, setLocationError] = useState("");
+  const [websiteError, setWebsiteError] = useState("");
 
   const [disabled, setDisabled] = useState(false);
 
-  // const handleServer = () => {
-  //   const userData = {
-  //     email,
-  //     password,
-  //   };
-  //   props.login("./auth", userData, props.history);
-  // };
-  const handleLogInSubmit = (event) => {
-    event.preventDefault();
-    console.log("submit..");
-    // handleServer();
-    // console.log("handling server..");
+  useEffect(() => {
+    const { bio, location, website } = props.user;
+    setBio(bio);
+    setLocation(location);
+    setWebsite(website);
+  }, []);
+
+  const handleServer = () => {
+    const userData = {
+      bio,
+      location,
+      website,
+    };
+
+    props.update("./api/users/details", userData);
+
+    if (props.errors) {
+      alert("something failed");
+    } else {
+      handleClose();
+    }
   };
 
-  // const validHandler = (value, name) => {
-  //   if (name === "email") {
-  //     const regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; //eslint-disable-line
-  //     if (!value.match(regEx)) {
-  //       return "Please enter correct format";
-  //     }
-  //   } else {
-  //     return value.length >= 6 ? "" : "length should be longer than 6";
-  //   }
-  // };
+  const handleLogInSubmit = (event) => {
+    event.preventDefault();
+    handleServer();
+    console.log("handling server..");
+  };
 
-  // const handleChange = (event) => {
-  //   const name = event.target.name;
-  //   const message = validHandler(event.target.value, event.target.name);
+  const validHandler = (value, name) => {
+    if (name === "website") {
+      return value.length >= 5 && value.length <= 50
+        ? ""
+        : "length should be longer than 5 smaller than 50";
+    } else if (name === "bio") {
+      return value.length >= 5 && value.length <= 200
+        ? ""
+        : "length should be longer than 5 smaller than 200";
+    } else {
+      return value.length >= 5 && value.length <= 30
+        ? ""
+        : "length should be longer than 5 smaller than 30";
+    }
+  };
 
-  //   if (name === "password") {
-  //     setPassword(event.target.value);
-  //     setPasswordError(message);
-  //   } else if (name === "email") {
-  //     setEmail(event.target.value);
-  //     setEmailError(message);
-  //   }
+  const handleChange = (event) => {
+    const name = event.target.name;
+    const message = validHandler(event.target.value, event.target.name);
 
-  //   if (!message) {
-  //     setDisabled(false);
-  //   } else {
-  //     setDisabled(true);
-  //   }
-  // };
+    if (name === "bio") {
+      setBio(event.target.value);
+      setBioError(message);
+    } else if (name === "location") {
+      setLocation(event.target.value);
+      setLocationError(message);
+    } else {
+      setWebsite(event.target.value);
+      setWebsiteError(message);
+    }
+
+    if (!message) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  };
 
   return (
     <Dialog
@@ -95,18 +123,29 @@ const EditProfile = (props) => {
 
       <div className={classes.editImage}>
         <AvatarImage />
-        <Button className={classes.button}>
-          <AddIcon />
-        </Button>
       </div>
 
       <DialogContent>
-        <TextField id="bio" name="bio" type="bio" label="bio" fullWidth />
+        <TextField
+          id="bio"
+          name="bio"
+          type="bio"
+          label="bio"
+          value={bio}
+          onChange={handleChange}
+          helperText={bioError}
+          error={bioError ? true : false}
+          fullWidth
+        />
         <TextField
           id="location"
           name="location"
           type="location"
           label="location"
+          value={location}
+          onChange={handleChange}
+          helperText={locationError}
+          error={locationError ? true : false}
           fullWidth
         />
         <TextField
@@ -114,27 +153,47 @@ const EditProfile = (props) => {
           name="website"
           type="website"
           label="website"
+          value={website}
+          onChange={handleChange}
+          helperText={websiteError}
+          error={websiteError ? true : false}
           fullWidth
         />
       </DialogContent>
-      {/* {props.errors && (
-        <Typography variant="body2" className={classes.errorMessage}>
-          {props.errors}
-        </Typography>
-      )} */}
+
       <DialogActions>
         <Button onClick={handleClose} color="primary">
           Cancel
         </Button>
         <Button onClick={handleLogInSubmit} color="primary" disabled={disabled}>
           Save
-          {/* {props.loading && <CircularProgress size={10} />} */}
+          {props.loading && <CircularProgress size={10} />}
         </Button>
       </DialogActions>
     </Dialog>
   );
 };
 
-EditProfile.propTypes = {};
+EditProfile.propTypes = {
+  user: PropTypes.object.isRequired,
+  update: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+  errors: PropTypes.string.isRequired,
+};
 
-export default EditProfile;
+//state from the store, and properties of this object become our props
+const mapStateToProps = (state) => ({
+  user: state.user.user,
+  loading: state.user.loading,
+  errors: state.user.errors,
+});
+
+//takes dispatch from the store and dispatch an action
+const mapActionsToProps = (dispatch) => {
+  return {
+    update: (url, userData) => dispatch(apiPutUserBegan({ userData, url })),
+  };
+};
+
+//connect subscribe/unsubscribe the redux store
+export default connect(mapStateToProps, mapActionsToProps)(EditProfile);

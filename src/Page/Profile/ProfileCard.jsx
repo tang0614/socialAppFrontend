@@ -12,7 +12,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import LinkOffOutlinedIcon from "@material-ui/icons/LinkOffOutlined";
-import DateRangeOutlinedIcon from "@material-ui/icons/DateRangeOutlined";
+import DateRangeIcon from "@material-ui/icons/DateRange";
 
 //redux
 import { connect } from "react-redux";
@@ -47,12 +47,15 @@ const useStyles = makeStyles({
 });
 const ProfileCard = (props) => {
   const classes = useStyles(props);
-  const { currentUser } = props;
-
-  useEffect(() => {
-    console.log("ProfileCard DID MOUNT ");
-    props.getUser(`/users/${currentUser._id}`);
-  }, []);
+  const {
+    handle,
+    bio,
+    website,
+    location,
+    createdAt,
+    following,
+    followedBy,
+  } = props.user;
 
   return (
     <Card className={classes.root}>
@@ -64,29 +67,32 @@ const ProfileCard = (props) => {
         />
 
         <CardContent className={classes.profileInfo}>
-          <Typography gutterBottom variant="h5" component="h2">
-            {props.user.handle}
+          <Typography gutterBottom variant="h6" component="h2">
+            {handle}
           </Typography>
+
           <Typography variant="body2" color="textSecondary" component="p">
-            @ {props.user.handle}
+            @ {handle}
           </Typography>
+
           <Typography variant="body2" color="textSecondary" component="p">
-            {props.user.bio}
+            {bio}
           </Typography>
 
           <Typography className={classes.notes}>
             <Typography variant="body2" color="textSecondary" component="p">
               <LocationOnOutlinedIcon />
-
-              {props.user.location}
+              {location}
             </Typography>
+
             <Typography variant="body2" color="textSecondary" component="p">
               <LinkOffOutlinedIcon />
-              {props.user.website}
+              {website}
             </Typography>
+
             <Typography variant="body2" color="textSecondary" component="p">
-              <DateRangeOutlinedIcon />
-              {props.user.createdAt.split("T")[0]}
+              <DateRangeIcon />
+              {createdAt ? createdAt.split("T")[0] : ""}
             </Typography>
           </Typography>
 
@@ -97,15 +103,16 @@ const ProfileCard = (props) => {
               component="p"
               className={classes.note}
             >
-              {props.user.following.length} Followings
+              {following ? following.length : ""} Followings
             </Typography>
+
             <Typography
               variant="body2"
               color="textSecondary"
               component="p"
               className={classes.note}
             >
-              {props.user.followedBy.length} Followers
+              {followedBy ? followedBy.length : ""} Followers
             </Typography>
           </Typography>
         </CardContent>
@@ -126,7 +133,7 @@ const ProfileCard = (props) => {
 };
 
 ProfileCard.propTypes = {
-  getUser: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
   fetch_loading: PropTypes.bool.isRequired,
   fetch_errors: PropTypes.string.isRequired,
 };
@@ -138,12 +145,5 @@ const mapStateToProps = (state) => ({
   fetch_errors: state.user.fetch_errors,
 });
 
-//takes dispatch from the store and dispatch an action
-const mapActionsToProps = (dispatch) => {
-  return {
-    getUser: (url) => dispatch(apiGetUserBegan({ url })),
-  };
-};
-
 //connect subscribe/unsubscribe the redux store
-export default connect(mapStateToProps, mapActionsToProps)(ProfileCard);
+export default connect(mapStateToProps)(ProfileCard);

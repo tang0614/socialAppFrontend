@@ -10,3 +10,8 @@ export const logoutUser = createAction("logoutUser");
 export const apiGetUserBegan = createAction("apiGetUserBegan ");
 export const apiGetUserSuccess = createAction("apiGetUserSuccess");
 export const apiGetUserFailed = createAction("apiGetUserFailed");
+
+//user put request
+export const apiPutUserBegan = createAction("apiPutUserBegan ");
+export const apiPutUserSuccess = createAction("apiPutUserSuccess");
+export const apiPutUserFailed = createAction("apiPutUserFailed");

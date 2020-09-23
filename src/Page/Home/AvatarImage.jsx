@@ -11,17 +11,22 @@ const useStyles = makeStyles((theme) => ({
   },
 
   large: {
-    width: theme.spacing(10),
-    height: theme.spacing(10),
+    width: theme.spacing(8),
+    height: theme.spacing(8),
     border: "2px solid black",
   },
 }));
 
 const AvatarImage = (props) => {
   const classes = useStyles();
+
   return (
     <div className={classes.root}>
-      <Avatar alt="avatar" src="/image/icon.png" className={classes.large} />
+      <Avatar
+        alt="avatar"
+        src={process.env.REACT_APP_API_URL + "/" + props.imageUrl}
+        className={classes.large}
+      />
     </div>
   );
 };

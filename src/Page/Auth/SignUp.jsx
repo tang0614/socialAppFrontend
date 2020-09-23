@@ -45,7 +45,7 @@ const SignUp = (props) => {
       repeat_password,
       handle,
     };
-    props.signup("./users", userData, props.history);
+    props.signup("./api/users", userData, props.history);
   };
   const handleSignUpSubmit = (event) => {
     event.preventDefault();

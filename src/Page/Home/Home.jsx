@@ -18,11 +18,16 @@ import ListItemText from "@material-ui/core/ListItemText";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
 import ContactsOutlinedIcon from "@material-ui/icons/ContactsOutlined";
+import { checkExpiration } from "../../store/helpers";
 
 //redux
 import { connect } from "react-redux";
-import { logoutUser, apiGetUserBegan } from "../../store/actions";
-import ProfileList from "../Profile/ProfileList";
+import {
+  logoutUser,
+  apiGetUserBegan,
+  apiCallSuccess,
+} from "../../store/actions";
+import ProfileList from "./ProfileList";
 import AvatarImage from "./AvatarImage";
 
 const useStyles = makeStyles((theme) => ({
@@ -78,17 +83,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Home = (props) => {
-  const { currentUser } = props;
-  console.log("currentUser is ", currentUser);
   const classes = useStyles(props);
   const [state, setState] = React.useState({
     left: false,
   });
-
-  useEffect(() => {
-    console.log("HOME DID MOUNT ");
-    props.getUser(`/users/${currentUser._id}`);
-  }, []);
 
   const handleLogout = () => {
     props.logout();
@@ -122,6 +120,7 @@ const Home = (props) => {
           name={props.user.handle}
           following={props.user.following}
           followedBy={props.user.followedBy}
+          imageUrl={props.user.imageUrl}
         />
         <ListItem button key={"Profile"} onClick={handleProfile}>
           <ListItemIcon>
@@ -149,7 +148,7 @@ const Home = (props) => {
             onClick={toggleDrawer("left", true)}
             className={classes.menuIcon}
           >
-            <AvatarImage />
+            <AvatarImage imageUrl={props.user.imageUrl} />
           </Button>
 
           <Typography variant="h6" className={classes.title}>
@@ -181,6 +180,9 @@ const Home = (props) => {
 };
 
 Home.propTypes = {
+  user: PropTypes.object.isRequired,
+  fetch_loading: PropTypes.bool.isRequired,
+  fetch_errors: PropTypes.string.isRequired,
   logout: PropTypes.func.isRequired,
 };
 
@@ -194,7 +196,6 @@ const mapStateToProps = (state) => ({
 const mapActionsToProps = (dispatch) => {
   return {
     logout: () => dispatch(logoutUser()),
-    getUser: (url) => dispatch(apiGetUserBegan({ url })),
   };
 };
 

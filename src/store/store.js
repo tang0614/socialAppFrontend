@@ -2,11 +2,11 @@ import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 
 import { post_api } from "./middleware/postapi";
-import { request_api } from "./middleware/requestapi";
-
+import { get_api } from "./middleware/getapi";
+import { put_api } from "./middleware/putapi";
 import userReducer from "./reducers/userReducer";
 
-const middleware = [thunk, post_api, request_api];
+const middleware = [thunk, post_api, get_api, put_api];
 
 const reducers = combineReducers({
   user: userReducer,
