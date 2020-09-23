@@ -29,7 +29,6 @@ import PostCard from "../Post/PostCard";
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: "#fff",
-
     margin: "0 auto",
     width: "100%",
   },
@@ -56,19 +55,16 @@ const useStyles = makeStyles((theme) => ({
     width: "auto",
   },
   addIcon: {
-    position: "absolute",
-    bottom: "2rem",
-    right: "1rem",
+    position: "fixed",
     color: "#1DA1F2",
+    right: 0,
+    bottom: 0,
+    padding: "2rem",
   },
   menuIcon: {
     color: "#1DA1F2",
   },
-  addNew: {
-    position: "absolute",
-    color: "#1DA1F2",
-    right: 0,
-  },
+
   errorMessage: {
     fontSize: "0.8rem",
     color: "red",
@@ -79,6 +75,7 @@ const useStyles = makeStyles((theme) => ({
 const Home = (props) => {
   const classes = useStyles(props);
   const [open, setOpen] = React.useState(false);
+
   const [state, setState] = React.useState({
     left: false,
   });

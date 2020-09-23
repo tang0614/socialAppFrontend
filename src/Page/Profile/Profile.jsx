@@ -21,10 +21,11 @@ const useStyles = makeStyles({
   },
 
   addIcon: {
-    position: "absolute",
-    bottom: "2rem",
-    right: "1rem",
+    position: "fixed",
     color: "#1DA1F2",
+    right: 0,
+    bottom: 0,
+    padding: "2rem",
   },
   editImage: {
     display: "flex",
@@ -37,7 +38,12 @@ const useStyles = makeStyles({
 
 const Profile = (props) => {
   const classes = useStyles(props);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [total, setTotal] = useState(0);
+
+  const increasePost = () => {
+    setTotal(total + 1);
+  };
 
   const handleEditPicture = () => {
     const fileInput = document.getElementById("profileImage");
@@ -89,7 +95,12 @@ const Profile = (props) => {
         <AddCircleOutlineIcon fontSize="large" />
       </Button>
 
-      <PostCard open={open} handleClose={handleClose} {...props} />
+      <PostCard
+        open={open}
+        handleClose={handleClose}
+        increasePost={increasePost}
+        {...props}
+      />
     </div>
   );
 };

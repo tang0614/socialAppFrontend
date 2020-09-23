@@ -41,7 +41,6 @@ const PostCard = (props) => {
     console.log("userData", userData);
     props.postScream("./api/screams", userData);
     handleClose();
-    props.history.push("/home");
   };
   const validHandler = (value) => {
     if (value.length > 200) return "length should be smaller than 200";
@@ -63,7 +62,7 @@ const PostCard = (props) => {
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
-        className={classes.root}
+        fullWidth={"100%"}
       >
         <Button
           className={classes.cancelIcon}
@@ -82,6 +81,7 @@ const PostCard = (props) => {
             defaultValue={body}
             onChange={handleChange}
             variant="outlined"
+            fullWidth={"100%"}
           />
         </DialogContent>
         <DialogActions>

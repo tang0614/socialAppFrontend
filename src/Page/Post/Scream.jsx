@@ -17,7 +17,7 @@ import AvatarImage from "../Home/AvatarImage";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    maxWidth: 545,
   },
 }));
 

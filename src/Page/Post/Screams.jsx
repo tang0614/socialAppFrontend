@@ -9,15 +9,16 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles((theme) => ({
   screams: {
-    maxWidth: 345,
+    width: "90%",
+    maxWidth: 545,
     margin: "2rem auto",
   },
 }));
 
 const Screams = (props) => {
   const classes = useStyles(props);
+
   useEffect(() => {
-    console.log(" Screams useEffect fetching screams", props.data);
     props.getAllScreams("./api/screams");
   }, []);
 

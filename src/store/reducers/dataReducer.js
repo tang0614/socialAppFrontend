@@ -48,7 +48,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         loading: false,
-        scream: action.payload.scream,
+        screams: [action.payload.scream, ...state.screams],
       };
 
     case actions.apiPostScreamFailed.type:
@@ -57,6 +57,28 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
         errors: action.payload,
+      };
+
+    case actions.apiDeleteBegan.type:
+      console.log("start delete scream data");
+      return {
+        ...state,
+      };
+
+    case actions.apiDeleteSuccess.type:
+      console.log("  deleted screamId is..", action.payload._id);
+      const i = state.screams.findIndex(
+        (scream) => scream._id === action.payload._id
+      );
+      state.screams.splice(i, 1);
+      return {
+        ...state,
+      };
+
+    case actions.apiDeleteFailed.type:
+      console.log("apiDeleteFailed: ", action.payload);
+      return {
+        ...state,
       };
 
     default:

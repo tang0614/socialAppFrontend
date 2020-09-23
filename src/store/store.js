@@ -5,10 +5,19 @@ import { post_api } from "./middleware/postapi";
 import { post_detail_api } from "./middleware/postDetailApi";
 import { get_api } from "./middleware/getapi";
 import { put_api } from "./middleware/putapi";
+import { delete_api } from "./middleware/delete";
+
 import userReducer from "./reducers/userReducer";
 import dataReducer from "./reducers/dataReducer";
 
-const middleware = [thunk, post_api, get_api, put_api, post_detail_api];
+const middleware = [
+  thunk,
+  post_api,
+  get_api,
+  put_api,
+  post_detail_api,
+  delete_api,
+];
 
 const reducers = combineReducers({
   user: userReducer,
