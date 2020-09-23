@@ -16,6 +16,7 @@ export const post_api = ({ dispatch, getState }) => (next) => (action) => {
       history.push("/home");
 
       const currentUser = getCurrentUser();
+
       dispatch(
         actions.apiGetUserBegan({ url: `/api/users/${currentUser._id}` })
       );

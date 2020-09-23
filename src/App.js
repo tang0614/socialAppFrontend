@@ -33,7 +33,11 @@ function App() {
         <div className="App">
           <Switch>
             <ProtectedRoute path="/home" exact={true} component={Home} />
-            <ProtectedRoute path="/profile" exact={true} component={Profile} />
+            <ProtectedRoute
+              path="/profile/:_id"
+              exact={true}
+              component={Profile}
+            />
             <Route path="/auth" exact={true} component={Auth} />
             <Route path="/" exact={true}>
               <Redirect to="/auth" />

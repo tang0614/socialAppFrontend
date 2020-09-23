@@ -6,7 +6,6 @@ import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 
@@ -22,9 +21,7 @@ const useStyles = makeStyles((theme) => ({
     color: "red",
     textAlign: "center",
   },
-  editImage: {
-    position: "relative",
-  },
+
   button: {
     position: "absolute",
     bottom: "25%",
@@ -51,7 +48,7 @@ const EditProfile = (props) => {
     setBio(bio);
     setLocation(location);
     setWebsite(website);
-  }, []);
+  }, [props.user]);
 
   const handleServer = () => {
     const userData = {
@@ -62,11 +59,7 @@ const EditProfile = (props) => {
 
     props.update("./api/users/details", userData);
 
-    if (props.errors) {
-      alert("something failed");
-    } else {
-      handleClose();
-    }
+    handleClose();
   };
 
   const handleLogInSubmit = (event) => {
@@ -121,9 +114,7 @@ const EditProfile = (props) => {
     >
       <DialogTitle id="form-dialog-title">Edit Profile</DialogTitle>
 
-      <div className={classes.editImage}>
-        <AvatarImage />
-      </div>
+      <AvatarImage />
 
       <DialogContent>
         <TextField
@@ -167,7 +158,6 @@ const EditProfile = (props) => {
         </Button>
         <Button onClick={handleLogInSubmit} color="primary" disabled={disabled}>
           Save
-          {props.loading && <CircularProgress size={10} />}
         </Button>
       </DialogActions>
     </Dialog>
@@ -176,22 +166,17 @@ const EditProfile = (props) => {
 
 EditProfile.propTypes = {
   user: PropTypes.object.isRequired,
-  update: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
-  errors: PropTypes.string.isRequired,
 };
 
 //state from the store, and properties of this object become our props
 const mapStateToProps = (state) => ({
   user: state.user.user,
-  loading: state.user.loading,
-  errors: state.user.errors,
 });
 
 //takes dispatch from the store and dispatch an action
 const mapActionsToProps = (dispatch) => {
   return {
-    update: (url, userData) => dispatch(apiPutUserBegan({ userData, url })),
+    update: (url, userData) => dispatch(apiPutUserBegan({ url, userData })),
   };
 };
 

@@ -18,17 +18,12 @@ import ListItemText from "@material-ui/core/ListItemText";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
 import ContactsOutlinedIcon from "@material-ui/icons/ContactsOutlined";
-import { checkExpiration } from "../../store/helpers";
+import ProfileList from "./ProfileList";
+import AvatarImage from "./AvatarImage";
 
 //redux
 import { connect } from "react-redux";
-import {
-  logoutUser,
-  apiGetUserBegan,
-  apiCallSuccess,
-} from "../../store/actions";
-import ProfileList from "./ProfileList";
-import AvatarImage from "./AvatarImage";
+import { logoutUser } from "../../store/actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -92,7 +87,7 @@ const Home = (props) => {
     props.logout();
   };
   const handleProfile = () => {
-    props.history.push("/profile");
+    props.history.push(`/profile/${props.user._id}`);
   };
 
   const toggleDrawer = (anchor, open) => (event) => {

@@ -25,7 +25,7 @@ export default function (state = initialState, action) {
     case actions.apiCallSuccess.type:
       console.log("siginUp/login successfully ");
       setAuthorizationHeader(action.payload); //payload is token
-     
+
       return {
         ...state,
         loading: false,
@@ -83,8 +83,8 @@ export default function (state = initialState, action) {
       console.log("user start updating data");
       return {
         ...state,
-        loading: true,
-        errors: "",
+        fetch_loading: true,
+        fetch_errors: "",
       };
 
     case actions.apiPutUserSuccess.type:
@@ -92,17 +92,17 @@ export default function (state = initialState, action) {
 
       return {
         ...state,
-        user: action.payload.target,
-        loading: false,
-        errors: "",
+        user: action.payload.user,
+        fetch_loading: false,
+        fetch_errors: "",
       };
 
     case actions.apiPutUserFailed.type:
       console.log("user data updated failed and error is : ", action.payload);
       return {
         ...state,
-        loading: false,
-        errors: action.payload,
+        fetch_loading: false,
+        fetch_errors: action.payload,
       };
 
     default:

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-
+import { Link } from "react-router-dom";
 //Material UI
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -13,10 +13,11 @@ import CardMedia from "@material-ui/core/CardMedia";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import LinkOffOutlinedIcon from "@material-ui/icons/LinkOffOutlined";
 import DateRangeIcon from "@material-ui/icons/DateRange";
-
+import EditProfile from "./EditProfile";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import MuiLink from "@material-ui/core/Link";
 //redux
 import { connect } from "react-redux";
-import { apiGetUserBegan } from "../../store/actions";
 
 const useStyles = makeStyles({
   root: {
@@ -44,96 +45,135 @@ const useStyles = makeStyles({
   note: {
     padding: "0 1rem",
   },
+  button: {
+    position: "absolute",
+    right: 0,
+    margin: "1em",
+  },
 });
 const ProfileCard = (props) => {
   const classes = useStyles(props);
-  const {
-    handle,
-    bio,
-    website,
-    location,
-    createdAt,
-    following,
-    followedBy,
-  } = props.user;
+  const [open, setOpen] = React.useState(false);
 
-  return (
-    <Card className={classes.root}>
-      <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          image="/image/twitterLogo.jpg"
-          title="background"
-        />
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
-        <CardContent className={classes.profileInfo}>
-          <Typography gutterBottom variant="h6" component="h2">
-            {handle}
-          </Typography>
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-          <Typography variant="body2" color="textSecondary" component="p">
-            @ {handle}
-          </Typography>
+  let paper;
+  if (props.fetch_loading) {
+    paper = <CircularProgress />;
+  } else {
+    console.log("PROFILE props.user is", props.user);
 
-          <Typography variant="body2" color="textSecondary" component="p">
-            {bio}
-          </Typography>
+    const {
+      _id,
+      handle,
+      bio,
+      website,
+      location,
+      createdAt,
+      following,
+      followedBy,
+    } = props.user;
 
-          <Typography className={classes.notes}>
-            <Typography variant="body2" color="textSecondary" component="p">
-              <LocationOnOutlinedIcon />
-              {location}
+    paper = (
+      <Card>
+        <CardActionArea>
+          <CardMedia
+            className={classes.media}
+            image="/image/twitterLogo.jpg"
+            title="background"
+          />
+
+          <Button
+            variant="outlined"
+            color="primary"
+            className={classes.button}
+            onClick={handleOpen}
+          >
+            Edit Profile
+          </Button>
+
+          <CardContent className={classes.profileInfo}>
+            <Typography gutterBottom variant="h6" component="h2">
+              {handle}
             </Typography>
 
-            <Typography variant="body2" color="textSecondary" component="p">
-              <LinkOffOutlinedIcon />
-              {website}
-            </Typography>
-
-            <Typography variant="body2" color="textSecondary" component="p">
-              <DateRangeIcon />
-              {createdAt ? createdAt.split("T")[0] : ""}
-            </Typography>
-          </Typography>
-
-          <Typography className={classes.notes}>
-            <Typography
-              variant="body2"
-              color="textSecondary"
-              component="p"
-              className={classes.note}
+            <MuiLink
+              component={Link}
+              to={`/profile/${_id}`}
+              color="textPrimary"
             >
-              {following ? following.length : ""} Followings
+              @{handle}
+            </MuiLink>
+
+            <Typography variant="body2" color="textSecondary" component="p">
+              {bio}
             </Typography>
 
-            <Typography
-              variant="body2"
-              color="textSecondary"
-              component="p"
-              className={classes.note}
-            >
-              {followedBy ? followedBy.length : ""} Followers
+            <Typography className={classes.notes}>
+              <Typography variant="body2" color="textSecondary" component="p">
+                <LocationOnOutlinedIcon />
+                {location}
+              </Typography>
+
+              <Typography variant="body2" color="textSecondary" component="p">
+                <LinkOffOutlinedIcon />
+                {website}
+              </Typography>
+
+              <Typography variant="body2" color="textSecondary" component="p">
+                <DateRangeIcon />
+                {createdAt ? createdAt.split("T")[0] : ""}
+              </Typography>
             </Typography>
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions className={classes.buttons}>
-        <Button size="small" color="primary">
-          Tweets
-        </Button>
-        <Button size="small" color="primary">
-          Tweets & replies
-        </Button>
-        <Button size="small" color="primary">
-          Likes
-        </Button>
-      </CardActions>
-    </Card>
-  );
+
+            <Typography className={classes.notes}>
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                component="p"
+                className={classes.note}
+              >
+                {following ? following.length : ""} Followings
+              </Typography>
+
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                component="p"
+                className={classes.note}
+              >
+                {followedBy ? followedBy.length : ""} Followers
+              </Typography>
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+        <CardActions className={classes.buttons}>
+          <Button size="small" color="primary">
+            Tweets
+          </Button>
+          <Button size="small" color="primary">
+            Tweets & replies
+          </Button>
+          <Button size="small" color="primary">
+            Likes
+          </Button>
+        </CardActions>
+
+        <EditProfile open={open} handleClose={handleClose} />
+      </Card>
+    );
+  }
+
+  return <div className={classes.root}>{paper}</div>;
 };
 
 ProfileCard.propTypes = {
-  user: PropTypes.object.isRequired,
   fetch_loading: PropTypes.bool.isRequired,
   fetch_errors: PropTypes.string.isRequired,
 };
