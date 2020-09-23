@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import MyButton from "../util/myButton";
+
 // MUI Stuff
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -8,9 +8,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DeleteOutline from "@material-ui/icons/DeleteOutline";
 
 //redux
-import { connect } from "react-redux";
-
-import { apiDeleteBegan } from "../store/actions";
+// import { connect } from "react-redux";
+// import { apiDeleteBegan } from "../store/actions";
 
 class DeleteScream extends Component {
   //open and close window
@@ -27,16 +26,16 @@ class DeleteScream extends Component {
   };
   deleteScream = () => {
     console.log("deleting scream");
-    this.props.delete(this.props.screamId, this.props.history);
+    // this.props.delete(this.props.screamId, this.props.history);
     this.setState({ open: false });
   };
 
   render() {
     return (
       <div>
-        <MyButton tip="Delete Scream" onClick={this.handleOpen}>
+        <Button onClick={this.handleOpen}>
           <DeleteOutline color="secondary" />
-        </MyButton>
+        </Button>
 
         <Dialog
           open={this.state.open}
@@ -62,12 +61,14 @@ class DeleteScream extends Component {
 }
 
 //takes dispatch from the store and dispatch an action
-const mapActionsToProps = (dispatch) => {
-  return {
-    delete: (screamId, history) =>
-      dispatch(apiDeleteBegan({ screamId, history })),
-  };
-};
+// const mapActionsToProps = (dispatch) => {
+//   return {
+//     delete: (screamId, history) =>
+//       dispatch(apiDeleteBegan({ screamId, history })),
+//   };
+// };
 
 //connect subscribe/unsubscribe the redux store
-export default connect(null, mapActionsToProps)(DeleteScream);
+// export default connect(null, mapActionsToProps)(DeleteScream);
+
+export default DeleteScream;

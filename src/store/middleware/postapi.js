@@ -1,25 +1,27 @@
-import axios from "axios";
+import http from "../httpService";
 import * as actions from "../actions";
+import { getCurrentUser } from "../helpers";
 
 export const post_api = ({ dispatch, getState }) => (next) => (action) => {
   if (action.type !== actions.apiCallBegan.type) return next(action);
-  //if action is a function such as api call then
-  next(action); // passing action to next middleware - the reducer
+
+  next(action);
 
   const { url, userData, history } = action.payload;
 
-  axios
+  http
     .post(`${url}`, userData, history)
     .then((res) => {
       dispatch(actions.apiCallSuccess(res.data.token));
-      dispatch(actions.apiGetUserBegan({ url: "./user" }));
-      history.push("home");
+      history.push("/home");
+
+      const currentUser = getCurrentUser();
+
+      dispatch(
+        actions.apiGetUserBegan({ url: `./api/users/${currentUser._id}` })
+      );
     })
     .catch((error) => {
-      if (error.response.data.general) {
-        dispatch(actions.apiCallFailed(error.response.data.general));
-      } else {
-        dispatch(actions.apiCallFailed(error));
-      }
+      dispatch(actions.apiCallFailed(error.response.data.message));
     });
 };
