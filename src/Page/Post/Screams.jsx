@@ -6,6 +6,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { apiGetScreamBegan } from "../../store/actions";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { getCurrentUser } from "../../store/helpers";
+import PersonalScream from "./PersonalScream";
 
 const useStyles = makeStyles((theme) => ({
   screams: {
@@ -17,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Screams = (props) => {
   const classes = useStyles(props);
-
+  const currentUser = getCurrentUser();
   useEffect(() => {
     props.getAllScreams("./api/screams");
   }, []);
@@ -26,9 +28,13 @@ const Screams = (props) => {
   if (!props.data.screams) {
     paper = <CircularProgress />;
   } else {
-    paper = props.data.screams.map((scream, id) => (
-      <Scream key={id + "scream"} scream={scream} />
-    ));
+    paper = props.data.screams.map((scream, id) =>
+      scream.author === currentUser._id ? (
+        <PersonalScream key={id + "scream"} scream={scream} />
+      ) : (
+        <Scream key={id + "scream"} scream={scream} />
+      )
+    );
   }
 
   return <div className={classes.screams}>{paper}</div>;

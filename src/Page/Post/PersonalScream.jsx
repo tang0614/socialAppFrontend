@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import DeleteScream from "./deleteScream";
+import AvatarImage from "../Home/AvatarImage";
 // MUI Stuff
+
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -60,7 +62,7 @@ const Scream = (props) => {
     createdAt,
     comments,
     commentOn,
-    author_details,
+    author,
     _id,
   } = props.scream;
 
@@ -68,9 +70,10 @@ const Scream = (props) => {
     <Card className={classes.root}>
       <div className={classes.header}>
         <div className={classes.headerItem}>
-          <AuthorImage imageUrl={author_details[0].imageUrl} />
+          <AvatarImage />
+
           <MuiLink component={Link} to={`/profile/${_id}`} color="textPrimary">
-            @{author_details[0].handle}
+            @{props.user.user.handle}
           </MuiLink>
         </div>
         <div>
@@ -91,6 +94,7 @@ const Scream = (props) => {
         <ChatBubbleOutlineIcon />
         <RoundedCornerIcon />
         <FavoriteBorderIcon />
+        <DeleteScream _id={_id} />
       </div>
     </Card>
   );

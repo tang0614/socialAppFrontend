@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
+
 import ProfileHeader from "./ProfileHeader";
 import ProfileCard from "./ProfileCard";
 import { makeStyles } from "@material-ui/core/styles";
@@ -7,6 +7,8 @@ import AvatarImage from "../Home/AvatarImage";
 import Button from "@material-ui/core/Button";
 import EditLocationOutlinedIcon from "@material-ui/icons/EditLocationOutlined";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import Popover from "@material-ui/core/Popover";
+import Typography from "@material-ui/core/Typography";
 
 //redux
 import { connect } from "react-redux";
@@ -34,12 +36,27 @@ const useStyles = makeStyles({
   icon: {
     position: "absolute",
   },
+  popover: {
+    pointerEvents: "none",
+  },
 });
 
 const Profile = (props) => {
   const classes = useStyles(props);
   const [open, setOpen] = useState(false);
   const [total, setTotal] = useState(0);
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handlePopoverOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const openPop = Boolean(anchorEl);
 
   const increasePost = () => {
     setTotal(total + 1);
@@ -80,14 +97,39 @@ const Profile = (props) => {
               onChange={handleImageChange}
             />
           </Button>
+
           <Button
             tip="Edit profile picture"
             onClick={handleEditPicture}
             btnClassName="button"
             className="editIcon"
+            aria-owns={openPop ? "mouse-over-popover" : undefined}
+            aria-haspopup="true"
+            onMouseEnter={handlePopoverOpen}
+            onMouseLeave={handlePopoverClose}
           >
             <EditLocationOutlinedIcon />
           </Button>
+        </div>
+        <div>
+          <Popover
+            id="mouse-over-popover"
+            className={classes.popover}
+            open={openPop}
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+            onClose={handlePopoverClose}
+            disableRestoreFocus
+          >
+            <Typography>Edit Image (within 1024*1024 jpg/png).</Typography>
+          </Popover>
         </div>
       </div>
 

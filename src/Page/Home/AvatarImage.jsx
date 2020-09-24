@@ -38,7 +38,11 @@ const AvatarImage = (props) => {
 
   return (
     <div className={classes.root}>
-      <Avatar alt="avatar" src={url} className={classes.large} />
+      {props.fetch_errors ? (
+        <div>Try image smaller than 1014*1024</div>
+      ) : (
+        <Avatar alt="avatar" src={url} className={classes.large} />
+      )}
     </div>
   );
 };
@@ -48,6 +52,7 @@ AvatarImage.propTypes = {};
 //state from the store, and properties of this object become our props
 const mapStateToProps = (state) => ({
   user: state.user.user,
+  fetch_errors: state.user.fetch_errors,
 });
 
 //takes dispatch from the store and dispatch an action
