@@ -1,10 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
-
+import PropTypes from "prop-types";
 //redux
 import { connect } from "react-redux";
-import { apiPutUserBegan } from "../../store/actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,20 +46,14 @@ const AvatarImage = (props) => {
   );
 };
 
-AvatarImage.propTypes = {};
+AvatarImage.propTypes = {
+  user: PropTypes.object.isRequired,
+};
 
 //state from the store, and properties of this object become our props
 const mapStateToProps = (state) => ({
   user: state.user.user,
-  fetch_errors: state.user.fetch_errors,
 });
 
-//takes dispatch from the store and dispatch an action
-const mapActionsToProps = (dispatch) => {
-  return {
-    update: (url, userData) => dispatch(apiPutUserBegan({ userData, url })),
-  };
-};
-
 //connect subscribe/unsubscribe the redux store
-export default connect(mapStateToProps, mapActionsToProps)(AvatarImage);
+export default connect(mapStateToProps)(AvatarImage);

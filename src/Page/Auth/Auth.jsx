@@ -96,7 +96,6 @@ const Auth = (props) => {
     setOpenLogIn(false);
   };
 
-  
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -158,7 +157,5 @@ const Auth = (props) => {
     </div>
   );
 };
-
-
 
 export default Auth;

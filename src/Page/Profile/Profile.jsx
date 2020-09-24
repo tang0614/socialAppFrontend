@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import ProfileHeader from "./ProfileHeader";
 import ProfileCard from "./ProfileCard";
 import { makeStyles } from "@material-ui/core/styles";
-import AvatarImage from "../Home/AvatarImage";
+import AvatarImage from "../../component/AvatarImage";
 import Button from "@material-ui/core/Button";
 import EditLocationOutlinedIcon from "@material-ui/icons/EditLocationOutlined";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";

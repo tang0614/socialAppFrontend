@@ -3,9 +3,8 @@ import { setCommentHeader } from "../helpers";
 
 const initialState = {
   screams: "",
-
-  loading: false,
   errors: "",
+  post_errors: "",
 };
 
 export default function (state = initialState, action) {
@@ -14,7 +13,6 @@ export default function (state = initialState, action) {
       console.log("start fetching scream data");
       return {
         ...state,
-        loading: true,
         errors: "",
       };
 
@@ -23,7 +21,6 @@ export default function (state = initialState, action) {
 
       return {
         ...state,
-        loading: false,
         screams: action.payload.screams,
       };
 
@@ -31,7 +28,6 @@ export default function (state = initialState, action) {
       console.log("apiGetScreamFailed : ", action.payload);
       return {
         ...state,
-        loading: false,
         errors: action.payload,
       };
 
@@ -39,8 +35,7 @@ export default function (state = initialState, action) {
       console.log("start post scream data");
       return {
         ...state,
-        loading: true,
-        errors: "",
+        post_errors: "",
       };
 
     case actions.apiPostScreamSuccess.type:
@@ -48,7 +43,6 @@ export default function (state = initialState, action) {
 
       return {
         ...state,
-        loading: false,
         screams: [action.payload.scream, ...state.screams],
       };
 
@@ -56,8 +50,7 @@ export default function (state = initialState, action) {
       console.log("apiPostScreamFailed : ", action.payload);
       return {
         ...state,
-        loading: false,
-        errors: action.payload,
+        post_errors: action.payload,
       };
 
     case actions.apiDeleteBegan.type:
@@ -86,7 +79,6 @@ export default function (state = initialState, action) {
       console.log("start post comment data");
       return {
         ...state,
-        loading: true,
         errors: "",
       };
 
@@ -96,14 +88,12 @@ export default function (state = initialState, action) {
 
       return {
         ...state,
-        loading: false,
       };
 
     case actions.apiPostCommentFailed.type:
       console.log("apiPostCommentFailed : ", action.payload);
       return {
         ...state,
-        loading: false,
         errors: action.payload,
       };
 
@@ -111,7 +101,6 @@ export default function (state = initialState, action) {
       console.log("start put comment data");
       return {
         ...state,
-        loading: true,
         errors: "",
       };
 
@@ -120,7 +109,6 @@ export default function (state = initialState, action) {
 
       return {
         ...state,
-        loading: false,
         screams: [action.payload.comment, ...state.screams],
       };
 
@@ -128,7 +116,6 @@ export default function (state = initialState, action) {
       console.log("apiPutCommentFailed : ", action.payload);
       return {
         ...state,
-        loading: false,
         errors: action.payload,
       };
 

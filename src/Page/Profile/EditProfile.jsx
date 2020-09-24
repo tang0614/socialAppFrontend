@@ -8,7 +8,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
-import AvatarImage from "../Home/AvatarImage";
+import AvatarImage from "../../component/AvatarImage";
 
 //redux
 import { connect } from "react-redux";

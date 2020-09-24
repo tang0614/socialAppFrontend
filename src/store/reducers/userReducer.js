@@ -5,10 +5,8 @@ const initialState = {
   authenticated: false,
   loading: false,
   errors: "",
-
   user: "",
-  fetch_loading: false,
-  fetch_errors: "",
+  fetching_errors: "",
 };
 
 export default function (state = initialState, action) {
@@ -18,7 +16,7 @@ export default function (state = initialState, action) {
       console.log("user submit/login siginUp form");
       return {
         ...state,
-        loading: true,
+
         errors: "",
       };
 
@@ -28,7 +26,7 @@ export default function (state = initialState, action) {
 
       return {
         ...state,
-        loading: false,
+
         authenticated: true,
       };
 
@@ -36,7 +34,7 @@ export default function (state = initialState, action) {
       console.log("siginUp/login failed : ", action.payload);
       return {
         ...state,
-        loading: false,
+
         errors: action.payload,
       };
 
@@ -56,7 +54,7 @@ export default function (state = initialState, action) {
       console.log("user start fetching data");
       return {
         ...state,
-        fetch_loading: true,
+
         fetch_errors: "",
       };
 
@@ -65,7 +63,7 @@ export default function (state = initialState, action) {
 
       return {
         ...state,
-        fetch_loading: false,
+
         user: action.payload.user,
       };
 
@@ -73,7 +71,7 @@ export default function (state = initialState, action) {
       console.log("user data failed and error is : ", action.payload);
       return {
         ...state,
-        fetch_loading: false,
+
         fetch_errors: action.payload,
       };
 
@@ -83,7 +81,7 @@ export default function (state = initialState, action) {
       // console.log("user start updating data");
       return {
         ...state,
-        fetch_loading: true,
+
         fetch_errors: "",
       };
 
@@ -93,7 +91,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         user: action.payload.user,
-        fetch_loading: false,
+
         fetch_errors: "",
       };
 
@@ -101,7 +99,7 @@ export default function (state = initialState, action) {
       // console.log("user data updated failed and error is : ", action.payload);
       return {
         ...state,
-        fetch_loading: false,
+
         fetch_errors: action.payload,
       };
 

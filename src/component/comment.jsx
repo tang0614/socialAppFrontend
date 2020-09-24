@@ -121,7 +121,6 @@ const mapStateToProps = (state) => ({
   fetch_errors: state.user.fetch_errors,
 });
 
-//takes dispatch from the store and dispatch an action
 const mapActionsToProps = (dispatch) => {
   return {
     postComment: (url, userData) =>

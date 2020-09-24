@@ -1,6 +1,5 @@
 import http from "../httpService";
 import * as actions from "../actions";
-import { getComment } from "../helpers";
 
 export const post_detail_api = ({ dispatch, getState }) => (next) => (
   action
@@ -14,12 +13,13 @@ export const post_detail_api = ({ dispatch, getState }) => (next) => (
   next(action);
 
   if (action.type === actions.apiPostScreamBegan.type) {
-    const { url, userData } = action.payload;
+    const { url, userData, handle } = action.payload;
 
     http
       .post(`${url}`, userData)
       .then((res) => {
         dispatch(actions.apiPostScreamSuccess(res.data));
+        handle();
       })
       .catch((error) => {
         dispatch(actions.apiPostScreamFailed(error.response.data.message));
