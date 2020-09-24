@@ -10,12 +10,13 @@ export const put_api = ({ dispatch, getState }) => (next) => (action) => {
 
   next(action);
 
-  const { url, userData } = action.payload;
+  const { url, userData, handle } = action.payload;
   if (action.type === actions.apiPutUserBegan.type) {
     http
       .put(`${url}`, userData)
       .then((res) => {
         dispatch(actions.apiPutUserSuccess(res.data));
+        handle();
       })
       .catch((error) => {
         console.log(error);

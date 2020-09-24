@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from "react";
-
-import ProfileHeader from "./ProfileHeader";
-import ProfileCard from "./ProfileCard";
+import React, { useState } from "react";
+import ProfileHeader from "../../component/ProfileHeader";
+import ProfileCard from "../../component/ProfileCard";
 import { makeStyles } from "@material-ui/core/styles";
-import AvatarImage from "../../component/AvatarImage";
 import Button from "@material-ui/core/Button";
-import EditLocationOutlinedIcon from "@material-ui/icons/EditLocationOutlined";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
-import Popover from "@material-ui/core/Popover";
-import Typography from "@material-ui/core/Typography";
+
 import PostCard from "../../component/PostCard";
 //redux
 import { connect } from "react-redux";
 import { apiPutUserBegan, apiGetUserBegan } from "../../store/actions";
+import EditImage from "../../component/EditImage";
 
 const useStyles = makeStyles({
   root: {
@@ -42,32 +39,10 @@ const useStyles = makeStyles({
 
 const Profile = (props) => {
   const classes = useStyles(props);
+  //open for new tweet
   const [open, setOpen] = useState(false);
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handlePopoverOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handlePopoverClose = () => {
-    setAnchorEl(null);
-  };
-
-  const openPop = Boolean(anchorEl);
-
-  const handleEditPicture = () => {
-    const fileInput = document.getElementById("profileImage");
-    fileInput.click();
-  };
-
-  const handleImageChange = (event) => {
-    const formData = new FormData();
-
-    formData.append("profileImage", event.target.files[0]);
-    props.update("./api/users/image", formData);
-  };
-
+  //handle new tweet
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -79,53 +54,10 @@ const Profile = (props) => {
   return (
     <div className={classes.root}>
       <ProfileHeader {...props} />
-      <ProfileCard />
-      <div className={classes.editImage}>
-        <AvatarImage />
-        <div>
-          <Button className={classes.icon}>
-            <input
-              type="file"
-              id="profileImage"
-              hidden="hidden"
-              onChange={handleImageChange}
-            />
-          </Button>
 
-          <Button
-            tip="Edit profile picture"
-            onClick={handleEditPicture}
-            btnClassName="button"
-            className="editIcon"
-            aria-owns={openPop ? "mouse-over-popover" : undefined}
-            aria-haspopup="true"
-            onMouseEnter={handlePopoverOpen}
-            onMouseLeave={handlePopoverClose}
-          >
-            <EditLocationOutlinedIcon />
-          </Button>
-        </div>
-        <div>
-          <Popover
-            id="mouse-over-popover"
-            className={classes.popover}
-            open={openPop}
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "left",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "left",
-            }}
-            onClose={handlePopoverClose}
-            disableRestoreFocus
-          >
-            <Typography>Edit Image (within 1024*1024 jpg/png).</Typography>
-          </Popover>
-        </div>
-      </div>
+      <ProfileCard />
+
+      <EditImage />
 
       <Button className={classes.addIcon} onClick={handleClickOpen}>
         <AddCircleOutlineIcon fontSize="large" />

@@ -7,6 +7,7 @@ const initialState = {
   errors: "",
   user: "",
   fetching_errors: "",
+  update_error: "",
 };
 
 export default function (state = initialState, action) {
@@ -82,7 +83,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
 
-        fetch_errors: "",
+        update_error: "",
       };
 
     case actions.apiPutUserSuccess.type:
@@ -92,7 +93,7 @@ export default function (state = initialState, action) {
         ...state,
         user: action.payload.user,
 
-        fetch_errors: "",
+        update_error: "",
       };
 
     case actions.apiPutUserFailed.type:
@@ -100,7 +101,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
 
-        fetch_errors: action.payload,
+        update_error: action.payload,
       };
 
     default:

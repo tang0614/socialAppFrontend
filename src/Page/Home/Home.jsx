@@ -131,13 +131,7 @@ const Home = (props) => {
         {list("left")}
       </Drawer>
 
-      {props.errors && (
-        <Typography variant="body2" className={classes.errorMessage}>
-          {props.errors}
-        </Typography>
-      )}
-
-      {/* <Screams /> */}
+      <Screams />
 
       <Button className={classes.addIcon} onClick={handleOpen}>
         <AddCircleOutlineIcon fontSize="large" />

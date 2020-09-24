@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
+import EditProfile from "./EditProfile";
 import { Link } from "react-router-dom";
+
 //Material UI
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -13,7 +15,6 @@ import CardMedia from "@material-ui/core/CardMedia";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import LinkOffOutlinedIcon from "@material-ui/icons/LinkOffOutlined";
 import DateRangeIcon from "@material-ui/icons/DateRange";
-import EditProfile from "./EditProfile";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import MuiLink from "@material-ui/core/Link";
 //redux

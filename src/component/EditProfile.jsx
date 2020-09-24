@@ -8,13 +8,24 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
-import AvatarImage from "../../component/AvatarImage";
-
+import AvatarImage from "./AvatarImage";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
 //redux
 import { connect } from "react-redux";
-import { apiPutUserBegan } from "../../store/actions";
+import { apiPutUserBegan } from "../store/actions";
+
+const useStyles = makeStyles((theme) => ({
+  errorMessage: {
+    fontSize: "0.8rem",
+    color: "red",
+    textAlign: "center",
+  },
+}));
 
 const EditProfile = (props) => {
+  const classes = useStyles(props);
+  //open and close edit profile button
   const { open, handleClose } = props;
 
   const [bio, setBio] = useState("");
@@ -40,16 +51,13 @@ const EditProfile = (props) => {
       location,
       website,
     };
-
-    props.update("./api/users/details", userData);
-
-    handleClose();
+    props.update("./api/users/details", userData, handleClose);
+    //error check
   };
 
   const handleLogInSubmit = (event) => {
     event.preventDefault();
     handleServer();
-    console.log("handling server..");
   };
 
   const validHandler = (value, name) => {
@@ -99,6 +107,11 @@ const EditProfile = (props) => {
       <DialogTitle id="form-dialog-title">Edit Profile</DialogTitle>
 
       <AvatarImage />
+      {props.errors && (
+        <Typography variant="body2" className={classes.errorMessage}>
+          {props.errors}
+        </Typography>
+      )}
 
       <DialogContent>
         <TextField
@@ -150,17 +163,21 @@ const EditProfile = (props) => {
 
 EditProfile.propTypes = {
   user: PropTypes.object.isRequired,
+  update: PropTypes.func.isRequired,
+  errors: PropTypes.string.isRequired,
 };
 
 //state from the store, and properties of this object become our props
 const mapStateToProps = (state) => ({
   user: state.user.user,
+  errors: state.user.update_error,
 });
 
 //takes dispatch from the store and dispatch an action
 const mapActionsToProps = (dispatch) => {
   return {
-    update: (url, userData) => dispatch(apiPutUserBegan({ url, userData })),
+    update: (url, userData, handle) =>
+      dispatch(apiPutUserBegan({ url, userData, handle })),
   };
 };
 
