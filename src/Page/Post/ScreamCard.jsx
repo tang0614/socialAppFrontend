@@ -1,6 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import AuthorImage from "./AuthorImage";
+import { getCurrentUser } from "../../store/helpers";
+import AvatarImage from "../Home/AvatarImage";
 // MUI Stuff
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -8,8 +11,10 @@ import CardContent from "@material-ui/core/CardContent";
 import MuiLink from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import dayjs from "dayjs";
-import AuthorImage from "./AuthorImage";
 import relativeTime from "dayjs/plugin/relativeTime";
+
+// Redux
+import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: { boxShadow: "none" },
@@ -46,18 +51,32 @@ const ScreamCard = (props) => {
   const classes = useStyles(props);
   dayjs.extend(relativeTime);
 
-  const { author_details, createdAt, _id, body } = props;
+  const { createdAt, _id, body, author_details, author } = props.scream;
+
+  const currentUser = getCurrentUser();
+
+  const paper =
+    author === currentUser._id ? (
+      <div className={classes.headerItem}>
+        <AvatarImage />
+        <MuiLink component={Link} to={`/profile/${_id}`} color="textPrimary">
+          @{props.user.user.handle}
+        </MuiLink>
+      </div>
+    ) : (
+      <div className={classes.headerItem}>
+        <AuthorImage imageUrl={author_details[0].imageUrl} />
+
+        <MuiLink component={Link} to={`/profile/${_id}`} color="textPrimary">
+          @{author_details[0].handle}
+        </MuiLink>
+      </div>
+    );
 
   return (
     <Card className={classes.root}>
       <div className={classes.header}>
-        <div className={classes.headerItem}>
-          <AuthorImage imageUrl={author_details.imageUrl} />
-
-          <MuiLink component={Link} to={`/profile/${_id}`} color="textPrimary">
-            @{author_details.handle}
-          </MuiLink>
-        </div>
+        {paper}
         <div>
           <Typography
             variant="body2"
@@ -75,4 +94,9 @@ const ScreamCard = (props) => {
   );
 };
 
-export default ScreamCard;
+//connect subscribe/unsubscribe the redux store
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps)(ScreamCard);

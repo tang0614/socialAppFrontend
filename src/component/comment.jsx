@@ -72,12 +72,7 @@ const Comment = (props) => {
           <CloseIcon />
         </Button>
 
-        <ScreamCard
-          author_details={props.author_details}
-          createdAt={props.createdAt}
-          _id={props._id}
-          body={props.body}
-        />
+        <ScreamCard scream={props.scream} />
         <DialogContent>
           <TextField
             id="tweet"

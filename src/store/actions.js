@@ -35,7 +35,6 @@ export const apiPostScreamSuccess = createAction("apiPostScreamSuccess");
 export const apiPostScreamFailed = createAction("apiPostScreamFailed");
 
 //scream delete request
-
 export const apiDeleteBegan = createAction("apiDeleteBegan");
 export const apiDeleteSuccess = createAction("apiDeleteSuccess");
 export const apiDeleteFailed = createAction("apiDeleteFailed");

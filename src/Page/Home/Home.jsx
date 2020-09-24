@@ -74,11 +74,11 @@ const useStyles = makeStyles((theme) => ({
 
 const Home = (props) => {
   const classes = useStyles(props);
-  const [open, setOpen] = React.useState(false);
-
+  
   const [state, setState] = React.useState({
     left: false,
   });
+  const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);

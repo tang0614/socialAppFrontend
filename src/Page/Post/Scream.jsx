@@ -58,6 +58,7 @@ const Scream = (props) => {
     comments,
     commentOn,
     author_details,
+    author,
     _id,
   } = props.scream;
 
@@ -73,34 +74,25 @@ const Scream = (props) => {
 
   return (
     <Card className={classes.root}>
-      <ScreamCard
-        author_details={author_details[0]}
-        createdAt={createdAt}
-        _id={_id}
-        body={body}
-      />
+      <ScreamCard scream={props.scream} />
 
       <div className={classes.buttons}>
-        {author_details.handle === props.user.user.handle ? (
-          <DeleteScream _id={_id} />
-        ) : (
-          ""
-        )}
-
         <Button onClick={handleClickOpen}>
           <ChatBubbleOutlineIcon />
         </Button>
         <RoundedCornerIcon />
         <FavoriteBorderIcon />
+        {author_details[0].handle === props.user.user.handle ? (
+          <DeleteScream _id={_id} />
+        ) : (
+          ""
+        )}
       </div>
 
       <Comment
         open={open}
         handleClose={handleClose}
-        author_details={author_details[0]}
-        createdAt={createdAt}
-        _id={_id}
-        body={body}
+        scream={props.scream}
         {...props}
       />
     </Card>
