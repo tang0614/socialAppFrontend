@@ -18,7 +18,7 @@ export const get_api = ({ dispatch }) => (next) => (action) => {
         console.log(error);
         dispatch(actions.apiGetScreamFailed(error.response.data.message));
       });
-  } else {
+  } else if (action.type === actions.apiGetUserBegan.type) {
     const { url } = action.payload;
     http
       .get(`${url}`)

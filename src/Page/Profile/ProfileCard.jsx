@@ -67,7 +67,7 @@ const ProfileCard = (props) => {
   if (props.fetch_loading) {
     paper = <CircularProgress />;
   } else {
-    console.log("PROFILE props.user is", props.user);
+    
 
     const {
       _id,

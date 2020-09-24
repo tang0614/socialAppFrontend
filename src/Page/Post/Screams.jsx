@@ -18,18 +18,33 @@ const useStyles = makeStyles((theme) => ({
 
 const Screams = (props) => {
   const classes = useStyles(props);
-  const currentUser = getCurrentUser();
+
   useEffect(() => {
     props.getAllScreams("./api/screams");
   }, []);
+
+  const getScream = (scream, id) => {
+    const commentOn_id = scream.commentOn;
+    if (scream.commentOn) {
+      const commentedScream = props.data.screams.find(
+        (scream) => scream._id === commentOn_id
+      );
+      return (
+        <div>
+          <Scream key={id + "commentedScream"} scream={commentedScream} />
+          <Scream key={id + "scream"} scream={scream} isComment={true} />
+        </div>
+      );
+    } else {
+      return <Scream key={id + "scream"} scream={scream} isComment={false} />;
+    }
+  };
 
   let paper;
   if (!props.data.screams) {
     paper = <CircularProgress />;
   } else {
-    paper = props.data.screams.map((scream, id) => (
-      <Scream key={id + "scream"} scream={scream} />
-    ));
+    paper = props.data.screams.map((scream, id) => getScream(scream, id));
   }
 
   return <div className={classes.screams}>{paper}</div>;

@@ -40,3 +40,19 @@ export function checkExpiration() {
     }
   }
 }
+
+export const setCommentHeader = (_id) => {
+  localStorage.setItem("IdComment", _id);
+};
+
+export const removeCommentHeader = () => {
+  localStorage.removeItem("IdComment");
+};
+
+export function getComment() {
+  try {
+    return localStorage.getItem("IdComment");
+  } catch (ex) {
+    console.log("no valid comment key given");
+  }
+}

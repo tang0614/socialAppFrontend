@@ -1,8 +1,9 @@
 import * as actions from "../actions";
+import { setCommentHeader } from "../helpers";
 
 const initialState = {
   screams: "",
-  scream: "",
+
   loading: false,
   errors: "",
 };
@@ -79,6 +80,56 @@ export default function (state = initialState, action) {
       console.log("apiDeleteFailed: ", action.payload);
       return {
         ...state,
+      };
+
+    case actions.apiPostCommentBegan.type:
+      console.log("start post comment data");
+      return {
+        ...state,
+        loading: true,
+        errors: "",
+      };
+
+    case actions.apiPostCommentSuccess.type:
+      console.log("comment successfully posted as", action.payload.scream);
+      setCommentHeader(action.payload.scream._id);
+
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case actions.apiPostCommentFailed.type:
+      console.log("apiPostCommentFailed : ", action.payload);
+      return {
+        ...state,
+        loading: false,
+        errors: action.payload,
+      };
+
+    case actions.apiPutCommentBegan.type:
+      console.log("start put comment data");
+      return {
+        ...state,
+        loading: true,
+        errors: "",
+      };
+
+    case actions.apiPutCommentSuccess.type:
+      console.log("comment successfully put as", action.payload.comment);
+
+      return {
+        ...state,
+        loading: false,
+        screams: [action.payload.comment, ...state.screams],
+      };
+
+    case actions.apiPutCommentFailed.type:
+      console.log("apiPutCommentFailed : ", action.payload);
+      return {
+        ...state,
+        loading: false,
+        errors: action.payload,
       };
 
     default:

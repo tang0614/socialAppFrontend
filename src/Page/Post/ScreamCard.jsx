@@ -24,11 +24,14 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     alignItems: "center",
   },
+  isComment: {
+    textAlign: "start",
+  },
 
   content: {
     position: "relative",
     margin: "0 1rem",
-    minHeight: "5rem",
+
     textAlign: "start",
   },
   buttons: {
@@ -52,6 +55,7 @@ const ScreamCard = (props) => {
   dayjs.extend(relativeTime);
 
   const { createdAt, _id, body, author_details, author } = props.scream;
+  const { isComment } = props;
 
   const currentUser = getCurrentUser();
 
@@ -75,8 +79,19 @@ const ScreamCard = (props) => {
 
   return (
     <Card className={classes.root}>
+      <div className={classes.isComment}>
+        {isComment ? (
+          <Typography variant="body2" color="textSecondary">
+            {" "}
+            replying{" "}
+          </Typography>
+        ) : (
+          ""
+        )}
+      </div>
       <div className={classes.header}>
         {paper}
+
         <div>
           <Typography
             variant="body2"
@@ -88,7 +103,7 @@ const ScreamCard = (props) => {
         </div>
       </div>
       <CardContent className={classes.content}>
-        <Typography variant="body1">{body}</Typography>
+        <Typography variant="body2">{body}</Typography>
       </CardContent>
     </Card>
   );

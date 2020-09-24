@@ -81,7 +81,7 @@ const Scream = (props) => {
 
   const [open, setOpen] = React.useState(false);
   const [open_full, setOpen_full] = React.useState(false);
-  console.log("open_full", open_full);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -105,7 +105,7 @@ const Scream = (props) => {
           className={classes.fullScreen_button}
           onClick={handleClickOpenFull}
         >
-          <ScreamCard scream={props.scream} />
+          <ScreamCard scream={props.scream} isComment={props.isComment} />
         </Button>
 
         <div className={classes.buttons}>
@@ -114,11 +114,8 @@ const Scream = (props) => {
           </Button>
           <RoundedCornerIcon />
           <FavoriteBorderIcon />
-          {author_details[0].handle === props.user.user.handle ? (
-            <DeleteScream _id={_id} />
-          ) : (
-            ""
-          )}
+
+          {author === props.user.user._id ? <DeleteScream _id={_id} /> : ""}
         </div>
 
         <Comment
@@ -157,11 +154,7 @@ const Scream = (props) => {
           </Button>
           <RoundedCornerIcon />
           <FavoriteBorderIcon />
-          {author_details[0].handle === props.user.user.handle ? (
-            <DeleteScream _id={_id} />
-          ) : (
-            ""
-          )}
+          {author === props.user.user._id ? <DeleteScream _id={_id} /> : ""}
         </div>
       </Dialog>
     </div>

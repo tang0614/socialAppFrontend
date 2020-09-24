@@ -16,7 +16,7 @@ export const apiPutUserBegan = createAction("apiPutUserBegan ");
 export const apiPutUserSuccess = createAction("apiPutUserSuccess");
 export const apiPutUserFailed = createAction("apiPutUserFailed");
 
-//request all screams
+//request  screams
 export const apiGetScreamBegan = createAction("apiGetScreamBegan");
 export const apiGetScreamSuccess = createAction("apiGetScreamSuccess");
 export const apiGetScreamFailed = createAction("apiGetScreamFailed");
@@ -38,3 +38,13 @@ export const apiPostScreamFailed = createAction("apiPostScreamFailed");
 export const apiDeleteBegan = createAction("apiDeleteBegan");
 export const apiDeleteSuccess = createAction("apiDeleteSuccess");
 export const apiDeleteFailed = createAction("apiDeleteFailed");
+
+//scream comment request
+export const apiPostCommentBegan = createAction("apiPostCommentBegan");
+export const apiPostCommentSuccess = createAction("apiPostCommentSuccess");
+export const apiPostCommentFailed = createAction("apiPostCommentFailed");
+
+//put comment detail
+export const apiPutCommentBegan = createAction("apiPutCommentBegan");
+export const apiPutCommentSuccess = createAction("apiPutCommentSuccess");
+export const apiPutCommentFailed = createAction("apiPutCommentFailed");
