@@ -11,6 +11,13 @@ import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import RoundedCornerIcon from "@material-ui/icons/RoundedCorner";
 import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import Slide from "@material-ui/core/Slide";
+import KeyboardBackspaceOutlinedIcon from "@material-ui/icons/KeyboardBackspaceOutlined";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import IconButton from "@material-ui/core/IconButton";
+
 // Redux
 import { connect } from "react-redux";
 
@@ -32,6 +39,9 @@ const useStyles = makeStyles((theme) => ({
 
     textAlign: "start",
   },
+  fullScreen_button: {
+    color: "transparent",
+  },
   buttons: {
     display: "flex",
     flexDirection: "row",
@@ -46,7 +56,14 @@ const useStyles = makeStyles((theme) => ({
 
     padding: "1rem",
   },
+  fullScreenScreamCard: {
+    marginTop: "3rem",
+  },
 }));
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const Scream = (props) => {
   const classes = useStyles(props);
@@ -63,7 +80,8 @@ const Scream = (props) => {
   } = props.scream;
 
   const [open, setOpen] = React.useState(false);
-
+  const [open_full, setOpen_full] = React.useState(false);
+  console.log("open_full", open_full);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -72,30 +90,81 @@ const Scream = (props) => {
     setOpen(false);
   };
 
+  const handleCloseFull = () => {
+    setOpen_full(false);
+  };
+
+  const handleClickOpenFull = () => {
+    setOpen_full(true);
+  };
+
   return (
-    <Card className={classes.root}>
-      <ScreamCard scream={props.scream} />
-
-      <div className={classes.buttons}>
-        <Button onClick={handleClickOpen}>
-          <ChatBubbleOutlineIcon />
+    <div>
+      <Card className={classes.root}>
+        <Button
+          className={classes.fullScreen_button}
+          onClick={handleClickOpenFull}
+        >
+          <ScreamCard scream={props.scream} />
         </Button>
-        <RoundedCornerIcon />
-        <FavoriteBorderIcon />
-        {author_details[0].handle === props.user.user.handle ? (
-          <DeleteScream _id={_id} />
-        ) : (
-          ""
-        )}
-      </div>
 
-      <Comment
-        open={open}
-        handleClose={handleClose}
-        scream={props.scream}
-        {...props}
-      />
-    </Card>
+        <div className={classes.buttons}>
+          <Button onClick={handleClickOpen}>
+            <ChatBubbleOutlineIcon />
+          </Button>
+          <RoundedCornerIcon />
+          <FavoriteBorderIcon />
+          {author_details[0].handle === props.user.user.handle ? (
+            <DeleteScream _id={_id} />
+          ) : (
+            ""
+          )}
+        </div>
+
+        <Comment
+          open={open}
+          handleClose={handleClose}
+          scream={props.scream}
+          {...props}
+        />
+      </Card>
+
+      <Dialog
+        fullScreen
+        open={open_full}
+        onClose={handleCloseFull}
+        TransitionComponent={Transition}
+      >
+        <AppBar className={classes.appBar}>
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleCloseFull}
+              aria-label="close"
+            >
+              <KeyboardBackspaceOutlinedIcon />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        <div className={classes.fullScreenScreamCard}>
+          <ScreamCard scream={props.scream} />
+        </div>
+
+        <div className={classes.buttons}>
+          <Button onClick={handleClickOpen}>
+            <ChatBubbleOutlineIcon />
+          </Button>
+          <RoundedCornerIcon />
+          <FavoriteBorderIcon />
+          {author_details[0].handle === props.user.user.handle ? (
+            <DeleteScream _id={_id} />
+          ) : (
+            ""
+          )}
+        </div>
+      </Dialog>
+    </div>
   );
 };
 

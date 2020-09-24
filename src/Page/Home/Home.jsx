@@ -20,11 +20,10 @@ import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
 import ContactsOutlinedIcon from "@material-ui/icons/ContactsOutlined";
 import ProfileList from "./ProfileList";
 import AvatarImage from "./AvatarImage";
-
+import PostCard from "../../component/PostCard";
 //redux
 import { connect } from "react-redux";
 import { logoutUser } from "../../store/actions";
-import PostCard from "../Post/PostCard";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -74,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Home = (props) => {
   const classes = useStyles(props);
-  
+
   const [state, setState] = React.useState({
     left: false,
   });

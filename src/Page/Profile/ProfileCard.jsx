@@ -50,7 +50,6 @@ const useStyles = makeStyles({
     right: 0,
     margin: "1em",
   },
-  
 });
 const ProfileCard = (props) => {
   const classes = useStyles(props);

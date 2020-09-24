@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 //redux
 import { connect } from "react-redux";
-import { apiPostScreamBegan } from "../../store/actions";
+import { apiPostScreamBegan } from "../store/actions";
 
 //Material UI
 import { makeStyles } from "@material-ui/core/styles";

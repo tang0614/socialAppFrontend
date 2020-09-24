@@ -38,8 +38,8 @@ const Comment = (props) => {
       body,
     };
 
-    console.log("userData", userData);
-    props.postScream("./api/screams", userData);
+    console.log("tweet a comment");
+    // props.postScream("./api/screams", userData);
     handleClose();
   };
   const validHandler = (value) => {

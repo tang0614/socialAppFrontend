@@ -9,11 +9,10 @@ import EditLocationOutlinedIcon from "@material-ui/icons/EditLocationOutlined";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
-
+import PostCard from "../../component/PostCard";
 //redux
 import { connect } from "react-redux";
 import { apiPutUserBegan, apiGetUserBegan } from "../../store/actions";
-import PostCard from "../Post/PostCard";
 
 const useStyles = makeStyles({
   root: {
