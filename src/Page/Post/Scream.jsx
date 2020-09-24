@@ -1,21 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
-
+import ScreamCard from "./ScreamCard";
+import Comment from "../../component/comment";
 // MUI Stuff
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import MuiLink from "@material-ui/core/Link";
-import Typography from "@material-ui/core/Typography";
+import DeleteScream from "./deleteScream";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import RoundedCornerIcon from "@material-ui/icons/RoundedCorner";
-
+import Button from "@material-ui/core/Button";
 // Redux
 import { connect } from "react-redux";
-import AuthorImage from "./AuthorImage";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
   content: {
     display: "block",
-    width: "95%",
+
     minHeight: "5rem",
 
     textAlign: "start",
@@ -64,34 +61,48 @@ const Scream = (props) => {
     _id,
   } = props.scream;
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <Card className={classes.root}>
-      <div className={classes.header}>
-        <div className={classes.headerItem}>
-          <AuthorImage imageUrl={author_details[0].imageUrl} />
-          <MuiLink component={Link} to={`/profile/${_id}`} color="textPrimary">
-            @{author_details[0].handle}
-          </MuiLink>
-        </div>
-        <div>
-          <Typography
-            variant="body2"
-            color="textSecondary"
-            className={classes.headerItem}
-          >
-            {dayjs(createdAt).fromNow()}
-          </Typography>
-        </div>
-      </div>
-      <CardContent className={classes.content}>
-        <Typography variant="body1">{body}</Typography>
-      </CardContent>
+      <ScreamCard
+        author_details={author_details[0]}
+        createdAt={createdAt}
+        _id={_id}
+        body={body}
+      />
 
       <div className={classes.buttons}>
-        <ChatBubbleOutlineIcon />
+        {author_details.handle === props.user.user.handle ? (
+          <DeleteScream _id={_id} />
+        ) : (
+          ""
+        )}
+
+        <Button onClick={handleClickOpen}>
+          <ChatBubbleOutlineIcon />
+        </Button>
         <RoundedCornerIcon />
         <FavoriteBorderIcon />
       </div>
+
+      <Comment
+        open={open}
+        handleClose={handleClose}
+        author_details={author_details[0]}
+        createdAt={createdAt}
+        _id={_id}
+        body={body}
+        {...props}
+      />
     </Card>
   );
 };

@@ -44,7 +44,6 @@ const useStyles = makeStyles({
 const Profile = (props) => {
   const classes = useStyles(props);
   const [open, setOpen] = useState(false);
-  const [total, setTotal] = useState(0);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -57,10 +56,6 @@ const Profile = (props) => {
   };
 
   const openPop = Boolean(anchorEl);
-
-  const increasePost = () => {
-    setTotal(total + 1);
-  };
 
   const handleEditPicture = () => {
     const fileInput = document.getElementById("profileImage");
@@ -137,12 +132,7 @@ const Profile = (props) => {
         <AddCircleOutlineIcon fontSize="large" />
       </Button>
 
-      <PostCard
-        open={open}
-        handleClose={handleClose}
-        increasePost={increasePost}
-        {...props}
-      />
+      <PostCard open={open} handleClose={handleClose} {...props} />
     </div>
   );
 };
