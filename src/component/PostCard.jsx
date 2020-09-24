@@ -39,7 +39,7 @@ const PostCard = (props) => {
 
   //state to control the content of tweet
   const [body, setBody] = useState("");
-  const [disabled, setDisabled] = useState(false);
+  const [disabled, setDisabled] = useState(true);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -50,7 +50,8 @@ const PostCard = (props) => {
   };
 
   const validHandler = (value) => {
-    if (value.length > 200) return "length should be smaller than 200";
+    if ((value.length > 200) | (value.length < 3))
+      return "length should be smaller than 200 and greater than 3";
   };
 
   const handleChange = (event) => {

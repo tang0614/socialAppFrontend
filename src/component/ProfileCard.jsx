@@ -65,7 +65,7 @@ const ProfileCard = (props) => {
   };
 
   let paper;
-  if (props.fetch_loading) {
+  if (!props.user) {
     paper = <CircularProgress />;
   } else {
     const {
@@ -179,7 +179,6 @@ ProfileCard.propTypes = {
 //state from the store, and properties of this object become our props
 const mapStateToProps = (state) => ({
   user: state.user.user,
-
   fetch_errors: state.user.fetch_errors,
 });
 

@@ -30,7 +30,7 @@ const Comment = (props) => {
   const { _id } = props.scream;
 
   const [body, setBody] = useState("");
-  const [disabled, setDisabled] = useState(false);
+  const [disabled, setDisabled] = useState(true);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -58,13 +58,15 @@ const Comment = (props) => {
   };
 
   const validHandler = (value) => {
-    if (value.length > 200) return "length should be smaller than 200";
+    if (value.length > 200 || value.length < 3)
+      return "length should be smaller than 200 and smaller than 3 characters";
   };
 
   const handleChange = (event) => {
     setBody(event.target.value);
     const message = validHandler(event.target.value);
-
+    console.log("body is", body);
+    console.log("message is", message);
     if (!message) {
       setDisabled(false);
     } else {

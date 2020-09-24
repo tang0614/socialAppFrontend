@@ -8,6 +8,7 @@ const initialState = {
   user: "",
   fetching_errors: "",
   update_error: "",
+  image_loading: false,
 };
 
 export default function (state = initialState, action) {
@@ -56,7 +57,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
 
-        fetch_errors: "",
+        fetching_errors: "",
       };
 
     case actions.apiGetUserSuccess.type:
@@ -73,16 +74,15 @@ export default function (state = initialState, action) {
       return {
         ...state,
 
-        fetch_errors: action.payload,
+        fetching_errors: action.payload,
       };
-
     //put request
 
     case actions.apiPutUserBegan.type:
       // console.log("user start updating data");
       return {
         ...state,
-
+        update_loading: true,
         update_error: "",
       };
 
@@ -92,15 +92,14 @@ export default function (state = initialState, action) {
       return {
         ...state,
         user: action.payload.user,
-
-        update_error: "",
+        update_loading: false,
       };
 
     case actions.apiPutUserFailed.type:
       // console.log("user data updated failed and error is : ", action.payload);
       return {
         ...state,
-
+        update_loading: false,
         update_error: action.payload,
       };
 

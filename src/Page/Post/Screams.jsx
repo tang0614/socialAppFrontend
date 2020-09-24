@@ -13,6 +13,11 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 545,
     margin: "2rem auto",
   },
+  wrapper: {
+    marginBottom: "1rem",
+
+    borderLeft: "2px solid #1DA1F2",
+  },
 }));
 
 const Screams = (props) => {
@@ -25,7 +30,7 @@ const Screams = (props) => {
         (scream) => scream._id === commentOn_id
       );
       return (
-        <div>
+        <div className={classes.wrapper}>
           <Scream key={id + "commentedScream"} scream={commentedScream} />
           <Scream key={id + "scream"} scream={scream} isComment={true} />
         </div>

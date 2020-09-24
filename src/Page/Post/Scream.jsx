@@ -25,7 +25,10 @@ import { connect } from "react-redux";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 545,
+    margin: 0,
+    padding: 0,
   },
+
   header: {
     display: "flex",
     flexDirection: "row",
@@ -48,7 +51,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
-    marginBottom: "1em",
   },
   headerItem: {
     display: "flex",

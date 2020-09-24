@@ -16,7 +16,9 @@ export const put_api = ({ dispatch, getState }) => (next) => (action) => {
       .put(`${url}`, userData)
       .then((res) => {
         dispatch(actions.apiPutUserSuccess(res.data));
-        handle();
+        if (handle) {
+          handle();
+        }
       })
       .catch((error) => {
         console.log(error);

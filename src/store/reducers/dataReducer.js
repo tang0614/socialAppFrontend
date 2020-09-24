@@ -65,8 +65,10 @@ export default function (state = initialState, action) {
         (scream) => scream._id === action.payload._id
       );
       state.screams.splice(i, 1);
+
       return {
         ...state,
+        screams: [...state.screams],
       };
 
     case actions.apiDeleteFailed.type:
