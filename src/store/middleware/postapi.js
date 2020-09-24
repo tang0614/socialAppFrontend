@@ -20,6 +20,7 @@ export const post_api = ({ dispatch, getState }) => (next) => (action) => {
       dispatch(
         actions.apiGetUserBegan({ url: `./api/users/${currentUser._id}` })
       );
+      dispatch(actions.apiGetScreamBegan({ url: `./api/screams` }));
     })
     .catch((error) => {
       dispatch(actions.apiCallFailed(error.response.data.message));

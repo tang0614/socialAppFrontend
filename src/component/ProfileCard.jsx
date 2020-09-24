@@ -173,14 +173,13 @@ const ProfileCard = (props) => {
 };
 
 ProfileCard.propTypes = {
-  fetch_loading: PropTypes.bool.isRequired,
   fetch_errors: PropTypes.string.isRequired,
 };
 
 //state from the store, and properties of this object become our props
 const mapStateToProps = (state) => ({
   user: state.user.user,
-  fetch_loading: state.user.fetch_loading,
+
   fetch_errors: state.user.fetch_errors,
 });
 

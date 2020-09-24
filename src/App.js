@@ -11,7 +11,12 @@ import { getCurrentUser } from "./store/helpers";
 import { Provider } from "react-redux";
 import store from "./store/store";
 
-import { logoutUser, apiCallSuccess, apiGetUserBegan } from "./store/actions";
+import {
+  logoutUser,
+  apiCallSuccess,
+  apiGetUserBegan,
+  apiGetScreamBegan,
+} from "./store/actions";
 import { checkExpiration } from "./store/helpers";
 import Profile from "./Page/Profile/Profile";
 
@@ -24,6 +29,7 @@ function App() {
       //still login in ....
       store.dispatch(apiCallSuccess(token));
       store.dispatch(apiGetUserBegan({ url: `/api/users/${currentUser._id}` }));
+      store.dispatch(apiGetScreamBegan({ url: `./api/screams` }));
     }
   }, []);
 

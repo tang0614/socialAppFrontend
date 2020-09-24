@@ -2,8 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import AuthorImage from "./AuthorImage";
-import { getCurrentUser } from "../../store/helpers";
-import AvatarImage from "../../component/AvatarImage";
+import AvatarImage from "./AvatarImage";
 // MUI Stuff
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -57,14 +56,12 @@ const ScreamCard = (props) => {
   const { createdAt, _id, body, author_details, author } = props.scream;
   const { isComment } = props;
 
-  const currentUser = getCurrentUser();
-
   const paper =
-    author === currentUser._id ? (
+    author === props.user._id ? (
       <div className={classes.headerItem}>
         <AvatarImage />
         <MuiLink component={Link} to={`/profile/${_id}`} color="textPrimary">
-          @{props.user.user.handle}
+          @{props.user.handle}
         </MuiLink>
       </div>
     ) : (
@@ -109,9 +106,14 @@ const ScreamCard = (props) => {
   );
 };
 
+ScreamCard.propTypes = {
+  user: PropTypes.object.isRequired,
+  scream: PropTypes.object.isRequired,
+};
+
 //connect subscribe/unsubscribe the redux store
 const mapStateToProps = (state) => ({
-  user: state.user,
+  user: state.user.user,
 });
 
 export default connect(mapStateToProps)(ScreamCard);

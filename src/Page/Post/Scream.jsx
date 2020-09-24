@@ -1,10 +1,11 @@
 import React from "react";
-import ScreamCard from "./ScreamCard";
+import ScreamCard from "../../component/ScreamCard";
 import Comment from "../../component/comment";
+import PropTypes from "prop-types";
 // MUI Stuff
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import DeleteScream from "./deleteScream";
+import DeleteScream from "../../component/deleteScream";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
@@ -115,7 +116,7 @@ const Scream = (props) => {
           <RoundedCornerIcon />
           <FavoriteBorderIcon />
 
-          {author === props.user.user._id ? <DeleteScream _id={_id} /> : ""}
+          {author === props.user._id ? <DeleteScream _id={_id} /> : ""}
         </div>
 
         <Comment
@@ -154,16 +155,22 @@ const Scream = (props) => {
           </Button>
           <RoundedCornerIcon />
           <FavoriteBorderIcon />
-          {author === props.user.user._id ? <DeleteScream _id={_id} /> : ""}
+          {author === props.user._id ? <DeleteScream _id={_id} /> : ""}
         </div>
       </Dialog>
     </div>
   );
 };
 
+Scream.propTypes = {
+  scream: PropTypes.object.isRequired,
+  isComment: PropTypes.bool.isRequired,
+  user: PropTypes.object.isRequired,
+};
+
 //connect subscribe/unsubscribe the redux store
 const mapStateToProps = (state) => ({
-  user: state.user,
+  user: state.user.user,
 });
 
 export default connect(mapStateToProps)(Scream);

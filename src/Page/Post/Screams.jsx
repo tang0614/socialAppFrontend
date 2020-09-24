@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Scream from "./Scream";
 import PropTypes from "prop-types";
+
 import { makeStyles } from "@material-ui/core/styles";
 // REdux
 import { connect } from "react-redux";
-import { apiGetScreamBegan } from "../../store/actions";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { getCurrentUser } from "../../store/helpers";
 
 const useStyles = makeStyles((theme) => ({
   screams: {
@@ -19,14 +18,10 @@ const useStyles = makeStyles((theme) => ({
 const Screams = (props) => {
   const classes = useStyles(props);
 
-  useEffect(() => {
-    props.getAllScreams("./api/screams");
-  }, []);
-
   const getScream = (scream, id) => {
     const commentOn_id = scream.commentOn;
-    if (scream.commentOn) {
-      const commentedScream = props.data.screams.find(
+    if (commentOn_id) {
+      const commentedScream = props.screams.find(
         (scream) => scream._id === commentOn_id
       );
       return (
@@ -41,26 +36,23 @@ const Screams = (props) => {
   };
 
   let paper;
-  if (!props.data.screams) {
+  if (!props.screams) {
     paper = <CircularProgress />;
   } else {
-    paper = props.data.screams.map((scream, id) => getScream(scream, id));
+    paper = props.screams.map((scream, id) => getScream(scream, id));
   }
 
   return <div className={classes.screams}>{paper}</div>;
 };
 
-//state from the store, and properties of this object become our props
-const mapStateToProps = (state) => ({
-  data: state.data, //cannot query state.data.screams-scream is object
-});
-
-//takes dispatch from the store and dispatch an action
-const mapActionsToProps = (dispatch) => {
-  return {
-    getAllScreams: (url) => dispatch(apiGetScreamBegan({ url })),
-  };
+Screams.propTypes = {
+  screams: PropTypes.object.isRequired,
 };
 
+//state from the store, and properties of this object become our props
+const mapStateToProps = (state) => ({
+  screams: state.data.screams, //cannot query state.data.screams-scream is object
+});
+
 //connect subscribe/unsubscribe the redux store
-export default connect(mapStateToProps, mapActionsToProps)(Screams);
+export default connect(mapStateToProps)(Screams);

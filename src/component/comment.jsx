@@ -11,7 +11,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import CloseIcon from "@material-ui/icons/Close";
-import ScreamCard from "../Page/Post/ScreamCard";
+import ScreamCard from "./ScreamCard";
 import { getComment, removeCommentHeader } from "../store/helpers";
 
 const useStyles = makeStyles((theme) => ({

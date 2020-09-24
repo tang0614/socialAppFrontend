@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import PropTypes from "prop-types";
 // MUI Stuff
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -9,7 +9,7 @@ import DeleteOutline from "@material-ui/icons/DeleteOutline";
 
 // REdux
 import { connect } from "react-redux";
-import { apiDeleteBegan } from "../../store/actions";
+import { apiDeleteBegan } from "../store/actions";
 
 const DeleteScream = (props) => {
   const [open, setOpen] = useState(false);
@@ -47,10 +47,9 @@ const DeleteScream = (props) => {
   );
 };
 
-//state from the store, and properties of this object become our props
-const mapStateToProps = (state) => ({
-  data: state.data, //cannot query state.data.screams-scream is object
-});
+DeleteScream.propTypes = {
+  delete: PropTypes.func.isRequired,
+};
 
 //takes dispatch from the store and dispatch an action
 const mapActionsToProps = (dispatch) => {
@@ -60,4 +59,4 @@ const mapActionsToProps = (dispatch) => {
 };
 
 //connect subscribe/unsubscribe the redux store
-export default connect(mapStateToProps, mapActionsToProps)(DeleteScream);
+export default connect(null, mapActionsToProps)(DeleteScream);
