@@ -30,8 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
   content: {
     position: "relative",
-    margin: "0 1rem",
-
+    margin: "0 auto",
     textAlign: "start",
   },
   buttons: {
@@ -45,8 +44,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-
-    padding: "1rem",
+    padding: "0.5rem",
   },
 }));
 
@@ -55,7 +53,7 @@ const ScreamCard = (props) => {
   dayjs.extend(relativeTime);
 
   const { createdAt, _id, body, author_details, author } = props.scream;
-  const { isComment, isRetweet } = props;
+  const { isComment } = props;
 
   let bodyScream;
   if (body.startsWith("retweet")) {
@@ -65,7 +63,7 @@ const ScreamCard = (props) => {
       (scream) => scream._id === scream_id
     );
 
-    bodyScream = <Scream scream={commentedScream} />;
+    bodyScream = <Scream scream={commentedScream} isRetweet={true} />;
   } else {
     bodyScream = <Typography variant="body2">{body}</Typography>;
   }
@@ -122,7 +120,11 @@ const ScreamCard = (props) => {
           </Typography>
         </div>
       </div>
-      <CardContent className={classes.content}>{bodyScream}</CardContent>
+      <CardContent className={classes.content}>
+        <Typography variant="body2" color="textSecondary" component="p">
+          {bodyScream}
+        </Typography>
+      </CardContent>
     </Card>
   );
 };

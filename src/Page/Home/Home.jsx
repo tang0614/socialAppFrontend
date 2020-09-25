@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
   },
   addIcon: {
     position: "fixed",
-    color: "#1DA1F2",
+    color: "orange",
     right: 0,
     bottom: 0,
     padding: "2rem",

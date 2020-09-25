@@ -41,9 +41,6 @@ const useStyles = makeStyles((theme) => ({
 
   content: {
     display: "block",
-
-    minHeight: "5rem",
-
     textAlign: "start",
   },
   fullScreen_button: {
@@ -60,20 +57,8 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+  },
 
-    padding: "1rem",
-  },
-  fullScreenScreamCard: {
-    marginTop: "3rem",
-  },
-  fab: {
-    margin: theme.spacing(2),
-  },
-  absolute: {
-    position: "absolute",
-    bottom: theme.spacing(2),
-    right: theme.spacing(3),
-  },
   disabled: {
     color: "#cccccc",
     cursor: "none",

@@ -9,13 +9,12 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles((theme) => ({
   screams: {
-    width: "90%",
+    width: "100%",
     maxWidth: 545,
-    margin: "2rem auto",
+    margin: "0 auto",
   },
   wrapper: {
     marginBottom: "1rem",
-
     borderLeft: "2px solid #1DA1F2",
   },
 }));

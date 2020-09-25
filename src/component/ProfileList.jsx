@@ -19,6 +19,8 @@ import { logoutUser } from "../store/actions";
 const useStyles = makeStyles((theme) => ({
   inline: {
     display: "inline",
+    padding: "0 1em",
+    margin: "0 auto",
   },
   notes: {
     display: "flex",
@@ -26,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: "1em",
   },
   note: {
-    padding: "0 1rem",
+    padding: " 0 1rem",
   },
 }));
 
@@ -58,6 +60,9 @@ const ProfileList = (props) => {
             @ {handle}
           </Typography>
         </ListItemAvatar>
+      </ListItem>
+
+      <ListItem>
         <ListItemText
           secondary={
             <React.Fragment>
