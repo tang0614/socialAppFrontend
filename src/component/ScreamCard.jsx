@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import AuthorImage from "./AuthorImage";
-import AvatarImage from "./AvatarImage";
 import Scream from "../Page/Post/Scream";
 // MUI Stuff
 import { makeStyles } from "@material-ui/core/styles";
@@ -12,14 +11,16 @@ import MuiLink from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-
+import RoundedCornerIcon from "@material-ui/icons/RoundedCorner";
+import ChatBubbleOutlineSharpIcon from "@material-ui/icons/ChatBubbleOutlineSharp";
 // Redux
 import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     boxShadow: "none",
-    width: "320px",
+    width: "250px",
+    margin: "0 auto",
   },
   notes: {
     textAlign: "start",
@@ -39,7 +40,14 @@ const useStyles = makeStyles((theme) => ({
   },
 
   content: {
+    width: "250px",
     textAlign: "start",
+    padding: "1rem 0 ",
+  },
+  icon: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
   },
 }));
 
@@ -67,7 +75,7 @@ const ScreamCard = (props) => {
   const paper =
     author === props.user._id ? (
       <div className={classes.headerItem}>
-        <AvatarImage />
+        <AuthorImage imageUrl={author_details[0].imageUrl} />
         <MuiLink component={Link} to={`/profile/${_id}`} color="textPrimary">
           @{props.user.handle}
         </MuiLink>
@@ -86,18 +94,28 @@ const ScreamCard = (props) => {
     <Card className={classes.root}>
       <div className={classes.notes}>
         {isComment ? (
-          <Typography variant="body2" color="textSecondary">
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            className={classes.icon}
+          >
             {" "}
-            replying{" "}
+            Replying
+            <ChatBubbleOutlineSharpIcon />
           </Typography>
         ) : (
           ""
         )}
 
         {body.startsWith("retweet") ? (
-          <Typography variant="body2" color="textSecondary">
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            className={classes.icon}
+          >
             {" "}
-            retweet{" "}
+            Retweet
+            <RoundedCornerIcon />
           </Typography>
         ) : (
           ""
@@ -118,11 +136,7 @@ const ScreamCard = (props) => {
         </div>
       </div>
 
-      <CardContent className={classes.content}>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {bodyScream}
-        </Typography>
-      </CardContent>
+      <div className={classes.content}>{bodyScream}</div>
     </Card>
   );
 };

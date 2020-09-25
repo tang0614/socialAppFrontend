@@ -2,10 +2,6 @@ import React from "react";
 import ScreamCard from "../../component/ScreamCard";
 import PropTypes from "prop-types";
 import DeleteOutline from "@material-ui/icons/DeleteOutline";
-import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import RoundedCornerIcon from "@material-ui/icons/RoundedCorner";
-import Tooltip from "@material-ui/core/Tooltip";
 import DeleteScream from "../../component/deleteScream";
 import Comment from "../../component/comment";
 import dayjs from "dayjs";
@@ -20,12 +16,16 @@ import KeyboardBackspaceOutlinedIcon from "@material-ui/icons/KeyboardBackspaceO
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
+import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import RoundedCornerIcon from "@material-ui/icons/RoundedCorner";
+import Tooltip from "@material-ui/core/Tooltip";
 // Redux
 import { connect } from "react-redux";
 import { apiPostScreamBegan } from "../../store/actions";
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: 500,
+    maxWidth: 512,
     margin: "0 auto",
     padding: 0,
   },
@@ -40,16 +40,16 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-evenly",
     alignItems: "center",
   },
-  retweet_card: {
-    width: 300,
-    padding: 0,
-  },
+
   retweet_buttons: {
-    width: 300,
+    width: 250,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
+  },
+  fullScreenScreamCard: {
+    marginTop: "3rem",
   },
 }));
 
