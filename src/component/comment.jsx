@@ -47,7 +47,7 @@ const Comment = (props) => {
           comment_id: comment_id,
           commented_id: _id,
         };
-        console.log("userData ", userData);
+
         props.putCommentDetail(`./api/screams/comment`, userData);
       }, 1000);
     } catch (err) {
@@ -65,8 +65,7 @@ const Comment = (props) => {
   const handleChange = (event) => {
     setBody(event.target.value);
     const message = validHandler(event.target.value);
-    console.log("body is", body);
-    console.log("message is", message);
+
     if (!message) {
       setDisabled(false);
     } else {

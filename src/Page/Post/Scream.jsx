@@ -1,17 +1,18 @@
 import React from "react";
 import ScreamCard from "../../component/ScreamCard";
-import Comment from "../../component/comment";
 import PropTypes from "prop-types";
-import DeleteScream from "../../component/deleteScream";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-// MUI Stuff
-import Tooltip from "@material-ui/core/Tooltip";
-import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
+import DeleteOutline from "@material-ui/icons/DeleteOutline";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import RoundedCornerIcon from "@material-ui/icons/RoundedCorner";
+import Tooltip from "@material-ui/core/Tooltip";
+import DeleteScream from "../../component/deleteScream";
+import Comment from "../../component/comment";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+// MUI Stuff
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import Slide from "@material-ui/core/Slide";
@@ -19,32 +20,19 @@ import KeyboardBackspaceOutlinedIcon from "@material-ui/icons/KeyboardBackspaceO
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-import DeleteOutline from "@material-ui/icons/DeleteOutline";
-
 // Redux
 import { connect } from "react-redux";
 import { apiPostScreamBegan } from "../../store/actions";
-
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 545,
-    margin: 0,
+    width: 500,
+    margin: "0 auto",
     padding: 0,
   },
 
-  header: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-
-  content: {
-    display: "block",
-    textAlign: "start",
-  },
-  fullScreen_button: {
-    color: "transparent",
+  disabled: {
+    color: "#cccccc",
+    cursor: "none",
   },
   buttons: {
     display: "flex",
@@ -52,16 +40,16 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-evenly",
     alignItems: "center",
   },
-
-  headerItem: {
+  retweet_card: {
+    width: 300,
+    padding: 0,
+  },
+  retweet_buttons: {
+    width: 300,
     display: "flex",
     flexDirection: "row",
+    justifyContent: "space-evenly",
     alignItems: "center",
-  },
-
-  disabled: {
-    color: "#cccccc",
-    cursor: "none",
   },
 }));
 
@@ -72,16 +60,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const Scream = (props) => {
   const classes = useStyles(props);
   dayjs.extend(relativeTime);
-  const {
-    likeBy,
-    body,
-    createdAt,
-    comments,
-    commentOn,
-    author_details,
-    author,
-    _id,
-  } = props.scream;
+  const { author, _id } = props.scream;
 
   const [open, setOpen] = React.useState(false);
   const [open_full, setOpen_full] = React.useState(false);
@@ -111,7 +90,21 @@ const Scream = (props) => {
   };
 
   const buttons = props.isRetweet ? (
-    ""
+    <div className={classes.retweet_buttons}>
+      <Tooltip onClick={handleClickOpen} title={"comment"}>
+        <Button>
+          <ChatBubbleOutlineIcon />
+        </Button>
+      </Tooltip>
+
+      <Tooltip onClick={retweet} title={"retweet"}>
+        <Button>
+          <RoundedCornerIcon />
+        </Button>
+      </Tooltip>
+
+      <FavoriteBorderIcon />
+    </div>
   ) : (
     <div className={classes.buttons}>
       <Tooltip onClick={handleClickOpen} title={"comment"}>
@@ -137,19 +130,29 @@ const Scream = (props) => {
       )}
     </div>
   );
+
+  const screamCard = props.isRetweet ? (
+    <div className={classes.retweet_card}>
+      <ScreamCard
+        scream={props.scream}
+        isComment={props.isComment}
+        isRetweet={props.isRetweet}
+      />
+    </div>
+  ) : (
+    <Button className={classes.fullScreen_button} onClick={handleClickOpenFull}>
+      <ScreamCard
+        scream={props.scream}
+        isComment={props.isComment}
+        isRetweet={props.isRetweet}
+      />
+    </Button>
+  );
+
   return (
     <div>
       <Card className={classes.root}>
-        <Button
-          className={classes.fullScreen_button}
-          onClick={handleClickOpenFull}
-        >
-          <ScreamCard
-            scream={props.scream}
-            isComment={props.isComment}
-            isRetweet={props.isRetweet}
-          />
-        </Button>
+        {screamCard}
 
         {buttons}
         <Comment

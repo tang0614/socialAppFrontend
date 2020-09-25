@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import AuthorImage from "./AuthorImage";
 import AvatarImage from "./AvatarImage";
+import Scream from "../Page/Post/Scream";
 // MUI Stuff
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -14,42 +15,37 @@ import relativeTime from "dayjs/plugin/relativeTime";
 
 // Redux
 import { connect } from "react-redux";
-import Scream from "../Page/Post/Scream";
 
 const useStyles = makeStyles((theme) => ({
-  root: { boxShadow: "none" },
+  root: {
+    boxShadow: "none",
+    width: "320px",
+  },
+  notes: {
+    textAlign: "start",
+  },
+
   header: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
-  isComment: {
-    textAlign: "start",
-  },
 
-  content: {
-    position: "relative",
-    margin: "0 auto",
-    textAlign: "start",
-  },
-  buttons: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    alignItems: "center",
-    marginBottom: "1em",
-  },
   headerItem: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    padding: "0.5rem",
+  },
+
+  content: {
+    textAlign: "start",
   },
 }));
 
 const ScreamCard = (props) => {
   const classes = useStyles(props);
+
   dayjs.extend(relativeTime);
 
   const { createdAt, _id, body, author_details, author } = props.scream;
@@ -88,7 +84,7 @@ const ScreamCard = (props) => {
 
   return (
     <Card className={classes.root}>
-      <div className={classes.isComment}>
+      <div className={classes.notes}>
         {isComment ? (
           <Typography variant="body2" color="textSecondary">
             {" "}
@@ -107,6 +103,7 @@ const ScreamCard = (props) => {
           ""
         )}
       </div>
+
       <div className={classes.header}>
         {paper}
 
@@ -120,6 +117,7 @@ const ScreamCard = (props) => {
           </Typography>
         </div>
       </div>
+
       <CardContent className={classes.content}>
         <Typography variant="body2" color="textSecondary" component="p">
           {bodyScream}
