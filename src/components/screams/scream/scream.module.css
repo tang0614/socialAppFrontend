@@ -1,0 +1,12 @@
+.Card {
+  display: flex;
+
+  margin-bottom: 20px;
+}
+.Image {
+  min-width: 200px;
+}
+.Content {
+  padding: 20px;
+  object-fit: cover;
+}

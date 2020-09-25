@@ -1,26 +1,57 @@
 import * as actions from "../actions";
-import { setCommentHeader } from "../helpers";
 
 const initialState = {
-  screams: "",
-  errors: "",
-  post_errors: "",
+  screams: [],
+  scream: {},
+  loading: false,
+  errors: null,
+  like_errors: null,
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case actions.apiGetScreamBegan.type:
-      console.log("start fetching scream data");
+    case actions.apiPostBegan.type:
+      console.log("posting data.. ");
       return {
         ...state,
-        errors: "",
+      };
+
+    case actions.apiPostSuccess.type:
+      if (action.payload.reducer === "comment") {
+        console.log("comment apiPostSuccess.. ");
+        console.log(action.payload);
+
+        let index = state.screams.findIndex(
+          (scream) => scream.screamId === action.payload.screamId
+        );
+        state.screams[index].commentCount += 1;
+        return {
+          ...state,
+        };
+      } else if (action.payload.reducer === "data") {
+        console.log("post scream apiPostSuccess.. ");
+        return {
+          ...state,
+          screams: [action.payload.newScream, ...state.screams],
+        };
+      } else {
+        return { ...state };
+      }
+
+    case actions.apiGetScreamBegan.type:
+      console.log("user start fetching scream data");
+      return {
+        ...state,
+        loading: true,
+        errors: null,
       };
 
     case actions.apiGetScreamSuccess.type:
-      console.log("screams successfully fetched as", action.payload.screams);
+      console.log("data successfully fetched as", action.payload.screams);
 
       return {
         ...state,
+        loading: false,
         screams: action.payload.screams,
       };
 
@@ -28,97 +59,55 @@ export default function (state = initialState, action) {
       console.log("apiGetScreamFailed : ", action.payload);
       return {
         ...state,
+        loading: false,
         errors: action.payload,
       };
 
-    case actions.apiPostScreamBegan.type:
-      console.log("start post scream data");
-      return {
-        ...state,
-        post_errors: "",
-      };
-
-    case actions.apiPostScreamSuccess.type:
-      console.log("screams successfully posted as", action.payload.scream);
-
-      return {
-        ...state,
-        screams: [action.payload.scream, ...state.screams],
-      };
-
-    case actions.apiPostScreamFailed.type:
-      console.log("apiPostScreamFailed : ", action.payload);
-      return {
-        ...state,
-        post_errors: action.payload,
-      };
-
-    case actions.apiDeleteBegan.type:
-      console.log("start delete scream data");
+    case actions.apiLikeScreamBegan.type:
+      console.log("user start like a scream");
       return {
         ...state,
       };
 
+    case actions.apiUnLikeScreamBegan.type:
+      console.log("user start unlike a scream");
+      return {
+        ...state,
+      };
+
+    case actions.apiLikeScreamSuccess.type:
+    case actions.apiUnLikeScreamSuccess.type:
+      let index = state.screams.findIndex(
+        (scream) => scream.screamId === action.payload.screamId
+      );
+      state.screams[index] = action.payload;
+      return {
+        ...state,
+      };
+
+    // eslint-disable-next-line no-fallthrough
     case actions.apiDeleteSuccess.type:
-      console.log("  deleted screamId is..", action.payload._id);
+      console.log(" apiDeleteSuccess screamId is..", action.payload.screamId);
       const i = state.screams.findIndex(
-        (scream) => scream._id === action.payload._id
+        (scream) => scream.screamId === action.payload.screamId
       );
       state.screams.splice(i, 1);
-
       return {
         ...state,
-        screams: [...state.screams],
       };
 
     case actions.apiDeleteFailed.type:
-      console.log("apiDeleteFailed: ", action.payload);
+      console.log("apiLikeScreamFailed : ", action.payload);
       return {
         ...state,
       };
 
-    case actions.apiPostCommentBegan.type:
-      console.log("start post comment data");
+    case actions.apiPostFailed.type:
+    case actions.apiLikeScreamFailed.type:
+    case actions.apiUnLikeScreamFailed.type:
+      console.log("Failed : ", action.payload);
       return {
         ...state,
-        errors: "",
-      };
-
-    case actions.apiPostCommentSuccess.type:
-      console.log("comment successfully posted as", action.payload.scream);
-      setCommentHeader(action.payload.scream._id);
-
-      return {
-        ...state,
-      };
-
-    case actions.apiPostCommentFailed.type:
-      console.log("apiPostCommentFailed : ", action.payload);
-      return {
-        ...state,
-        errors: action.payload,
-      };
-
-    case actions.apiPutCommentBegan.type:
-      console.log("start put comment data");
-      return {
-        ...state,
-        errors: "",
-      };
-
-    case actions.apiPutCommentSuccess.type:
-      console.log("comment successfully put as", action.payload.comment);
-
-      return {
-        ...state,
-        screams: [action.payload.comment, ...state.screams],
-      };
-
-    case actions.apiPutCommentFailed.type:
-      console.log("apiPutCommentFailed : ", action.payload);
-      return {
-        ...state,
-        errors: action.payload,
       };
 
     default:

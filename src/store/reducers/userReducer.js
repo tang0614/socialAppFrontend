@@ -1,106 +1,130 @@
 import * as actions from "../actions";
-import { setAuthorizationHeader, removeAuthorizationHeader } from "../helpers";
+import { setAuthorizationHeader, removeAuthorizationHeader } from "../helper";
 
 const initialState = {
   authenticated: false,
+
+  credentials: "",
+  likes: [],
+  notifications: [],
+
   loading: false,
-  errors: "",
-  user: "",
-  fetching_errors: "",
-  update_error: "",
-  image_loading: false,
+  fetch_loading: null,
+
+  errors: null,
+  fetch_errors: null,
+  image_errors: null,
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    //LogIn SignUp
     case actions.apiCallBegan.type:
-      console.log("user submit/login siginUp form");
+      console.log("user submit form");
       return {
         ...state,
+        loading: true,
+        errors: null,
+      };
 
-        errors: "",
+    case actions.apiGetUserBegan.type:
+      console.log("user start fetching data");
+      return {
+        ...state,
+        fetch_loading: true,
+        fetch_errors: null,
+      };
+
+    case actions.apiPostBegan.type:
+      console.log("posting data.. ");
+      return {
+        ...state,
       };
 
     case actions.apiCallSuccess.type:
-      console.log("siginUp/login successfully ");
-      setAuthorizationHeader(action.payload); //payload is token
-
+      console.log("login successfully apiCallSuccess");
+      setAuthorizationHeader(action.payload);
       return {
         ...state,
-
+        loading: false,
         authenticated: true,
       };
 
-    case actions.apiCallFailed.type:
-      console.log("siginUp/login failed : ", action.payload);
+    case actions.apiGetUserSuccess.type:
+      console.log("data successfully fetched as", action.payload);
+
       return {
         ...state,
+        fetch_loading: false,
+        credentials: action.payload.credentials,
+        likes: action.payload.likes,
+      };
 
+    case actions.apiPostSuccess.type:
+      return {
+        ...state,
+      };
+
+    case actions.apiCallFailed.type:
+      console.log("login failed : ", action.payload);
+      return {
+        ...state,
+        loading: false,
         errors: action.payload,
+      };
+
+    case actions.apiGetUserFailed.type:
+      console.log("login failed : ", action.payload);
+      return {
+        ...state,
+        fetch_loading: false,
+        fetch_errors: action.payload,
+      };
+
+    case actions.apiPostFailed.type:
+      console.log("Post Failed: ", action.payload);
+      return {
+        ...state,
+        image_errors: action.payload,
       };
 
     case actions.logoutUser.type:
       console.log("logging out user");
       removeAuthorizationHeader();
-      window.location.replace("/auth");
+      window.location.replace("/home");
 
       return {
         ...state,
         authenticated: false,
       };
 
-    //Get Users
+    case actions.apiUserInfo.type:
+      return state.credentials;
 
-    case actions.apiGetUserBegan.type:
-      console.log("user start fetching data");
+    case actions.apiLikeScreamSuccess.type:
       return {
         ...state,
-
-        fetching_errors: "",
+        likes: [
+          ...state.likes,
+          {
+            userHandle: state.credentials.handle,
+            screamId: action.payload.screamId,
+          },
+        ],
       };
 
-    case actions.apiGetUserSuccess.type:
-      console.log("user data successfully fetched as", action.payload);
-
+    case actions.apiUnLikeScreamSuccess.type:
       return {
         ...state,
-
-        user: action.payload.user,
+        likes: state.likes.filter(
+          (like) => like.screamId !== action.payload.screamId
+        ),
       };
 
-    case actions.apiGetUserFailed.type:
-      console.log("user data failed and error is : ", action.payload);
+    case actions.apiLikeScreamFailed.type:
+    case actions.apiUnLikeScreamFailed.type:
+      console.log("apiLikeScreamFailed : ", action.payload);
       return {
         ...state,
-
-        fetching_errors: action.payload,
-      };
-    //put request
-
-    case actions.apiPutUserBegan.type:
-      // console.log("user start updating data");
-      return {
-        ...state,
-        update_loading: true,
-        update_error: "",
-      };
-
-    case actions.apiPutUserSuccess.type:
-      // console.log("user data successfully updated as", action.payload);
-
-      return {
-        ...state,
-        user: action.payload.user,
-        update_loading: false,
-      };
-
-    case actions.apiPutUserFailed.type:
-      // console.log("user data updated failed and error is : ", action.payload);
-      return {
-        ...state,
-        update_loading: false,
-        update_error: action.payload,
       };
 
     default:

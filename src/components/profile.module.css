@@ -1,0 +1,31 @@
+.Paper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 30px;
+}
+
+.ImageWrapper {
+  position: relative;
+  opacity: 0.9;
+  overflow: hidden;
+  height: 0;
+  padding: 50% 0;
+
+  border-radius: 50%;
+}
+.Image {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  min-width: 100%;
+  min-height: 100%;
+  max-width: 150%;
+  margin: auto;
+}
+
+.Buttons {
+  margin-top: 20px;
+}
