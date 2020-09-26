@@ -18,6 +18,9 @@ import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import Grid from "@material-ui/core/Grid";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import Hidden from "@material-ui/core/Hidden";
+import CircularProgress from "@material-ui/core/CircularProgress";
+// Redux
+import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     background: "none",
-    width: "100%",
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -52,8 +54,8 @@ const useStyles = makeStyles((theme) => ({
     position: "fixed",
     color: "orange",
     right: 0,
-    bottom: 0,
-    padding: "2rem",
+    bottom: "3rem",
+    padding: "1rem",
   },
   menuIcon: {
     color: "#1DA1F2",
@@ -122,7 +124,7 @@ const Home = (props) => {
             onClick={toggleDrawer("left", true)}
             className={classes.menuIcon}
           >
-            <AvatarImage />
+            <AvatarImage isTweet={false} />
           </Button>
 
           <Typography variant="h6" className={classes.title}>
@@ -159,5 +161,13 @@ const Home = (props) => {
   );
 };
 
+Home.propTypes = {
+  delete_loading: PropTypes.bool.isRequired,
+};
+
 //connect subscribe/unsubscribe the redux store
-export default Home;
+const mapStateToProps = (state) => ({
+  delete_loading: state.data.delete_loading,
+});
+
+export default connect(mapStateToProps)(Home);

@@ -81,7 +81,7 @@ export default function (state = initialState, action) {
       // console.log("user start updating data");
       return {
         ...state,
-        update_loading: true,
+        image_loading: true,
         update_error: "",
       };
 
@@ -91,14 +91,14 @@ export default function (state = initialState, action) {
       return {
         ...state,
         user: action.payload.user,
-        update_loading: false,
+        image_loading: false,
       };
 
     case actions.apiPutUserFailed.type:
       // console.log("user data updated failed and error is : ", action.payload);
       return {
         ...state,
-        update_loading: false,
+        image_loading: false,
         update_error: action.payload,
       };
 

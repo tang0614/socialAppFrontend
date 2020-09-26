@@ -23,16 +23,28 @@ const Screams = (props) => {
   const classes = useStyles(props);
 
   const getScream = (scream, id) => {
-    const commentOn_id = scream.commentOn;
+    console.log("scream is ", scream);
+    if (scream.commentOn) {
+      const commented_id = scream.commentOn;
 
-    if (commentOn_id) {
       const commentedScream = props.screams.find(
-        (scream) => scream._id === commentOn_id
+        (scream) => scream._id === commented_id
       );
+
       return (
         <div className={classes.wrapper}>
-          <Scream key={id + "commentedScream"} scream={commentedScream} />
-          <Scream key={id + "scream"} scream={scream} isComment={true} />
+          {scream.body.startsWith("retweet") ? (
+            <Scream key={id + "Scream"} scream={scream} isComment={false} />
+          ) : (
+            <div>
+              <Scream key={id + "commentedScream"} scream={commentedScream} />
+              <Scream
+                key={id + "commentingScream"}
+                scream={scream}
+                isComment={true}
+              />{" "}
+            </div>
+          )}
         </div>
       );
     } else {
@@ -44,6 +56,7 @@ const Screams = (props) => {
   if (!props.screams) {
     paper = <CircularProgress />;
   } else {
+    console.log("props.screams", props.screams);
     paper = props.screams.map((scream, id) => getScream(scream, id));
   }
 
@@ -51,7 +64,7 @@ const Screams = (props) => {
 };
 
 Screams.propTypes = {
-  screams: PropTypes.object.isRequired,
+  screams: PropTypes.string.isRequired,
 };
 
 //state from the store, and properties of this object become our props

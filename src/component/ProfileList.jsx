@@ -50,7 +50,7 @@ const ProfileList = (props) => {
     <List>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <AvatarImage imageUrl={imageUrl} />
+          <AvatarImage imageUrl={imageUrl} isTweet={false} />
           <Typography
             component="span"
             variant="body2"

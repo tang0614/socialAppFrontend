@@ -12,18 +12,40 @@ import { connect } from "react-redux";
 import { apiDeleteBegan } from "../store/actions";
 
 const DeleteScream = (props) => {
-  const [open, setOpen] = useState(false);
+  const { handleOpen, handleClose, open } = props;
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
   const deleteScream = () => {
     console.log("deleting scream");
-    props.delete(`./api/screams/${props._id}`, props._id);
-    setOpen(false);
+
+    let ids_commentOn = [props._id];
+    props.screams.forEach((scream) => {
+      if (scream.commentOn === props._id) {
+        ids_commentOn.push(scream._id);
+      }
+    });
+
+    const data = {
+      ids: ids_commentOn,
+    };
+    console.log("deleting ...", data);
+
+    props.delete(`./api/screams/delete`, data);
+
+    handleClose();
+    // let ids_comments = [];
+    // props.screams.forEach((scream) => {
+    //   scream.comments.forEach((id) => {
+    //     if (id === props._id) {
+    //       ids_comments.push(id);
+    //     }
+    //   });
+    // });
+
+    // if (ids_comments) {
+    //   ids_comments.forEach((i) => {
+    //     props.delete(`./api/screams/${i}`, i);
+    //   });
+    // }
   };
 
   return (
@@ -49,14 +71,19 @@ const DeleteScream = (props) => {
 
 DeleteScream.propTypes = {
   delete: PropTypes.func.isRequired,
+  screams: PropTypes.string.isRequired,
 };
 
+//connect subscribe/unsubscribe the redux store
+const mapStateToProps = (state) => ({
+  screams: state.data.screams,
+});
 //takes dispatch from the store and dispatch an action
 const mapActionsToProps = (dispatch) => {
   return {
-    delete: (url, _id) => dispatch(apiDeleteBegan({ url, _id })),
+    delete: (url, data) => dispatch(apiDeleteBegan({ url, data })),
   };
 };
 
 //connect subscribe/unsubscribe the redux store
-export default connect(null, mapActionsToProps)(DeleteScream);
+export default connect(mapStateToProps, mapActionsToProps)(DeleteScream);

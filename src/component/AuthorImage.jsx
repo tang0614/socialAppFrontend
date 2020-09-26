@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   large: {
     width: theme.spacing(6),
     height: theme.spacing(6),
-    border: "2px solid black",
+    border: "1px solid black",
   },
 
   editImage: {

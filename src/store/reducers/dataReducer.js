@@ -5,6 +5,7 @@ const initialState = {
   screams: "",
   errors: "",
   post_errors: "",
+  delete_loading: false,
 };
 
 export default function (state = initialState, action) {
@@ -57,24 +58,28 @@ export default function (state = initialState, action) {
       console.log("start delete scream data");
       return {
         ...state,
+        delete_loading: true,
       };
 
     case actions.apiDeleteSuccess.type:
-      console.log("  deleted screamId is..", action.payload._id);
-      const i = state.screams.findIndex(
-        (scream) => scream._id === action.payload._id
-      );
-      state.screams.splice(i, 1);
+      console.log("  deleted screamId is..", action.payload.ids);
+
+      action.payload.ids.forEach((id) => {
+        const i = state.screams.findIndex((scream) => scream._id === id);
+        state.screams.splice(i, 1);
+      });
 
       return {
         ...state,
         screams: [...state.screams],
+        delete_loading: false,
       };
 
     case actions.apiDeleteFailed.type:
       console.log("apiDeleteFailed: ", action.payload);
       return {
         ...state,
+        delete_loading: false,
       };
 
     case actions.apiPostCommentBegan.type:

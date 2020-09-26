@@ -12,7 +12,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import CloseIcon from "@material-ui/icons/Close";
 import ScreamCard from "./ScreamCard";
-import { getComment, removeCommentHeader } from "../store/helpers";
+import { getComment } from "../store/helpers";
 
 const useStyles = makeStyles((theme) => ({
   cancelIcon: {
@@ -50,6 +50,7 @@ const Comment = (props) => {
 
         props.putCommentDetail(`./api/screams/comment`, userData);
       }, 1000);
+      setBody("");
     } catch (err) {
       alert("internet error, fail to comment");
     }
@@ -89,6 +90,7 @@ const Comment = (props) => {
         </Button>
 
         <ScreamCard scream={props.scream} />
+
         <DialogContent>
           <TextField
             id="tweet"

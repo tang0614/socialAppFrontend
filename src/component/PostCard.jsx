@@ -47,6 +47,7 @@ const PostCard = (props) => {
       body,
     };
     props.postScream("./api/screams", userData, handleClose);
+    setBody("");
   };
 
   const validHandler = (value) => {

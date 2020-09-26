@@ -33,6 +33,7 @@ export const post_detail_api = ({ dispatch, getState }) => (next) => (
       .post(`${url}`, userData)
       .then((res) => {
         dispatch(actions.apiPostCommentSuccess(res.data));
+        
       })
       .catch((error) => {
         dispatch(actions.apiPostCommentFailed(error.response.data.message));

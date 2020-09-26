@@ -6,7 +6,6 @@ import Scream from "../Page/Post/Scream";
 // MUI Stuff
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
 import MuiLink from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import dayjs from "dayjs";
@@ -15,6 +14,7 @@ import RoundedCornerIcon from "@material-ui/icons/RoundedCorner";
 import ChatBubbleOutlineSharpIcon from "@material-ui/icons/ChatBubbleOutlineSharp";
 // Redux
 import { connect } from "react-redux";
+import AvatarImage from "./AvatarImage";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -72,10 +72,11 @@ const ScreamCard = (props) => {
     bodyScream = <Typography variant="body2">{body}</Typography>;
   }
 
-  const paper =
+  const paperInHeader =
     author === props.user._id ? (
       <div className={classes.headerItem}>
-        <AuthorImage imageUrl={author_details[0].imageUrl} />
+        <AvatarImage isTweet={true} />
+
         <MuiLink component={Link} to={`/profile/${_id}`} color="textPrimary">
           @{props.user.handle}
         </MuiLink>
@@ -90,18 +91,18 @@ const ScreamCard = (props) => {
       </div>
     );
 
+  const header = body.startsWith("retweet") ? "" : paperInHeader;
   return (
     <Card className={classes.root}>
       <div className={classes.notes}>
         {isComment ? (
           <Typography
-            variant="body2"
+            variant="caption"
             color="textSecondary"
             className={classes.icon}
           >
-            {" "}
-            Replying
             <ChatBubbleOutlineSharpIcon />
+            {props.user.handle + " replying"}
           </Typography>
         ) : (
           ""
@@ -109,13 +110,12 @@ const ScreamCard = (props) => {
 
         {body.startsWith("retweet") ? (
           <Typography
-            variant="body2"
+            variant="caption"
             color="textSecondary"
             className={classes.icon}
           >
-            {" "}
-            Retweet
             <RoundedCornerIcon />
+            {props.user.handle + " retweet"}
           </Typography>
         ) : (
           ""
@@ -123,11 +123,11 @@ const ScreamCard = (props) => {
       </div>
 
       <div className={classes.header}>
-        {paper}
+        {header}
 
         <div>
           <Typography
-            variant="body2"
+            variant="caption"
             color="textSecondary"
             className={classes.headerItem}
           >
@@ -142,8 +142,8 @@ const ScreamCard = (props) => {
 };
 
 ScreamCard.propTypes = {
-  user: PropTypes.object.isRequired,
-  screams: PropTypes.object.isRequired,
+  user: PropTypes.string.isRequired,
+  screams: PropTypes.string.isRequired,
 };
 
 //connect subscribe/unsubscribe the redux store

@@ -16,6 +16,7 @@ export const get_api = ({ dispatch }) => (next) => (action) => {
       .then((res) => dispatch(actions.apiGetScreamSuccess(res.data)))
       .catch((error) => {
         console.log(error);
+
         dispatch(actions.apiGetScreamFailed(error.response.data.message));
       });
   } else if (action.type === actions.apiGetUserBegan.type) {

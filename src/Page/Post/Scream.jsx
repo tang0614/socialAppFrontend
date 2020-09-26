@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ScreamCard from "../../component/ScreamCard";
 import PropTypes from "prop-types";
 import DeleteOutline from "@material-ui/icons/DeleteOutline";
@@ -6,6 +6,7 @@ import DeleteScream from "../../component/deleteScream";
 import Comment from "../../component/comment";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { getComment } from "../../store/helpers";
 // MUI Stuff
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -22,12 +23,15 @@ import RoundedCornerIcon from "@material-ui/icons/RoundedCorner";
 import Tooltip from "@material-ui/core/Tooltip";
 // Redux
 import { connect } from "react-redux";
-import { apiPostScreamBegan } from "../../store/actions";
+import { apiPostCommentBegan, apiPutCommentBegan } from "../../store/actions";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 512,
     margin: "0 auto",
     padding: 0,
+    boxShadow: "none",
+    borderBottom: "1px dotted #cccccc",
   },
 
   disabled: {
@@ -49,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   fullScreenScreamCard: {
-    marginTop: "3rem",
+    marginTop: "4rem",
   },
 }));
 
@@ -60,10 +64,20 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const Scream = (props) => {
   const classes = useStyles(props);
   dayjs.extend(relativeTime);
+
+  
+  const [open, setOpen] = useState(false);
+  const [open_full, setOpen_full] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
+
   const { author, _id } = props.scream;
 
-  const [open, setOpen] = React.useState(false);
-  const [open_full, setOpen_full] = React.useState(false);
+  const handleDeleteOpen = () => {
+    setOpenDelete(true);
+  };
+  const handleDeleteClose = () => {
+    setOpenDelete(false);
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -86,25 +100,27 @@ const Scream = (props) => {
     const userData = {
       body: "retweet" + props.scream._id,
     };
-    props.postScream("./api/screams", userData);
+    // props.postScream("./api/screams", userData);
+    props.postComment("./api/screams", userData);
+
+    try {
+      setTimeout(() => {
+        const comment_id = getComment();
+        console.log("retweeting and comment_id is", comment_id);
+        const userData = {
+          comment_id: comment_id,
+          commented_id: _id,
+        };
+
+        props.putCommentDetail(`./api/screams/comment`, userData);
+      }, 1000);
+    } catch (err) {
+      alert("internet error, fail to retweet");
+    }
   };
 
-  const buttons = props.isRetweet ? (
-    <div className={classes.retweet_buttons}>
-      <Tooltip onClick={handleClickOpen} title={"comment"}>
-        <Button>
-          <ChatBubbleOutlineIcon />
-        </Button>
-      </Tooltip>
-
-      <Tooltip onClick={retweet} title={"retweet"}>
-        <Button>
-          <RoundedCornerIcon />
-        </Button>
-      </Tooltip>
-
-      <FavoriteBorderIcon />
-    </div>
+  const buttons = props.scream.body.startsWith("retweet") ? (
+    ""
   ) : (
     <div className={classes.buttons}>
       <Tooltip onClick={handleClickOpen} title={"comment"}>
@@ -122,7 +138,12 @@ const Scream = (props) => {
       <FavoriteBorderIcon />
 
       {author === props.user._id ? (
-        <DeleteScream _id={_id} />
+        <DeleteScream
+          _id={_id}
+          handleOpen={handleDeleteOpen}
+          handleClose={handleDeleteClose}
+          open={openDelete}
+        />
       ) : (
         <Tooltip title={"delete disabled"} className={classes.disabled}>
           <DeleteOutline disabled />
@@ -193,9 +214,9 @@ const Scream = (props) => {
 
 Scream.propTypes = {
   scream: PropTypes.object.isRequired,
-  isComment: PropTypes.bool.isRequired,
   user: PropTypes.object.isRequired,
-  postScream: PropTypes.func.isRequired,
+  postComment: PropTypes.func.isRequired,
+  putCommentDetail: PropTypes.func.isRequired,
 };
 
 //connect subscribe/unsubscribe the redux store
@@ -205,8 +226,10 @@ const mapStateToProps = (state) => ({
 
 const mapActionsToProps = (dispatch) => {
   return {
-    postScream: (url, userData, handle) =>
-      dispatch(apiPostScreamBegan({ url, userData, handle })),
+    postComment: (url, userData, handle) =>
+      dispatch(apiPostCommentBegan({ url, userData, handle })),
+    putCommentDetail: (url, userData) =>
+      dispatch(apiPutCommentBegan({ url, userData })),
   };
 };
 

@@ -43,6 +43,7 @@ export function checkExpiration() {
 
 export const setCommentHeader = (_id) => {
   localStorage.setItem("IdComment", _id);
+  console.log("comment id set successfully");
 };
 
 export const removeCommentHeader = () => {

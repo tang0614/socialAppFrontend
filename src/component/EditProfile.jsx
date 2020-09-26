@@ -106,7 +106,7 @@ const EditProfile = (props) => {
     >
       <DialogTitle id="form-dialog-title">Edit Profile</DialogTitle>
 
-      <AvatarImage />
+      <AvatarImage isTweet={false}/>
       {props.errors && (
         <Typography variant="body2" className={classes.errorMessage}>
           {props.errors}

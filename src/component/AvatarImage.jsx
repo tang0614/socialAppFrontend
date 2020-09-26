@@ -21,6 +21,12 @@ const useStyles = makeStyles((theme) => ({
     border: "2px solid black",
   },
 
+  small: {
+    width: theme.spacing(6),
+    height: theme.spacing(6),
+    border: "1px solid black",
+  },
+
   editImage: {
     width: "5px",
     padding: 0,
@@ -39,13 +45,13 @@ const AvatarImage = (props) => {
       <Avatar
         alt="avatar"
         src={process.env.REACT_APP_API_URL + "/" + props.user.imageUrl}
-        className={classes.large}
+        className={props.isTweet ? classes.small : classes.large}
       />
     ) : (
       <Avatar
         alt="avatar"
         src={window.location.origin + "/image/icon.png"}
-        className={classes.large}
+        className={props.isTweet ? classes.small : classes.large}
       />
     );
   }
@@ -54,9 +60,10 @@ const AvatarImage = (props) => {
 };
 
 AvatarImage.propTypes = {
-  user: PropTypes.object.isRequired,
+  user: PropTypes.string.isRequired,
   loading: PropTypes.bool.isRequired,
   error: PropTypes.string.isRequired,
+  isTweet: PropTypes.bool.isRequired,
 };
 
 //state from the store, and properties of this object become our props

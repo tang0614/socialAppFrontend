@@ -54,7 +54,7 @@ const EditImage = (props) => {
   };
   return (
     <div className={classes.editImage}>
-      <AvatarImage />
+      <AvatarImage isTweet={false}/>
       <div>
         <Button className={classes.icon}>
           <input
