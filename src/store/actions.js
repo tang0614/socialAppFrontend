@@ -63,3 +63,13 @@ export const apiPutCommentFailed = createAction("apiPutCommentFailed");
 export const apiPutRetweetBegan = createAction("apiPutRetweetBegan");
 export const apiPutRetweetSuccess = createAction("apiPutRetweetSuccess");
 export const apiPutRetweetFailed = createAction("apiPutRetweetFailed");
+
+//like a post
+export const apiPutLikeBegan = createAction("apiPutLikeBegan");
+export const apiPutLikeSuccess = createAction("apiPutLikeSuccess");
+export const apiPutLikeFailed = createAction("apiPutLikeFailed");
+
+//unlike a post
+export const apiPutUnLikeBegan = createAction("apiPutUnLikeBegan");
+export const apiPutUnLikeSuccess = createAction("apiPutUnLikeSuccess");
+export const apiPutUnLikeFailed = createAction("apiPutUnLikeFailed");

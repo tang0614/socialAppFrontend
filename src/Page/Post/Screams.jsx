@@ -29,7 +29,7 @@ const Screams = (props) => {
       props.screams.length
     );
     props.getPosts("./api/screams");
-  }, [props.screams.length]);
+  }, [props.totalRetweet, props.totalComment]);
 
   const getScream = (scream, id) => {
     console.log("getScream is ", scream);
@@ -73,11 +73,15 @@ const Screams = (props) => {
 
 Screams.propTypes = {
   screams: PropTypes.string.isRequired,
+  totalRetweet: PropTypes.number.isRequired,
+  totalComment: PropTypes.number.isRequired,
 };
 
 //state from the store, and properties of this object become our props
 const mapStateToProps = (state) => ({
   screams: state.data.screams, //cannot query state.data.screams-scream is object
+  totalRetweet: state.data.totalRetweet,
+  totalComment: state.data.totalComment,
 });
 
 const mapActionsToProps = (dispatch) => {

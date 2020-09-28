@@ -8,7 +8,9 @@ export const put_api = ({ dispatch, getState }) => (next) => (action) => {
     action.type !== actions.apiPutCommentBegan.type &&
     action.type !== actions.apiPutRetweetBegan.type &&
     action.type !== actions.apiDeleteBegan.type &&
-    action.type !== actions.apiUncommentBegan.type
+    action.type !== actions.apiUncommentBegan.type &&
+    action.type !== actions.apiPutLikeBegan.type &&
+    action.type !== actions.apiPutUnLikeBegan.type
   )
     return next(action);
 
@@ -63,6 +65,26 @@ export const put_api = ({ dispatch, getState }) => (next) => (action) => {
       .catch((error) => {
         console.log(error);
         dispatch(actions.apiUncommentFailed(error.response.data.message));
+      });
+  } else if (action.type === actions.apiPutLikeBegan.type) {
+    const { url } = action.payload;
+    http
+      .put(`${url}`)
+      .then((res) => {
+        dispatch(actions.apiPutLikeSuccess(res.data));
+      })
+      .catch((error) => {
+        dispatch(actions.apiPutLikeFailed(error.response.data.message));
+      });
+  } else if (action.type === actions.apiPutUnLikeBegan.type) {
+    const { url } = action.payload;
+    http
+      .put(`${url}`)
+      .then((res) => {
+        dispatch(actions.apiPutUnLikeSuccess(res.data));
+      })
+      .catch((error) => {
+        dispatch(actions.apiPutUnLikeFailed(error.response.data.message));
       });
   } else {
     const { url, data, history } = action.payload;

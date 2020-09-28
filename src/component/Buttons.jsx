@@ -12,6 +12,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 // Redux
 import { connect } from "react-redux";
+import { useFirstArgument } from "react-joi-validation";
 
 const useStyles = makeStyles((theme) => ({
   buttons: {
@@ -24,11 +25,15 @@ const useStyles = makeStyles((theme) => ({
     color: "#cccccc",
     cursor: "none",
   },
+  liked: {
+    color: "#1DA1F2",
+  },
+  unliked: {},
 }));
 
 const Buttons = (props) => {
   const classes = useStyles(props);
-
+  const [likePost, setLikePost] = useState();
   const {
     scream,
     handleClickOpen,
@@ -36,7 +41,27 @@ const Buttons = (props) => {
     handleDeleteOpen,
     handleDeleteClose,
     retweet,
+    like,
+    unLike,
   } = props;
+
+  const handleLikePost = () => {
+    console.log("handleLikePost");
+    setLikePost(true);
+    if (likePost) {
+      setLikePost(false);
+    }
+    //here like post is false because setLikePost is async call
+  };
+
+  useEffect(() => {
+    //here like post is changed because of useEffect
+    if (likePost) {
+      like(scream._id);
+    } else if (likePost === false) {
+      unLike(scream._id);
+    }
+  }, [likePost]);
 
   const buttons = scream.body.startsWith("retweet") ? (
     ""
@@ -56,7 +81,11 @@ const Buttons = (props) => {
         </Button>
       </Tooltip>
 
-      <FavoriteBorderIcon />
+      <Tooltip onClick={handleLikePost} title={"retweet"}>
+        <Button className={likePost ? classes.liked : classes.unLiked}>
+          <FavoriteBorderIcon />
+        </Button>
+      </Tooltip>
 
       {scream.author === props.user._id ? (
         <DeleteScream

@@ -102,6 +102,51 @@ export default function (state = initialState, action) {
         update_error: action.payload,
       };
 
+    case actions.apiPutLikeBegan.type:
+      console.log("user start like a post");
+      return {
+        ...state,
+      };
+
+    case actions.apiPutLikeSuccess.type:
+      console.log(
+        "user successfully liked and updated as",
+        action.payload.updated
+      );
+
+      return {
+        ...state,
+        user: action.payload.updated,
+      };
+
+    case actions.apiPutLikeFailed.type:
+      console.log("apiPutLikeFailed  ");
+      return {
+        ...state,
+      };
+
+    case actions.apiPutUnLikeBegan.type:
+      console.log("user start unlike a post");
+      return {
+        ...state,
+      };
+
+    case actions.apiPutUnLikeSuccess.type:
+      console.log(
+        "user successfully unliked and updated as",
+        action.payload.target
+      );
+
+      return {
+        ...state,
+        user: action.payload.target,
+      };
+
+    case actions.apiPutUnLikeFailed.type:
+      console.log("apiPutUnLikeFailed  ");
+      return {
+        ...state,
+      };
     default:
       return state;
   }

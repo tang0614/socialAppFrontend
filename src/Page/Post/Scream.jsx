@@ -17,7 +17,12 @@ import Slide from "@material-ui/core/Slide";
 
 // Redux
 import { connect } from "react-redux";
-import { apiPostCommentBegan, apiPutRetweetBegan } from "../../store/actions";
+import {
+  apiPostCommentBegan,
+  apiPutRetweetBegan,
+  apiPutUnLikeBegan,
+  apiPutLikeBegan,
+} from "../../store/actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -90,7 +95,6 @@ const Scream = (props) => {
 
   const retweet = () => {
     console.log("retweeting");
-
     const userData = {
       body: "retweet" + props.scream._id,
     };
@@ -111,6 +115,16 @@ const Scream = (props) => {
     } catch (err) {
       alert("internet error, fail to retweet");
     }
+  };
+
+  const like = (_id) => {
+    console.log("liking a post");
+    props.putLikePost(`./api/users/like/${_id}`);
+  };
+
+  const unLike = (_id) => {
+    console.log("Unliking a post");
+    props.putUnLikePost(`./api/users/unlike/${_id}`);
   };
 
   const screamCard = props.isRetweet ? (
@@ -143,6 +157,8 @@ const Scream = (props) => {
           handleDeleteOpen={handleDeleteOpen}
           handleDeleteClose={handleDeleteClose}
           retweet={retweet}
+          like={like}
+          unLike={unLike}
         />
         <Comment
           open={open}
@@ -177,6 +193,8 @@ Scream.propTypes = {
   user: PropTypes.object.isRequired,
   postComment: PropTypes.func.isRequired,
   putRetweetDetail: PropTypes.func.isRequired,
+  putLikePost: PropTypes.func.isRequired,
+  putUnLikePost: PropTypes.func.isRequired,
 };
 
 //connect subscribe/unsubscribe the redux store
@@ -190,6 +208,8 @@ const mapActionsToProps = (dispatch) => {
       dispatch(apiPostCommentBegan({ url, userData, handle })),
     putRetweetDetail: (url, userData) =>
       dispatch(apiPutRetweetBegan({ url, userData })),
+    putLikePost: (url) => dispatch(apiPutLikeBegan({ url })),
+    putUnLikePost: (url) => dispatch(apiPutUnLikeBegan({ url })),
   };
 };
 

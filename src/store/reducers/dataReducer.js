@@ -9,6 +9,8 @@ const initialState = {
   post: "",
   post_error: "",
   post_loading: false,
+  totalComment: 0,
+  totalRetweet: 0,
 };
 
 export default function (state = initialState, action) {
@@ -124,6 +126,7 @@ export default function (state = initialState, action) {
 
       return {
         ...state,
+        totalComment: state.totalComment - 1,
       };
 
     case actions.apiUncommentFailed.type:
@@ -166,6 +169,7 @@ export default function (state = initialState, action) {
 
       return {
         ...state,
+        totalComment: state.totalComment + 1,
         screams: [action.payload.comment, ...state.screams],
       };
 
@@ -188,6 +192,7 @@ export default function (state = initialState, action) {
 
       return {
         ...state,
+        totalRetweet: state.totalRetweet + 1,
         screams: [action.payload.retweet, ...state.screams],
       };
 
