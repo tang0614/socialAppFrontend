@@ -21,6 +21,11 @@ export const apiGetScreamBegan = createAction("apiGetScreamBegan");
 export const apiGetScreamSuccess = createAction("apiGetScreamSuccess");
 export const apiGetScreamFailed = createAction("apiGetScreamFailed");
 
+//request one scream
+export const apiGetOneScreamBegan = createAction("apiGetOneScreamBegan");
+export const apiGetOneScreamSuccess = createAction("apiGetOneScreamSuccess");
+export const apiGetOneScreamFailed = createAction("apiGetOneScreamFailed");
+
 export const apiLikeScreamBegan = createAction("apiLikeScreamBegan");
 export const apiLikeScreamSuccess = createAction("apiLikeScreamSuccess ");
 export const apiLikeScreamFailed = createAction("apiLikeScreamFailed");

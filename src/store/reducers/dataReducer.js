@@ -6,6 +6,9 @@ const initialState = {
   errors: "",
   post_errors: "",
   delete_loading: false,
+  post: "",
+  post_error: "",
+  post_loading: false,
 };
 
 export default function (state = initialState, action) {
@@ -30,6 +33,31 @@ export default function (state = initialState, action) {
       return {
         ...state,
         errors: action.payload,
+      };
+
+    case actions.apiGetOneScreamBegan.type:
+      console.log("start fetching ONE scream data");
+      return {
+        ...state,
+        post_error: "",
+        post_loading: true,
+      };
+
+    case actions.apiGetOneScreamSuccess.type:
+      console.log("ONE scream successfully fetched as", action.payload.scream);
+
+      return {
+        ...state,
+        post: action.payload.scream[0],
+        post_loading: false,
+      };
+
+    case actions.apiGetOneScreamFailed.type:
+      console.log("aapiGetOneScreamFailed : ", action.payload);
+      return {
+        ...state,
+        post_error: action.payload,
+        post_loading: false,
       };
 
     case actions.apiPostScreamBegan.type:
