@@ -20,6 +20,10 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-evenly",
     alignItems: "center",
   },
+  disabled: {
+    color: "#cccccc",
+    cursor: "none",
+  },
 }));
 
 const Buttons = (props) => {

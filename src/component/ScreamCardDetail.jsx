@@ -2,19 +2,13 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import ScreamCard from "./ScreamCard";
 import Buttons from "./Buttons";
-import DeleteScream from "./deleteScream";
+
 //Material UI
 import KeyboardBackspaceOutlinedIcon from "@material-ui/icons/KeyboardBackspaceOutlined";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import RoundedCornerIcon from "@material-ui/icons/RoundedCorner";
-import Tooltip from "@material-ui/core/Tooltip";
-import DeleteOutline from "@material-ui/icons/DeleteOutline";
 import CircularProgress from "@material-ui/core/CircularProgress";
 // Redux
 import { connect } from "react-redux";
@@ -64,39 +58,6 @@ const ScreamCardDetail = (props) => {
   const getScreamDetail = (index) => {
     props.getScream(`/api/screams/${index}`);
   };
-
-  const buttons = scream.body.startsWith("retweet") ? (
-    ""
-  ) : (
-    <div className={classes.buttons}>
-      <Tooltip onClick={handleClickOpen} title={"comment"}>
-        <Button>
-          <ChatBubbleOutlineIcon />
-        </Button>
-      </Tooltip>
-
-      <Tooltip onClick={retweet} title={"retweet"}>
-        <Button>
-          <RoundedCornerIcon />
-        </Button>
-      </Tooltip>
-
-      <FavoriteBorderIcon />
-
-      {scream.author === props.user._id ? (
-        <DeleteScream
-          _id={scream._id}
-          handleOpen={handleDeleteOpen}
-          handleClose={handleDeleteClose}
-          open={openDelete}
-        />
-      ) : (
-        <Tooltip title={"delete disabled"} className={classes.disabled}>
-          <DeleteOutline disabled />
-        </Tooltip>
-      )}
-    </div>
-  );
 
   let comments = props.post_loading ? (
     <CircularProgress />

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router";
 // MUI Stuff
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -17,19 +18,19 @@ const DeleteScream = (props) => {
   const deleteScream = () => {
     console.log("deleting scream");
 
-    let ids_commentOn = [props._id];
+    let ids = [props._id];
     props.screams.forEach((scream) => {
       if (scream.commentOn === props._id) {
-        ids_commentOn.push(scream._id);
+        ids.push(scream._id);
+      }
+      if (scream.retweetOn === props._id) {
+        ids.push(scream._id);
       }
     });
 
-    const data = {
-      ids: ids_commentOn,
-    };
+    const data = { ids };
     console.log("deleting ...", data);
-
-    props.delete(`./api/screams/delete`, data);
+    props.delete(`./api/screams/delete`, data, props.history);
 
     handleClose();
     // let ids_comments = [];
@@ -81,9 +82,13 @@ const mapStateToProps = (state) => ({
 //takes dispatch from the store and dispatch an action
 const mapActionsToProps = (dispatch) => {
   return {
-    delete: (url, data) => dispatch(apiDeleteBegan({ url, data })),
+    delete: (url, data, history) =>
+      dispatch(apiDeleteBegan({ url, data, history })),
   };
 };
 
 //connect subscribe/unsubscribe the redux store
-export default connect(mapStateToProps, mapActionsToProps)(DeleteScream);
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(withRouter(DeleteScream));

@@ -53,3 +53,8 @@ export const apiPostCommentFailed = createAction("apiPostCommentFailed");
 export const apiPutCommentBegan = createAction("apiPutCommentBegan");
 export const apiPutCommentSuccess = createAction("apiPutCommentSuccess");
 export const apiPutCommentFailed = createAction("apiPutCommentFailed");
+
+//put retweet detail
+export const apiPutRetweetBegan = createAction("apiPutRetweetBegan");
+export const apiPutRetweetSuccess = createAction("apiPutRetweetSuccess");
+export const apiPutRetweetFailed = createAction("apiPutRetweetFailed");

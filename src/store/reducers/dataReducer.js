@@ -154,6 +154,28 @@ export default function (state = initialState, action) {
         errors: action.payload,
       };
 
+    case actions.apiPutRetweetBegan.type:
+      console.log("start put Retweet data");
+      return {
+        ...state,
+        errors: "",
+      };
+
+    case actions.apiPutRetweetSuccess.type:
+      console.log("Retweet successfully put as", action.payload.retweet);
+
+      return {
+        ...state,
+        screams: [action.payload.retweet, ...state.screams],
+      };
+
+    case actions.apiPutRetweetFailed.type:
+      console.log("apiPutRetweetFailed : ", action.payload);
+      return {
+        ...state,
+        errors: action.payload,
+      };
+
     default:
       return state;
   }
