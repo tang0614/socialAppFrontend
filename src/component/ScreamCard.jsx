@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import AuthorImage from "./AuthorImage";
 import Scream from "../Page/Post/Scream";
+import Buttons from "./Buttons";
 // MUI Stuff
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -57,7 +58,18 @@ const ScreamCard = (props) => {
   dayjs.extend(relativeTime);
 
   const { createdAt, _id, body, author_details, author } = props.scream;
-  const { isComment } = props;
+
+  const {
+    isComment,
+    isNested,
+    handleCloseFull,
+    scream,
+    handleClickOpen,
+    openDelete,
+    handleDeleteOpen,
+    handleDeleteClose,
+    retweet,
+  } = props;
 
   let bodyScream;
   if (body.startsWith("retweet")) {
@@ -137,6 +149,18 @@ const ScreamCard = (props) => {
       </div>
 
       <div className={classes.content}>{bodyScream}</div>
+      {isNested ? (
+        <Buttons
+          scream={scream}
+          handleClickOpen={handleClickOpen}
+          openDelete={openDelete}
+          handleDeleteOpen={handleDeleteOpen}
+          handleDeleteClose={handleDeleteClose}
+          retweet={retweet}
+        />
+      ) : (
+        ""
+      )}
     </Card>
   );
 };

@@ -110,6 +110,28 @@ export default function (state = initialState, action) {
         delete_loading: false,
       };
 
+    case actions.apiUncommentBegan.type:
+      console.log("apiUncommentBegan");
+      return {
+        ...state,
+      };
+
+    case actions.apiUncommentSuccess.type:
+      console.log(
+        " apiUncommentSuccess and  uncommented is..",
+        action.payload.target
+      );
+
+      return {
+        ...state,
+      };
+
+    case actions.apiUncommentFailed.type:
+      console.log("apiUncommentFailed: ", action.payload);
+      return {
+        ...state,
+      };
+
     case actions.apiPostCommentBegan.type:
       console.log("start post comment data");
       return {

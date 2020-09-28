@@ -29,7 +29,7 @@ function App() {
       //still login in ....
       store.dispatch(apiCallSuccess(token));
       store.dispatch(apiGetUserBegan({ url: `/api/users/${currentUser._id}` }));
-      store.dispatch(apiGetScreamBegan({ url: `./api/screams` }));
+      // store.dispatch(apiGetScreamBegan({ url: `./api/screams` }));
     }
   }, []);
 

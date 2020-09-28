@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import DeleteScream from "./deleteScream";
 //Material UI
@@ -44,12 +44,14 @@ const Buttons = (props) => {
     <div className={classes.buttons}>
       <Tooltip onClick={handleClickOpen} title={"comment"}>
         <Button>
+          {scream.comments.length}
           <ChatBubbleOutlineIcon />
         </Button>
       </Tooltip>
 
       <Tooltip onClick={retweet} title={"retweet"}>
         <Button>
+          {scream.retweets.length}
           <RoundedCornerIcon />
         </Button>
       </Tooltip>
@@ -58,7 +60,7 @@ const Buttons = (props) => {
 
       {scream.author === props.user._id ? (
         <DeleteScream
-          _id={scream._id}
+          scream={scream}
           handleOpen={handleDeleteOpen}
           handleClose={handleDeleteClose}
           open={openDelete}

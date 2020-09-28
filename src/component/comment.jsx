@@ -74,47 +74,45 @@ const Comment = (props) => {
     }
   };
   return (
-    <div className={classes.root}>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-        fullWidth={"100%"}
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="form-dialog-title"
+      fullWidth={"100%"}
+    >
+      <Button
+        className={classes.cancelIcon}
+        onClick={handleClose}
+        color="primary"
       >
+        <CloseIcon />
+      </Button>
+
+      <ScreamCard scream={props.scream} />
+
+      <DialogContent>
+        <TextField
+          id="tweet"
+          multiline
+          rows={4}
+          defaultValue={body}
+          onChange={handleChange}
+          variant="outlined"
+          fullWidth={"100%"}
+          label="Tweet your reply"
+        />
+      </DialogContent>
+      <DialogActions>
         <Button
-          className={classes.cancelIcon}
-          onClick={handleClose}
+          onClick={handleSubmit}
+          variant="contained"
           color="primary"
+          disabled={disabled}
         >
-          <CloseIcon />
+          Tweet
         </Button>
-
-        <ScreamCard scream={props.scream} />
-
-        <DialogContent>
-          <TextField
-            id="tweet"
-            multiline
-            rows={4}
-            defaultValue={body}
-            onChange={handleChange}
-            variant="outlined"
-            fullWidth={"100%"}
-            label="Tweet your reply"
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={handleSubmit}
-            variant="contained"
-            color="primary"
-            disabled={disabled}
-          >
-            Tweet
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+      </DialogActions>
+    </Dialog>
   );
 };
 

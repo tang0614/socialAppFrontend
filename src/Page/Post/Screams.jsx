@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 // REdux
 import { connect } from "react-redux";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { apiGetScreamBegan } from "../../store/actions";
 
 const useStyles = makeStyles((theme) => ({
   screams: {
@@ -22,8 +23,16 @@ const useStyles = makeStyles((theme) => ({
 const Screams = (props) => {
   const classes = useStyles(props);
 
+  useEffect(() => {
+    console.log(
+      "calling use effect and screams length is",
+      props.screams.length
+    );
+    props.getPosts("./api/screams");
+  }, [props.screams.length]);
+
   const getScream = (scream, id) => {
-    console.log("scream is ", scream);
+    console.log("getScream is ", scream);
     if (scream.commentOn) {
       const commented_id = scream.commentOn;
 
@@ -56,7 +65,6 @@ const Screams = (props) => {
   if (!props.screams) {
     paper = <CircularProgress />;
   } else {
-    console.log("props.screams", props.screams);
     paper = props.screams.map((scream, id) => getScream(scream, id));
   }
 
@@ -72,5 +80,11 @@ const mapStateToProps = (state) => ({
   screams: state.data.screams, //cannot query state.data.screams-scream is object
 });
 
+const mapActionsToProps = (dispatch) => {
+  return {
+    getPosts: (url) => dispatch(apiGetScreamBegan({ url })),
+  };
+};
+
 //connect subscribe/unsubscribe the redux store
-export default connect(mapStateToProps)(Screams);
+export default connect(mapStateToProps, mapActionsToProps)(Screams);

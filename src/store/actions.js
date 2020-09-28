@@ -44,6 +44,11 @@ export const apiDeleteBegan = createAction("apiDeleteBegan");
 export const apiDeleteSuccess = createAction("apiDeleteSuccess");
 export const apiDeleteFailed = createAction("apiDeleteFailed");
 
+//uncomment from comments
+export const apiUncommentBegan = createAction("apiUncommentBegan");
+export const apiUncommentSuccess = createAction("apiUncommentSuccess");
+export const apiUncommentFailed = createAction("apiUncommentFailed");
+
 //scream comment request
 export const apiPostCommentBegan = createAction("apiPostCommentBegan");
 export const apiPostCommentSuccess = createAction("apiPostCommentSuccess");

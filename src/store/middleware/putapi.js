@@ -7,14 +7,15 @@ export const put_api = ({ dispatch, getState }) => (next) => (action) => {
     action.type !== actions.apiPutUserBegan.type &&
     action.type !== actions.apiPutCommentBegan.type &&
     action.type !== actions.apiPutRetweetBegan.type &&
-    action.type !== actions.apiDeleteBegan.type
+    action.type !== actions.apiDeleteBegan.type &&
+    action.type !== actions.apiUncommentBegan.type
   )
     return next(action);
 
   next(action);
 
-  const { url, userData, handle } = action.payload;
   if (action.type === actions.apiPutUserBegan.type) {
+    const { url, userData, handle } = action.payload;
     http
       .put(`${url}`, userData)
       .then((res) => {
@@ -28,6 +29,7 @@ export const put_api = ({ dispatch, getState }) => (next) => (action) => {
         dispatch(actions.apiPutUserFailed(error.response.data.message));
       });
   } else if (action.type === actions.apiPutCommentBegan.type) {
+    const { url, userData } = action.payload;
     http
       .put(`${url}`, userData)
       .then((res) => {
@@ -39,6 +41,7 @@ export const put_api = ({ dispatch, getState }) => (next) => (action) => {
         dispatch(actions.apiPutCommentFailed(error.response.data.message));
       });
   } else if (action.type === actions.apiPutRetweetBegan.type) {
+    const { url, userData } = action.payload;
     http
       .put(`${url}`, userData)
       .then((res) => {
@@ -48,6 +51,18 @@ export const put_api = ({ dispatch, getState }) => (next) => (action) => {
       .catch((error) => {
         console.log(error);
         dispatch(actions.apiPutRetweetFailed(error.response.data.message));
+      });
+  } else if (action.type === actions.apiUncommentBegan.type) {
+    const { url, userData } = action.payload;
+    http
+      .put(`${url}`, userData)
+      .then((res) => {
+        dispatch(actions.apiUncommentSuccess(res.data));
+        removeCommentHeader();
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch(actions.apiUncommentFailed(error.response.data.message));
       });
   } else {
     const { url, data, history } = action.payload;

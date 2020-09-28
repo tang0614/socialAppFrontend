@@ -90,6 +90,7 @@ const Scream = (props) => {
 
   const retweet = () => {
     console.log("retweeting");
+
     const userData = {
       body: "retweet" + props.scream._id,
     };

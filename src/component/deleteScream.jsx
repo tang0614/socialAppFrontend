@@ -10,21 +10,30 @@ import DeleteOutline from "@material-ui/icons/DeleteOutline";
 import Tooltip from "@material-ui/core/Tooltip";
 // REdux
 import { connect } from "react-redux";
-import { apiDeleteBegan } from "../store/actions";
+import { apiDeleteBegan, apiUncommentBegan } from "../store/actions";
 
 const DeleteScream = (props) => {
-  const { handleOpen, handleClose, open } = props;
+  const { handleOpen, handleClose, open, scream } = props;
 
   const deleteScream = () => {
     console.log("deleting scream");
 
-    let ids = [props._id];
-    props.screams.forEach((scream) => {
-      if (scream.commentOn === props._id) {
-        ids.push(scream._id);
+    let ids = [scream._id];
+
+    if (scream.commentOn) {
+      const source = {
+        comment_id: scream._id,
+        commented_id: scream.commentOn,
+      };
+      props.uncomment(`./api/screams/uncomment`, source);
+    }
+
+    props.screams.forEach((el) => {
+      if (el.commentOn === scream._id) {
+        ids.push(el._id);
       }
-      if (scream.retweetOn === props._id) {
-        ids.push(scream._id);
+      if (el.retweetOn === scream._id) {
+        ids.push(el._id);
       }
     });
 
@@ -33,20 +42,6 @@ const DeleteScream = (props) => {
     props.delete(`./api/screams/delete`, data, props.history);
 
     handleClose();
-    // let ids_comments = [];
-    // props.screams.forEach((scream) => {
-    //   scream.comments.forEach((id) => {
-    //     if (id === props._id) {
-    //       ids_comments.push(id);
-    //     }
-    //   });
-    // });
-
-    // if (ids_comments) {
-    //   ids_comments.forEach((i) => {
-    //     props.delete(`./api/screams/${i}`, i);
-    //   });
-    // }
   };
 
   return (
@@ -72,6 +67,7 @@ const DeleteScream = (props) => {
 
 DeleteScream.propTypes = {
   delete: PropTypes.func.isRequired,
+  uncomment: PropTypes.func.isRequired,
   screams: PropTypes.string.isRequired,
 };
 
@@ -84,6 +80,8 @@ const mapActionsToProps = (dispatch) => {
   return {
     delete: (url, data, history) =>
       dispatch(apiDeleteBegan({ url, data, history })),
+    uncomment: (url, userData) =>
+      dispatch(apiUncommentBegan({ url, userData })),
   };
 };
 

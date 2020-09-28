@@ -64,7 +64,19 @@ const ScreamCardDetail = (props) => {
   ) : props.post.comments_details ? (
     props.post.comments_details.map((comment, id) => {
       const re = props.screams.find((s) => s._id === comment._id);
-      return <ScreamCard key={id} scream={re} isComment={true} />;
+      return (
+        <ScreamCard
+          key={id}
+          scream={re}
+          isComment={true}
+          isNested={true}
+          handleClickOpen={handleClickOpen}
+          openDelete={openDelete}
+          handleDeleteOpen={handleDeleteOpen}
+          handleDeleteClose={handleDeleteClose}
+          retweet={retweet}
+        />
+      );
     })
   ) : (
     ""
@@ -95,6 +107,7 @@ const ScreamCardDetail = (props) => {
           retweet={retweet}
         />
       </div>
+
       {comments}
     </div>
   );
