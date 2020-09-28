@@ -11,10 +11,25 @@ import Tooltip from "@material-ui/core/Tooltip";
 // REdux
 import { connect } from "react-redux";
 import { apiDeleteBegan, apiUncommentBegan } from "../store/actions";
+import { TagFacesTwoTone } from "@material-ui/icons";
 
 const DeleteScream = (props) => {
   const { handleOpen, handleClose, open, scream } = props;
 
+  function findCommentOn(target, ids) {
+    props.screams.forEach((element) => {
+      if (element.commentOn && element.commentOn === target._id) {
+        ids.push(element._id);
+        findCommentOn(element, ids);
+      } else if (element.retweetOn && element.retweetOn === target._id) {
+        ids.push(element._id);
+        findCommentOn(element, ids);
+      } else if (!element.commentOn) {
+        return;
+      }
+    });
+    return ids;
+  }
   const deleteScream = () => {
     console.log("deleting scream");
 
@@ -28,18 +43,12 @@ const DeleteScream = (props) => {
       props.uncomment(`./api/screams/uncomment`, source);
     }
 
-    props.screams.forEach((el) => {
-      if (el.commentOn === scream._id) {
-        ids.push(el._id);
-      }
-      if (el.retweetOn === scream._id) {
-        ids.push(el._id);
-      }
-    });
-
+    ids = findCommentOn(scream, ids);
+    console.log("ids is", ids);
     const data = { ids };
-    console.log("deleting ...", data);
-    props.delete(`./api/screams/delete`, data, props.history);
+    setTimeout(() => {
+      props.delete(`./api/screams/delete`, data, props.history);
+    }, 1000);
 
     handleClose();
   };

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import ScreamCard from "../../component/ScreamCard";
 import PropTypes from "prop-types";
-import DeleteScream from "../../component/deleteScream";
 import Comment from "../../component/comment";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -14,7 +13,7 @@ import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import Slide from "@material-ui/core/Slide";
-
+import CircularProgress from "@material-ui/core/CircularProgress";
 // Redux
 import { connect } from "react-redux";
 import {
@@ -63,12 +62,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const Scream = (props) => {
   const classes = useStyles(props);
   dayjs.extend(relativeTime);
-
+  const scream = props.scream;
   const [open, setOpen] = useState(false);
   const [open_full, setOpen_full] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
-
-  const { author, _id } = props.scream;
 
   const handleDeleteOpen = () => {
     setOpenDelete(true);
@@ -96,7 +93,7 @@ const Scream = (props) => {
   const retweet = () => {
     console.log("retweeting");
     const userData = {
-      body: "retweet" + props.scream._id,
+      body: "retweet" + scream._id,
     };
     // props.postScream("./api/screams", userData);
     props.postComment("./api/screams", userData);
@@ -107,7 +104,7 @@ const Scream = (props) => {
 
         const userData = {
           retweet_id: retweet_id,
-          retweeted_id: _id,
+          retweeted_id: scream._id,
         };
 
         props.putRetweetDetail(`./api/screams/retweet`, userData);
@@ -130,7 +127,7 @@ const Scream = (props) => {
   const screamCard = props.isRetweet ? (
     <div className={classes.retweet_card}>
       <ScreamCard
-        scream={props.scream}
+        scream={scream}
         isComment={props.isComment}
         isRetweet={props.isRetweet}
       />
@@ -138,7 +135,7 @@ const Scream = (props) => {
   ) : (
     <Button className={classes.fullScreen_button} onClick={handleClickOpenFull}>
       <ScreamCard
-        scream={props.scream}
+        scream={scream}
         isComment={props.isComment}
         isRetweet={props.isRetweet}
       />
@@ -151,7 +148,7 @@ const Scream = (props) => {
         {screamCard}
 
         <Buttons
-          scream={props.scream}
+          scream={scream}
           handleClickOpen={handleClickOpen}
           openDelete={openDelete}
           handleDeleteOpen={handleDeleteOpen}
@@ -163,7 +160,7 @@ const Scream = (props) => {
         <Comment
           open={open}
           handleClose={handleClose}
-          scream={props.scream}
+          scream={scream}
           {...props}
         />
       </Card>
@@ -176,7 +173,7 @@ const Scream = (props) => {
       >
         <ScreamCardDetail
           handleCloseFull={handleCloseFull}
-          scream={props.scream}
+          scream={scream}
           handleClickOpen={handleClickOpen}
           openDelete={openDelete}
           handleDeleteOpen={handleDeleteOpen}

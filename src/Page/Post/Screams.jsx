@@ -24,10 +24,6 @@ const Screams = (props) => {
   const classes = useStyles(props);
 
   useEffect(() => {
-    console.log(
-      "calling use effect and screams length is",
-      props.screams.length
-    );
     props.getPosts("./api/screams");
   }, [props.totalRetweet, props.totalComment]);
 
@@ -57,6 +53,7 @@ const Screams = (props) => {
         </div>
       );
     } else {
+      console.log("passing scream, not comment, not tweet is ", scream);
       return <Scream key={id + "scream"} scream={scream} isComment={false} />;
     }
   };

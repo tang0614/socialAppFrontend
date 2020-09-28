@@ -11,6 +11,7 @@ const initialState = {
   post_loading: false,
   totalComment: 0,
   totalRetweet: 0,
+  unComment_error: "",
 };
 
 export default function (state = initialState, action) {
@@ -71,10 +72,11 @@ export default function (state = initialState, action) {
 
     case actions.apiPostScreamSuccess.type:
       console.log("screams successfully posted as", action.payload.scream);
-
+      const scream = action.payload.scream;
+      scream.likeCount = 0;
       return {
         ...state,
-        screams: [action.payload.scream, ...state.screams],
+        screams: [scream, ...state.screams],
       };
 
     case actions.apiPostScreamFailed.type:
@@ -116,6 +118,7 @@ export default function (state = initialState, action) {
       console.log("apiUncommentBegan");
       return {
         ...state,
+        unComment_error: "",
       };
 
     case actions.apiUncommentSuccess.type:
@@ -133,6 +136,7 @@ export default function (state = initialState, action) {
       console.log("apiUncommentFailed: ", action.payload);
       return {
         ...state,
+        unComment_error: action.payload,
       };
 
     case actions.apiPostCommentBegan.type:

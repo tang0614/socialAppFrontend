@@ -56,14 +56,14 @@ export const put_api = ({ dispatch, getState }) => (next) => (action) => {
       });
   } else if (action.type === actions.apiUncommentBegan.type) {
     const { url, userData } = action.payload;
+    console.log("actions.apiUncommentBegan url is", url);
+    console.log("actions.apiUncommentBegan userData is", userData);
     http
       .put(`${url}`, userData)
       .then((res) => {
         dispatch(actions.apiUncommentSuccess(res.data));
-        removeCommentHeader();
       })
       .catch((error) => {
-        console.log(error);
         dispatch(actions.apiUncommentFailed(error.response.data.message));
       });
   } else if (action.type === actions.apiPutLikeBegan.type) {

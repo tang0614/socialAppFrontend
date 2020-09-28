@@ -53,7 +53,7 @@ const ScreamCardDetail = (props) => {
   useEffect(() => {
     console.log("scream detail using effect");
     getScreamDetail(scream._id);
-  }, []);
+  }, [scream]);
 
   const getScreamDetail = (index) => {
     props.getScream(`/api/screams/${index}`);

@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Buttons = (props) => {
   const classes = useStyles(props);
-  const [likePost, setLikePost] = useState();
+  const [likePost, setLikePost] = useState("");
   const {
     scream,
     handleClickOpen,
