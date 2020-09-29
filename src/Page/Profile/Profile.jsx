@@ -6,6 +6,10 @@ import Button from "@material-ui/core/Button";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import PostCard from "../../component/PostCard";
 import EditImage from "../../component/EditImage";
+import MyTweet from "./MyTweet";
+import { Route } from "react-router-dom";
+import MyLike from "./MyLike";
+import MyComment from "./MyComment";
 
 const useStyles = makeStyles({
   root: {
@@ -55,6 +59,11 @@ const Profile = (props) => {
       <Button className={classes.addIcon} onClick={handleClickOpen}>
         <AddCircleOutlineIcon fontSize="large" />
       </Button>
+
+      <Route path={"/profile/mytweet"} component={MyTweet} />
+      <Route path={"/profile/mycomment"} component={MyComment} />
+      <Route path={"/profile/mylike"} component={MyLike} />
+
       <PostCard open={open} handleClose={handleClose} {...props} />
     </div>
   );

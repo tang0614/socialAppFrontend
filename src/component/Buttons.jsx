@@ -43,7 +43,6 @@ const Buttons = (props) => {
     setLikePost(re.length > 0);
   }, [props.user.like]);
 
-  console.log("likePost is", likePost);
   const {
     scream,
     handleClickOpen,

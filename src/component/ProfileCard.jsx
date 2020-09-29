@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import EditProfile from "./EditProfile";
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
 
 //Material UI
 import { makeStyles } from "@material-ui/core/styles";
@@ -17,6 +17,8 @@ import LinkOffOutlinedIcon from "@material-ui/icons/LinkOffOutlined";
 import DateRangeIcon from "@material-ui/icons/DateRange";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import MuiLink from "@material-ui/core/Link";
+import Link from "@material-ui/core/Link";
+import { Link as RouterLink } from "react-router-dom";
 //redux
 import { connect } from "react-redux";
 
@@ -102,11 +104,7 @@ const ProfileCard = (props) => {
               {handle}
             </Typography>
 
-            <MuiLink
-              component={Link}
-              to={`/profile/${_id}`}
-              color="textPrimary"
-            >
+            <MuiLink component={Link} to={`/profile`} color="textPrimary">
               @{handle}
             </MuiLink>
 
@@ -153,15 +151,35 @@ const ProfileCard = (props) => {
           </CardContent>
         </CardActionArea>
         <CardActions className={classes.buttons}>
-          <Button size="small" color="primary">
+          <Link
+            component="button"
+            variant="body2"
+            onClick={() => {
+              props.history.push(props.match.url + "/mytweet");
+            }}
+          >
             Tweets
-          </Button>
-          <Button size="small" color="primary">
+          </Link>
+
+          <Link
+            component="button"
+            variant="body2"
+            onClick={() => {
+              props.history.push(props.match.url + "/mycomment");
+            }}
+          >
             Tweets & replies
-          </Button>
-          <Button size="small" color="primary">
+          </Link>
+
+          <Link
+            component="button"
+            variant="body2"
+            onClick={() => {
+              props.history.push(props.match.url + "/mylike");
+            }}
+          >
             Likes
-          </Button>
+          </Link>
         </CardActions>
 
         <EditProfile open={open} handleClose={handleClose} />
@@ -183,4 +201,4 @@ const mapStateToProps = (state) => ({
 });
 
 //connect subscribe/unsubscribe the redux store
-export default connect(mapStateToProps)(ProfileCard);
+export default connect(mapStateToProps)(withRouter(ProfileCard));

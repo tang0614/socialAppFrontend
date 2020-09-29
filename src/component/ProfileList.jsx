@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ProfileList = (props) => {
   const classes = useStyles();
-  const { handle, following, followedBy, imageUrl, _id } = props.user;
+  const { handle, following, followedBy, imageUrl } = props.user;
 
   //logout current user
   const handleLogout = () => {
@@ -43,7 +43,7 @@ const ProfileList = (props) => {
 
   //go to a new page
   const handleProfile = () => {
-    props.history.push(`/profile/${_id}`);
+    props.history.push(`/profile/mytweet`);
   };
 
   return (

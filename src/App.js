@@ -6,7 +6,8 @@ import Home from "./Page/Home/Home";
 import NotFound from "./Page/NotFound";
 import ProtectedRoute from "./component/common/protectedRoute";
 import { getCurrentUser } from "./store/helpers";
-
+import Profile from "./Page/Profile/Profile";
+import MyTweet from "./Page/Profile/MyTweet";
 //redux
 import { Provider } from "react-redux";
 import store from "./store/store";
@@ -18,7 +19,6 @@ import {
   apiGetScreamBegan,
 } from "./store/actions";
 import { checkExpiration } from "./store/helpers";
-import Profile from "./Page/Profile/Profile";
 
 function App() {
   useEffect(() => {
@@ -39,15 +39,11 @@ function App() {
         <div className="App">
           <Switch>
             <ProtectedRoute path="/home" exact={true} component={Home} />
-            <ProtectedRoute
-              path="/profile/:_id"
-              exact={true}
-              component={Profile}
-            />
             <Route path="/auth" exact={true} component={Auth} />
             <Route path="/" exact={true}>
               <Redirect to="/auth" />
             </Route>
+            <ProtectedRoute path="/profile" component={Profile} />
             <Route path="/" component={NotFound} />
           </Switch>
         </div>
