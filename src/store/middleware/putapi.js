@@ -1,6 +1,6 @@
 import http from "../httpService";
 import * as actions from "../actions";
-import { removeCommentHeader } from "../helpers";
+import { getCurrentUser, removeCommentHeader } from "../helpers";
 
 export const put_api = ({ dispatch, getState }) => (next) => (action) => {
   if (
@@ -10,7 +10,9 @@ export const put_api = ({ dispatch, getState }) => (next) => (action) => {
     action.type !== actions.apiDeleteBegan.type &&
     action.type !== actions.apiUncommentBegan.type &&
     action.type !== actions.apiPutLikeBegan.type &&
-    action.type !== actions.apiPutUnLikeBegan.type
+    action.type !== actions.apiPutUnLikeBegan.type &&
+    action.type !== actions.apiPutUnFollowBegan.type &&
+    action.type !== actions.apiPutFollowBegan.type
   )
     return next(action);
 
@@ -85,6 +87,36 @@ export const put_api = ({ dispatch, getState }) => (next) => (action) => {
       })
       .catch((error) => {
         dispatch(actions.apiPutUnLikeFailed(error.response.data.message));
+      });
+  } else if (action.type === actions.apiPutUnFollowBegan.type) {
+    const { url } = action.payload;
+
+    const currentUser = getCurrentUser();
+
+    http
+      .put(`${url}`)
+      .then((res) => {
+        dispatch(actions.apiPutUnFollowSuccess(res.data));
+        dispatch(
+          actions.apiGetUserBegan({ url: `./api/users/${currentUser._id}` })
+        );
+      })
+      .catch((error) => {
+        dispatch(actions.apiPutUnFollowFailed(error.response.data.message));
+      });
+  } else if (action.type === actions.apiPutFollowBegan.type) {
+    const { url } = action.payload;
+    const currentUser = getCurrentUser();
+    http
+      .put(`${url}`)
+      .then((res) => {
+        dispatch(actions.apiPutFollowSuccess(res.data));
+        dispatch(
+          actions.apiGetUserBegan({ url: `./api/users/${currentUser._id}` })
+        );
+      })
+      .catch((error) => {
+        dispatch(actions.apiPutFollowFailed(error.response.data.message));
       });
   } else {
     const { url, data, history } = action.payload;

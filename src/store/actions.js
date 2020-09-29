@@ -73,3 +73,15 @@ export const apiPutLikeFailed = createAction("apiPutLikeFailed");
 export const apiPutUnLikeBegan = createAction("apiPutUnLikeBegan");
 export const apiPutUnLikeSuccess = createAction("apiPutUnLikeSuccess");
 export const apiPutUnLikeFailed = createAction("apiPutUnLikeFailed");
+
+//follow
+
+export const apiPutFollowBegan = createAction("apiPutFollowBegan");
+export const apiPutFollowSuccess = createAction("apiPutFollowSuccess");
+export const apiPutFollowFailed = createAction("apiPutFollowFailed");
+
+//unfollow
+
+export const apiPutUnFollowBegan = createAction("apiPutUnFollowBegan");
+export const apiPutUnFollowSuccess = createAction("apiPutUnFollowSuccess");
+export const apiPutUnFollowFailed = createAction("apiPutUnFollowFailed");

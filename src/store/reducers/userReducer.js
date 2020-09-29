@@ -147,6 +147,28 @@ export default function (state = initialState, action) {
       return {
         ...state,
       };
+
+    case actions.apiPutUnFollowBegan.type:
+    case actions.apiPutFollowBegan.type:
+      console.log("apiPutFollowBegan");
+      return {
+        ...state,
+      };
+
+    case actions.apiPutUnFollowSuccess.type:
+    case actions.apiPutFollowSuccess.type:
+      console.log("apiPutFollowSuccess", action.payload.message);
+
+      return {
+        ...state,
+      };
+
+    case actions.apiPutUnFollowFailed.type:
+    case actions.apiPutFollowFailed.type:
+      console.log("apiPutFollowFailed ");
+      return {
+        ...state,
+      };
     default:
       return state;
   }

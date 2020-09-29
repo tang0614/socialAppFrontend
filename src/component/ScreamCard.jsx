@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import AuthorImage from "./AuthorImage";
@@ -6,6 +6,9 @@ import Scream from "../Page/Post/Scream";
 import Buttons from "./Buttons";
 // MUI Stuff
 import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import Tooltip from "@material-ui/core/Tooltip";
+import GroupAddIcon from "@material-ui/icons/GroupAdd";
 import Card from "@material-ui/core/Card";
 import MuiLink from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
@@ -16,6 +19,7 @@ import ChatBubbleOutlineSharpIcon from "@material-ui/icons/ChatBubbleOutlineShar
 // Redux
 import { connect } from "react-redux";
 import AvatarImage from "./AvatarImage";
+import { apiPutUnFollowBegan, apiPutFollowBegan } from "../store/actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,19 +54,31 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     alignItems: "center",
   },
+  follow: {
+    color: "#1DA1F2",
+  },
 }));
 
 const ScreamCard = (props) => {
   const classes = useStyles(props);
+  const [follow, setFollow] = useState("");
 
-  dayjs.extend(relativeTime);
+  useEffect(() => {
+    const re = props.user.following
+      ? props.user.following.filter((element) => {
+          return element === props.scream.author;
+        })
+      : "";
+
+    setFollow(re.length > 0);
+  }, [props.user.following]);
 
   const { createdAt, _id, body, author_details, author } = props.scream;
 
   const {
     isComment,
     isNested,
-    handleCloseFull,
+
     scream,
     handleClickOpen,
     openDelete,
@@ -71,6 +87,16 @@ const ScreamCard = (props) => {
     retweet,
   } = props;
 
+  const followHandler = () => {
+    if (follow) {
+      props.putUnFollow(`./api/users/unfollow/${props.scream.author}`);
+      setFollow(false);
+    } else {
+      props.putFollow(`./api/users/follow/${props.scream.author}`);
+      setFollow(true);
+    }
+  };
+  dayjs.extend(relativeTime);
   let bodyScream;
   if (body.startsWith("retweet")) {
     const scream_id = body.split("retweet")[1];
@@ -89,7 +115,7 @@ const ScreamCard = (props) => {
       <div className={classes.headerItem}>
         <AvatarImage isTweet={true} />
 
-        <MuiLink component={Link} to={`/profile/${_id}`} color="textPrimary">
+        <MuiLink component={Link} to={`/profile`} color="textPrimary">
           @{props.user.handle}
         </MuiLink>
       </div>
@@ -97,9 +123,19 @@ const ScreamCard = (props) => {
       <div className={classes.headerItem}>
         <AuthorImage imageUrl={author_details[0].imageUrl} />
 
-        <MuiLink component={Link} to={`/profile/${_id}`} color="textPrimary">
+        <MuiLink component={Link} to={`/profile`} color="textPrimary">
           @{author_details[0].handle}
         </MuiLink>
+
+        <Tooltip
+          title={"follow"}
+          className={follow ? classes.follow : ""}
+          onClick={followHandler}
+        >
+          <Button>
+            <GroupAddIcon />
+          </Button>
+        </Tooltip>
       </div>
     );
 
@@ -168,6 +204,8 @@ const ScreamCard = (props) => {
 ScreamCard.propTypes = {
   user: PropTypes.string.isRequired,
   screams: PropTypes.string.isRequired,
+  putFollow: PropTypes.func.isRequired,
+  putUnFollow: PropTypes.func.isRequired,
 };
 
 //connect subscribe/unsubscribe the redux store
@@ -176,4 +214,11 @@ const mapStateToProps = (state) => ({
   screams: state.data.screams,
 });
 
-export default connect(mapStateToProps)(ScreamCard);
+const mapActionsToProps = (dispatch) => {
+  return {
+    putFollow: (url) => dispatch(apiPutFollowBegan({ url })),
+    putUnFollow: (url) => dispatch(apiPutUnFollowBegan({ url })),
+  };
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(ScreamCard);

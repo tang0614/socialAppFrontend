@@ -38,7 +38,7 @@ const AvatarImage = (props) => {
   const classes = useStyles();
 
   let image;
-  if (props.loading) {
+  if (!props.user) {
     image = <CircularProgress />;
   } else {
     image = !props.error ? (
@@ -61,7 +61,7 @@ const AvatarImage = (props) => {
 
 AvatarImage.propTypes = {
   user: PropTypes.string.isRequired,
-  loading: PropTypes.bool.isRequired,
+
   error: PropTypes.string.isRequired,
   isTweet: PropTypes.bool.isRequired,
 };
@@ -69,7 +69,7 @@ AvatarImage.propTypes = {
 //state from the store, and properties of this object become our props
 const mapStateToProps = (state) => ({
   user: state.user.user,
-  loading: state.user.image_loading,
+
   error: state.user.update_error,
 });
 

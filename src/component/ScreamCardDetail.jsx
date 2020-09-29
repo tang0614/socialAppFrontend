@@ -10,6 +10,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
+
 // Redux
 import { connect } from "react-redux";
 import { apiGetOneScreamBegan } from "../store/actions";
@@ -35,6 +36,11 @@ const useStyles = makeStyles((theme) => ({
   },
   fullScreenScreamCard: {
     margin: "5rem 0",
+  },
+  follow: {
+    position: "absolute",
+    top: "5rem ",
+    right: "2rem",
   },
 }));
 
