@@ -10,6 +10,7 @@ import MyTweet from "./MyTweet";
 import { Route } from "react-router-dom";
 import MyLike from "./MyLike";
 import MyComment from "./MyComment";
+import Fab from "@material-ui/core/Fab";
 
 const useStyles = makeStyles({
   root: {
@@ -21,9 +22,9 @@ const useStyles = makeStyles({
   addIcon: {
     position: "fixed",
     color: "#1DA1F2",
-    right: 0,
-    bottom: 0,
-    padding: "2rem",
+
+    bottom: "3rem",
+    right: "3rem",
   },
   editImage: {
     display: "flex",
@@ -56,9 +57,14 @@ const Profile = (props) => {
       <ProfileHeader {...props} />
       <ProfileCard />
       <EditImage />
-      <Button className={classes.addIcon} onClick={handleClickOpen}>
+      <Fab
+        color="primary"
+        size="medium"
+        className={classes.addIcon}
+        onClick={handleClickOpen}
+      >
         <AddCircleOutlineIcon fontSize="large" />
-      </Button>
+      </Fab>
 
       <Route path={"/profile/mytweet"} component={MyTweet} />
       <Route path={"/profile/mycomment"} component={MyComment} />

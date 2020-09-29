@@ -18,7 +18,7 @@ import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import Grid from "@material-ui/core/Grid";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import Hidden from "@material-ui/core/Hidden";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import Fab from "@material-ui/core/Fab";
 // Redux
 import { connect } from "react-redux";
 
@@ -52,10 +52,10 @@ const useStyles = makeStyles((theme) => ({
   },
   addIcon: {
     position: "fixed",
-    color: "orange",
-    right: 0,
+    color: "#1DA1F2",
+
     bottom: "3rem",
-    padding: "1rem",
+    right: "3rem",
   },
   menuIcon: {
     color: "#1DA1F2",
@@ -152,9 +152,14 @@ const Home = (props) => {
         </Grid>
       </Grid>
 
-      <Button className={classes.addIcon} onClick={handleOpen}>
+      <Fab
+        color="primary"
+        size="medium"
+        className={classes.addIcon}
+        onClick={handleOpen}
+      >
         <AddCircleOutlineIcon fontSize="large" />
-      </Button>
+      </Fab>
 
       <PostCard open={open} handleClose={handleClose} {...props} />
     </div>

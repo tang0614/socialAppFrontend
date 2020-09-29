@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ScreamCard from "../../component/ScreamCard";
 import PropTypes from "prop-types";
 import Comment from "../../component/comment";
@@ -13,7 +13,9 @@ import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import Slide from "@material-ui/core/Slide";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import Tooltip from "@material-ui/core/Tooltip";
+import GroupAddIcon from "@material-ui/icons/GroupAdd";
+import EmojiNatureTwoToneIcon from "@material-ui/icons/EmojiNatureTwoTone";
 // Redux
 import { connect } from "react-redux";
 import {
@@ -21,6 +23,8 @@ import {
   apiPutRetweetBegan,
   apiPutUnLikeBegan,
   apiPutLikeBegan,
+  apiPutUnFollowBegan,
+  apiPutFollowBegan,
 } from "../../store/actions";
 
 const useStyles = makeStyles((theme) => ({
@@ -53,6 +57,17 @@ const useStyles = makeStyles((theme) => ({
   fullScreenScreamCard: {
     marginTop: "4rem",
   },
+  follow: {
+    color: "#1DA1F2",
+  },
+  add: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    margin: 0,
+    padding: 0,
+  },
 }));
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -66,6 +81,27 @@ const Scream = (props) => {
   const [open, setOpen] = useState(false);
   const [open_full, setOpen_full] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
+  const [follow, setFollow] = useState("");
+
+  useEffect(() => {
+    const re = props.user.following
+      ? props.user.following.filter((element) => {
+          return element === scream.author;
+        })
+      : "";
+
+    setFollow(re.length > 0);
+  }, [props.user.following]);
+
+  const followHandler = () => {
+    if (follow) {
+      props.putUnFollow(`./api/users/unfollow/${scream.author}`);
+      setFollow(false);
+    } else {
+      props.putFollow(`./api/users/follow/${scream.author}`);
+      setFollow(true);
+    }
+  };
 
   const handleDeleteOpen = () => {
     setOpenDelete(true);
@@ -145,6 +181,24 @@ const Scream = (props) => {
   return (
     <div>
       <Card className={classes.root}>
+        <div className={classes.add}>
+          <Button>
+            <EmojiNatureTwoToneIcon />
+          </Button>
+          {scream.author === props.user._id ? (
+            ""
+          ) : (
+            <Tooltip
+              title={follow ? "unfollow" : "follow"}
+              className={follow ? classes.follow : ""}
+              onClick={followHandler}
+            >
+              <Button>
+                <GroupAddIcon />
+              </Button>
+            </Tooltip>
+          )}
+        </div>
         {screamCard}
 
         <Buttons
@@ -192,6 +246,8 @@ Scream.propTypes = {
   putRetweetDetail: PropTypes.func.isRequired,
   putLikePost: PropTypes.func.isRequired,
   putUnLikePost: PropTypes.func.isRequired,
+  putFollow: PropTypes.func.isRequired,
+  putUnFollow: PropTypes.func.isRequired,
 };
 
 //connect subscribe/unsubscribe the redux store
@@ -207,6 +263,8 @@ const mapActionsToProps = (dispatch) => {
       dispatch(apiPutRetweetBegan({ url, userData })),
     putLikePost: (url) => dispatch(apiPutLikeBegan({ url })),
     putUnLikePost: (url) => dispatch(apiPutUnLikeBegan({ url })),
+    putFollow: (url) => dispatch(apiPutFollowBegan({ url })),
+    putUnFollow: (url) => dispatch(apiPutUnFollowBegan({ url })),
   };
 };
 
