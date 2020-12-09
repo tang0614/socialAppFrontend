@@ -1,3 +1,11 @@
+body {
+  background: #f7f7f7;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+
 .App {
   text-align: center;
 }
@@ -26,6 +34,75 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.app {
+  width: 45em;
+  display: grid;
+  gap: 1em;
+  margin: 3em auto;
+}
+form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1em;
+}
+button {
+  background: #17f;
+  color: #fff;
+  font: inherit;
+  border: none;
+  border-radius: 3px;
+  outline: none;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+button:active {
+  background-color: #05b;
+}
+input {
+  border: 1px solid #999;
+  border-radius: 3px;
+  font: inherit;
+  padding: 0.5em;
+  outline: none;
+}
+input:focus {
+  outline: auto #17f;
+}
+.item {
+  width: 100%;
+  padding: 3em;
+  list-style-type: none;
+  border-radius: 6px;
+  margin-bottom: 1em;
+  background: #fff;
+  box-shadow: 0px 2px 6px 2px #0002;
+}
+.item .title {
+  font-size: 100%;
+}
+.item .description {
+  margin: 1em 0;
+  text-align: left;
+}
+.item .thumbnail {
+  float: right;
+  box-shadow: 0px 1px 1px 1px #0002;
+  border-radius: 12px;
+  margin-left: 1em;
+  margin-bottom: 1em;
+}
+.item .meta {
+  font-size: 80%;
+  font-weight: bold;
+  color: #555;
+}
+.item .provider-thumbnail {
+  margin-right: 0.5em;
+}
+.item .meta > *:not(:last-child) {
+  margin-right: 2em;
 }
 
 @keyframes App-logo-spin {

@@ -25,9 +25,9 @@ const useStyles = makeStyles({
 
 const MyTweet = (props) => {
   const classes = useStyles(props);
-
+  console.log('My tweet page','props.screams is',props.screams)
   const getScream = (scream, id) => {
-    console.log("getScream is ", scream);
+
     if (scream.commentOn) {
       const commented_id = scream.commentOn;
 

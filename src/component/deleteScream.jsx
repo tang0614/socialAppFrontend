@@ -18,13 +18,16 @@ const DeleteScream = (props) => {
 
   function findCommentOn(target, ids) {
     props.screams.forEach((element) => {
-      if (element.commentOn && element.commentOn === target._id) {
+      if (element.commentOn && element.commentOn.includes(target._id)) {
         ids.push(element._id);
         findCommentOn(element, ids);
-      } else if (element.retweetOn && element.retweetOn === target._id) {
+       
+      } else if (element.retweetOn && element.retweetOn.includes(target._id)) {
         ids.push(element._id);
         findCommentOn(element, ids);
+       
       } else if (!element.commentOn) {
+      
         return;
       }
     });
@@ -43,8 +46,9 @@ const DeleteScream = (props) => {
       props.uncomment(`./api/screams/uncomment`, source);
     }
 
+    console.log('should be deleted scream is',scream)
     ids = findCommentOn(scream, ids);
-    console.log("ids is", ids);
+  
     const data = { ids };
     setTimeout(() => {
       props.delete(`./api/screams/delete`, data, props.history);

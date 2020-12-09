@@ -147,6 +147,7 @@ const Auth = (props) => {
         <Grid item sm={6} className={classes.imageContainer}>
           <Hidden xsDown>
             <ButtonBase className={classes.image}></ButtonBase>
+            
           </Hidden>
         </Grid>
       </Grid>

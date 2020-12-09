@@ -10,17 +10,17 @@ import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { CssBaseline } from "@material-ui/core";
 import Drawer from "@material-ui/core/Drawer";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import Grid from "@material-ui/core/Grid";
-import ButtonBase from "@material-ui/core/ButtonBase";
-import Hidden from "@material-ui/core/Hidden";
+
 import Fab from "@material-ui/core/Fab";
+import TextField from '@material-ui/core/TextField';
 // Redux
 import { connect } from "react-redux";
+import Search from "../Search/Search";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#1DA1F2",
 
     bottom: "3rem",
-    right: "3rem",
+    left: "3rem",
   },
   menuIcon: {
     color: "#1DA1F2",
@@ -81,6 +81,8 @@ const Home = (props) => {
   });
   //open for new post
   const [open, setOpen] = React.useState(false);
+  const [query, setQuery] = useState("");
+  const [words, setWords] = useState(null);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -113,6 +115,12 @@ const Home = (props) => {
       <ProfileList {...props} />
     </div>
   );
+  const search = (e) => {
+    console.log('Submit searching tweets...')
+    e.preventDefault();
+    setWords(query)
+  };
+
 
   return (
     <div className={classes.root}>
@@ -127,9 +135,15 @@ const Home = (props) => {
             <AvatarImage isTweet={false} />
           </Button>
 
-          <Typography variant="h6" className={classes.title}>
-            Home
-          </Typography>
+
+          <div>
+                <form  onSubmit={search} noValidate autoComplete="off" className={classes.search}>
+                    <TextField  id="search-tweet" label="Search tweets here..." variant="filled" value={query}  onChange={e => setQuery(e.target.value)}/>
+                    <button>Search</button>
+                </form>
+          </div>
+
+
         </Toolbar>
       </AppBar>
 
@@ -143,12 +157,10 @@ const Home = (props) => {
 
       <Grid container>
         <Grid item xs={12} sm={6} container>
-          <Screams />
+          <Screams query={words}/>
         </Grid>
         <Grid item sm={6} className={classes.imageContainer}>
-          <Hidden xsDown>
-            <ButtonBase className={classes.image}></ButtonBase>
-          </Hidden>
+          <Search login={true}/>
         </Grid>
       </Grid>
 

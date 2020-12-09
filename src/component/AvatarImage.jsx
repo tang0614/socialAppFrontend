@@ -44,7 +44,10 @@ const AvatarImage = (props) => {
     image = !props.error ? (
       <Avatar
         alt="avatar"
-        src={process.env.REACT_APP_API_URL + "/" + props.user.imageUrl}
+        src={
+          "https://s3-us-east-2.amazonaws.com/xinyu-twitter-app/" +
+          props.user.imageUrl
+        }
         className={props.isTweet ? classes.small : classes.large}
       />
     ) : (

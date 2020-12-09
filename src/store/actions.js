@@ -6,6 +6,12 @@ export const apiCallSuccess = createAction("apiCallSuccess");
 export const apiCallFailed = createAction("apiCallFailed");
 export const logoutUser = createAction("logoutUser");
 
+//user get all users request
+export const apiGetAllUserBegan = createAction("apiGetAllUserBegan ");
+export const apiGetAllUserSuccess = createAction("apiGetAllUserSuccess");
+export const apiGetAllUserFailed = createAction("apiGetAllUserFailed");
+
+
 //user get user request
 export const apiGetUserBegan = createAction("apiGetUserBegan ");
 export const apiGetUserSuccess = createAction("apiGetUserSuccess");
@@ -81,7 +87,12 @@ export const apiPutFollowSuccess = createAction("apiPutFollowSuccess");
 export const apiPutFollowFailed = createAction("apiPutFollowFailed");
 
 //unfollow
-
 export const apiPutUnFollowBegan = createAction("apiPutUnFollowBegan");
 export const apiPutUnFollowSuccess = createAction("apiPutUnFollowSuccess");
 export const apiPutUnFollowFailed = createAction("apiPutUnFollowFailed");
+
+
+//delete user
+export const apiDeleteUserBegan = createAction("apiDeleteUserBegan ");
+export const apiDeleteUserSuccess = createAction("apiDeleteUserSuccess");
+export const apiDeleteUserFailed = createAction("apiDeleteUserFailed");

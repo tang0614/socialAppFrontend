@@ -28,7 +28,7 @@ const AuthorImage = (props) => {
   const classes = useStyles();
 
   const url = props.imageUrl
-    ? process.env.REACT_APP_API_URL + "/" + props.imageUrl
+    ? "https://s3-us-east-2.amazonaws.com/xinyu-twitter-app/" + props.imageUrl
     : window.location.origin + "/image/icon.png";
 
   return (

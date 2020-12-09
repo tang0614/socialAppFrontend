@@ -104,9 +104,9 @@ const ProfileCard = (props) => {
               {handle}
             </Typography>
 
-            <MuiLink component={Link} to={`/profile`} color="textPrimary">
+            <Typography>
               @{handle}
-            </MuiLink>
+            </Typography>
 
             <Typography variant="body2" color="textSecondary" component="p">
               {bio}
@@ -183,6 +183,8 @@ const ProfileCard = (props) => {
         </CardActions>
 
         <EditProfile open={open} handleClose={handleClose} />
+
+
       </Card>
     );
   }

@@ -178,6 +178,8 @@ const Scream = (props) => {
     </Button>
   );
 
+  
+
   return (
     <div>
       <Card className={classes.root}>
@@ -185,11 +187,11 @@ const Scream = (props) => {
           <Button>
             <EmojiNatureTwoToneIcon />
           </Button>
-          {scream.author === props.user._id ? (
+          {scream.author === props.user._id || props.isRetweet ? (
             ""
-          ) : (
+          ) : ( 
             <Tooltip
-              title={follow ? "unfollow" : "follow"}
+              title={follow ? `unfollow ${scream.author_details[0].handle}` : `follow ${scream.author_details[0].handle}`}
               className={follow ? classes.follow : ""}
               onClick={followHandler}
             >

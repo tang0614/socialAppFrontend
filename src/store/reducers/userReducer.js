@@ -5,6 +5,7 @@ const initialState = {
   authenticated: false,
   loading: false,
   errors: "",
+  users:[],
   user: "",
   fetching_errors: "",
   update_error: "",
@@ -75,6 +76,56 @@ export default function (state = initialState, action) {
 
         fetching_errors: action.payload,
       };
+
+
+      //Get Users
+
+    case actions.apiGetAllUserBegan.type:
+      console.log("All users start fetching data");
+      return {
+        ...state,
+
+        fetching_errors: "",
+      };
+
+    case actions.apiGetAllUserSuccess.type:
+      console.log(" All users data successfully fetched as", action.payload);
+
+      return {
+        ...state,
+        users: action.payload.users,
+      };
+
+    case actions.apiGetAllUserFailed.type:
+      console.log("All users data failed and error is : ", action.payload);
+      return {
+        ...state,
+
+        fetching_errors: action.payload,
+      };
+
+      case actions.apiDeleteUserBegan.type:
+        // console.log("user start updating data");
+        return {
+          ...state,
+        };
+  
+      case actions.apiDeleteUserSuccess.type:
+        console.log("user deleted action.payload.id", action.payload.id);
+        let allUsers = [...state.users]
+        let deletedId = action.payload.id
+        let newUsers = allUsers.filter(user=>user._id!==deletedId )
+        return {
+          ...state,
+          users: newUsers
+        };
+  
+      case actions.apiDeleteUserFailed.type:
+        // console.log("user data updated failed and error is : ", action.payload);
+        return {
+          ...state,
+         
+        };
     //put request
 
     case actions.apiPutUserBegan.type:

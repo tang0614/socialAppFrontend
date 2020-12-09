@@ -42,8 +42,8 @@ const ProfileList = (props) => {
   };
 
   //go to a new page
-  const handleProfile = () => {
-    props.history.push(`/profile/mytweet`);
+  const handleProfile = (handle) => {
+    props.history.push(`/profile/${handle}`);
   };
 
   return (
@@ -89,7 +89,7 @@ const ProfileList = (props) => {
         />
       </ListItem>
 
-      <ListItem button key={"Profile"} onClick={handleProfile}>
+      <ListItem button key={"Profile"} onClick={()=>handleProfile(handle)}>
         <ListItemIcon>
           <ContactsOutlinedIcon />
         </ListItemIcon>

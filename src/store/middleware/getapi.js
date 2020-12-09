@@ -4,6 +4,7 @@ import * as actions from "../actions";
 export const get_api = ({ dispatch }) => (next) => (action) => {
   if (
     action.type !== actions.apiGetUserBegan.type &&
+    action.type !== actions.apiGetAllUserBegan.type &&
     action.type !== actions.apiGetScreamBegan.type &&
     action.type !== actions.apiGetOneScreamBegan.type
   )
@@ -28,7 +29,17 @@ export const get_api = ({ dispatch }) => (next) => (action) => {
       .catch((error) => {
         dispatch(actions.apiGetUserFailed(error.response.data.message));
       });
-  } else {
+  } else if (action.type === actions.apiGetAllUserBegan.type) {
+    const { url } = action.payload;
+    http
+      .get(`${url}`)
+      .then((res) => dispatch(actions.apiGetAllUserSuccess(res.data)))
+      .catch((error) => {
+        dispatch(actions.apiGetAllUserFailed(error.response.data.message));
+      });
+  } 
+  
+  else {
     const { url } = action.payload;
     console.log("apiGetOneScreamBegan url", url);
     http

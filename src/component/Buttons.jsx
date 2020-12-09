@@ -91,7 +91,7 @@ const Buttons = (props) => {
         </Button>
       </Tooltip>
 
-      {scream.author === props.user._id ? (
+      {scream.author === props.user._id||props.user.isAdmin ? (
         <DeleteScream
           scream={scream}
           handleOpen={handleDeleteOpen}

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Scream from "./Scream";
 import PropTypes from "prop-types";
-
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
 // REdux
 import { connect } from "react-redux";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import { apiGetScreamBegan } from "../../store/actions";
+import { ScreenShare } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   screams: {
@@ -62,8 +62,15 @@ const Screams = (props) => {
   if (!props.screams) {
     paper = <CircularProgress />;
   } else {
-    paper = props.screams.map((scream, id) => getScream(scream, id));
+    let data = props.screams
+    console.log('props.query',props.query)
+    if(props.query){
+      data = data.filter((scream, id) => scream.body.toLowerCase().includes(props.query.toLowerCase()));
+    }
+    paper = data.map((scream, id) => getScream(scream, id));
   }
+
+
 
   return <div className={classes.screams}>{paper}</div>;
 };

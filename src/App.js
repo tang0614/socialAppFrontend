@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import "./App.css";
 import Auth from "./Page/Auth/Auth";
 import Home from "./Page/Home/Home";
+import Search from "./Page/Search/Search";
 import NotFound from "./Page/NotFound";
 import ProtectedRoute from "./component/common/protectedRoute";
 import { getCurrentUser } from "./store/helpers";
 import Profile from "./Page/Profile/Profile";
-import MyTweet from "./Page/Profile/MyTweet";
+
 //redux
 import { Provider } from "react-redux";
 import store from "./store/store";
@@ -16,9 +17,10 @@ import {
   logoutUser,
   apiCallSuccess,
   apiGetUserBegan,
-  apiGetScreamBegan,
+
 } from "./store/actions";
 import { checkExpiration } from "./store/helpers";
+
 
 function App() {
   useEffect(() => {
@@ -39,11 +41,15 @@ function App() {
         <div className="App">
           <Switch>
             <ProtectedRoute path="/home" exact={true} component={Home} />
+            <ProtectedRoute path="/profile/:handle" component={Profile} />
+
             <Route path="/auth" exact={true} component={Auth} />
+            <Route path="/search" exact={true} component={Search} />
+
             <Route path="/" exact={true}>
-              <Redirect to="/auth" />
+              <Redirect to="/search" />
             </Route>
-            <ProtectedRoute path="/profile" component={Profile} />
+           
             <Route path="/" component={NotFound} />
           </Switch>
         </div>

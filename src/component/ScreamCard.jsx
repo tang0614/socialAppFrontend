@@ -89,17 +89,17 @@ const ScreamCard = (props) => {
       <div className={classes.headerItem}>
         <AvatarImage isTweet={true} />
 
-        <MuiLink component={Link} to={`/profile`} color="textPrimary">
+        <Typography>
           @{props.user.handle}
-        </MuiLink>
+        </Typography>
       </div>
     ) : (
       <div className={classes.headerItem}>
         <AuthorImage imageUrl={author_details[0].imageUrl} />
 
-        <MuiLink component={Link} to={`/profile`} color="textPrimary">
-          @{author_details[0].handle}
-        </MuiLink>
+        <Typography>
+          @{props.user.handle}
+        </Typography>
       </div>
     );
 
@@ -114,7 +114,7 @@ const ScreamCard = (props) => {
             className={classes.icon}
           >
             <ChatBubbleOutlineSharpIcon />
-            {props.user.handle + " replying"}
+            {(author_details?author_details[0].handle:props.user.handle) + " replying"}
           </Typography>
         ) : (
           ""
@@ -127,7 +127,7 @@ const ScreamCard = (props) => {
             className={classes.icon}
           >
             <RoundedCornerIcon />
-            {props.user.handle + " retweet"}
+            {(author_details?author_details[0].handle:props.user.handle)+ " retweet"}
           </Typography>
         ) : (
           ""

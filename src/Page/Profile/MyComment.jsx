@@ -27,7 +27,7 @@ const MyComment = (props) => {
   const classes = useStyles(props);
 
   const getScream = (scream, id) => {
-    console.log("getScream is ", scream);
+    
     if (scream.commentOn) {
       const commented_id = scream.commentOn;
 

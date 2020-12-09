@@ -45,7 +45,7 @@ const ProfileHeader = (props) => {
           </Button>
 
           <Typography variant="h6" className={classes.title}>
-            Xinyu Tang(Anna)
+            Back
           </Typography>
         </Toolbar>
       </AppBar>
