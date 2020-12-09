@@ -17,6 +17,11 @@ export const apiGetUserBegan = createAction("apiGetUserBegan ");
 export const apiGetUserSuccess = createAction("apiGetUserSuccess");
 export const apiGetUserFailed = createAction("apiGetUserFailed");
 
+//
+export const apiGetOtherUserBegan = createAction("apiGetOtherUserBegan ");
+export const apiGetOtherUserSuccess = createAction("apiGetOtherUserSuccess");
+export const apiGetOtherUserFailed = createAction("apiGetOtherUserFailed");
+
 //user put request
 export const apiPutUserBegan = createAction("apiPutUserBegan ");
 export const apiPutUserSuccess = createAction("apiPutUserSuccess");

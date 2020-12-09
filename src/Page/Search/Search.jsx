@@ -98,12 +98,18 @@ async function searchNews(q) {
 
 const Search = (props) => {
   const classes = useStyles(props);
-  const [query, setQuery] = useState("Covid19");
+  const [query, setQuery] = useState('covid19');
   const [list, setList] = useState(null);
 
   useEffect(() => {
-    searchNews(query).then(setList);
-  }, []);
+    if(props.words){
+      setQuery(props.words)
+      searchNews(props.words).then(setList);
+    }else{ 
+      searchNews(query).then(setList)
+    }
+   
+  }, [props.words,query]);
 
   const search = (e) => {
     console.log('Submit searching news...')
@@ -150,7 +156,7 @@ const Search = (props) => {
       {!list
         ? null
         : list.length === 0
-          ? <p><i>No results</i></p>
+          ? <p><i>No results found</i></p>
           : <ul className={classes.news}>
             {list.map((item, i) => (
               <Item key={i} item={item} />

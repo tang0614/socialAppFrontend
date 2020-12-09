@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ProfileList = (props) => {
   const classes = useStyles();
-  const { handle, following, followedBy, imageUrl } = props.user;
+  const { handle, following, followedBy, imageUrl, _id } = props.user;
 
   //logout current user
   const handleLogout = () => {
@@ -42,8 +42,8 @@ const ProfileList = (props) => {
   };
 
   //go to a new page
-  const handleProfile = (handle) => {
-    props.history.push(`/profile/${handle}`);
+  const handleProfile = (_id) => {
+    props.history.push(`/profile/${_id}`);
   };
 
   return (
@@ -89,7 +89,7 @@ const ProfileList = (props) => {
         />
       </ListItem>
 
-      <ListItem button key={"Profile"} onClick={()=>handleProfile(handle)}>
+      <ListItem button key={"Profile"} onClick={()=>handleProfile(_id)}>
         <ListItemIcon>
           <ContactsOutlinedIcon />
         </ListItemIcon>

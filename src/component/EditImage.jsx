@@ -19,6 +19,8 @@ const useStyles = makeStyles({
   },
   icon: {
     position: "absolute",
+    margin:"2rem"
+
   },
   popover: {
     pointerEvents: "none",
@@ -52,11 +54,16 @@ const EditImage = (props) => {
     formData.append("profileImage", event.target.files[0]);
     props.update("./api/users/image", formData);
   };
-  return (
-    <div className={classes.editImage}>
-      <AvatarImage isTweet={false}/>
+  let paper;
+
+  if(props.user._id!==props.handleId){
+    //different user
+    paper =<AvatarImage isTweet={false} handleId={props.handleId}/>
+  }else{
+    paper =<div>
+       <AvatarImage isTweet={false}/>
       <div>
-        <Button className={classes.icon}>
+        <Button >
           <input
             type="file"
             id="profileImage"
@@ -69,7 +76,8 @@ const EditImage = (props) => {
           tip="Edit profile picture"
           onClick={handleEditPicture}
           btnClassName="button"
-          className="editIcon"
+        
+          className={classes.icon}
           aria-owns={openPop ? "mouse-over-popover" : undefined}
           aria-haspopup="true"
           onMouseEnter={handlePopoverOpen}
@@ -100,12 +108,25 @@ const EditImage = (props) => {
         </Popover>
       </div>
     </div>
+  }
+  return (
+    <div className={classes.editImage}>
+     {paper}
+    </div>
   );
 };
 
 EditImage.propTypes = {
+
   update: PropTypes.func.isRequired,
 };
+
+//state from the store, and properties of this object become our props
+const mapStateToProps = (state) => ({
+  user: state.user.user,
+  
+});
+
 
 //takes dispatch from the store and dispatch an action
 const mapActionsToProps = (dispatch) => {
@@ -115,4 +136,4 @@ const mapActionsToProps = (dispatch) => {
 };
 
 //connect subscribe/unsubscribe the redux store
-export default connect(null, mapActionsToProps)(EditImage);
+export default connect(mapStateToProps, mapActionsToProps)(EditImage);

@@ -6,6 +6,7 @@ export const get_api = ({ dispatch }) => (next) => (action) => {
     action.type !== actions.apiGetUserBegan.type &&
     action.type !== actions.apiGetAllUserBegan.type &&
     action.type !== actions.apiGetScreamBegan.type &&
+    action.type !== actions.apiGetOtherUserBegan.type&&
     action.type !== actions.apiGetOneScreamBegan.type
   )
     return next(action);
@@ -29,7 +30,17 @@ export const get_api = ({ dispatch }) => (next) => (action) => {
       .catch((error) => {
         dispatch(actions.apiGetUserFailed(error.response.data.message));
       });
-  } else if (action.type === actions.apiGetAllUserBegan.type) {
+  }else if (action.type === actions.apiGetOtherUserBegan.type) {
+    const { url } = action.payload;
+    console.log(' apiGetOtherUserBegan url is', url)
+    http
+      .get(`${url}`)
+      .then((res) => dispatch(actions.apiGetOtherUserSuccess(res.data)))
+      .catch((error) => {
+        dispatch(actions.apiGetOtherUserFailed(error.response.data.message));
+      });
+  }
+   else if (action.type === actions.apiGetAllUserBegan.type) {
     const { url } = action.payload;
     http
       .get(`${url}`)

@@ -22,6 +22,8 @@ import { Link as RouterLink } from "react-router-dom";
 //redux
 import { connect } from "react-redux";
 
+import { apiGetOtherUserBegan } from "../store/actions";
+
 const useStyles = makeStyles({
   root: {
     width: "100%",
@@ -58,6 +60,17 @@ const ProfileCard = (props) => {
   const classes = useStyles(props);
   const [open, setOpen] = React.useState(false);
 
+  
+  useEffect(()=>{
+    if(props.handleId){
+      if(props.user._id!==props.handleId){
+        console.log('use effect is',`/api/users/${props.handleId}`)
+        props.getOtherUser(`/api/users/${props.handleId}`)
+      }
+    }
+    
+  },[props.handleId])
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -67,126 +80,214 @@ const ProfileCard = (props) => {
   };
 
   let paper;
+  
+
   if (!props.user) {
     paper = <CircularProgress />;
   } else {
-    const {
-      _id,
-      handle,
-      bio,
-      website,
-      location,
-      createdAt,
-      following,
-      followedBy,
-    } = props.user;
+    if(props.user._id!==props.handleId){
+     
+      if(!props.otherUser){
+        paper = <CircularProgress />;
+      }else{
+      //other user's page
+      const {
+        _id,
+        handle,
+        bio,
+        website,
+        location,
+        createdAt,
+        following,
+        followedBy,
+      } = props.otherUser;
 
-    paper = (
+      paper = 
       <Card>
-        <CardActionArea>
-          <CardMedia
-            className={classes.media}
-            image="/image/twitterLogo.jpg"
-            title="background"
-          />
-
-          <Button
-            variant="outlined"
-            color="primary"
-            className={classes.button}
-            onClick={handleOpen}
-          >
-            Edit Profile
-          </Button>
-
-          <CardContent className={classes.profileInfo}>
-            <Typography gutterBottom variant="h6" component="h2">
-              {handle}
-            </Typography>
-
-            <Typography>
-              @{handle}
-            </Typography>
-
-            <Typography variant="body2" color="textSecondary" component="p">
-              {bio}
-            </Typography>
-
-            <Typography className={classes.notes}>
+          <CardActionArea>
+            <CardMedia
+              className={classes.media}
+              image="/image/twitterLogo.jpg"
+              title="background"
+            />
+  
+           
+  
+            <CardContent className={classes.profileInfo}>
+              <Typography gutterBottom variant="h6" component="h2">
+                {handle}
+              </Typography>
+  
+              <Typography>
+                @{handle}
+              </Typography>
+  
               <Typography variant="body2" color="textSecondary" component="p">
-                <LocationOnOutlinedIcon />
-                {location}
+                {bio}
               </Typography>
-
+  
+              <Typography className={classes.notes}>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  <LocationOnOutlinedIcon />
+                  {location}
+                </Typography>
+  
+                <Typography variant="body2" color="textSecondary" component="p">
+                  <LinkOffOutlinedIcon />
+                  {website}
+                </Typography>
+  
+                <Typography variant="body2" color="textSecondary" component="p">
+                  <DateRangeIcon />
+                  {createdAt ? createdAt.split("T")[0] : ""}
+                </Typography>
+              </Typography>
+  
+              <Typography className={classes.notes}>
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  component="p"
+                  className={classes.note}
+                >
+                  {following ? following.length : ""} Followings
+                </Typography>
+  
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  component="p"
+                  className={classes.note}
+                >
+                  {followedBy ? followedBy.length : ""} Followers
+                </Typography>
+              </Typography>
+            </CardContent>
+    
+          </CardActionArea>
+          </Card>
+      }
+    }else{
+      const {
+        _id,
+        handle,
+        bio,
+        website,
+        location,
+        createdAt,
+        following,
+        followedBy,
+      } = props.user;
+  
+      paper = (
+        <Card>
+          <CardActionArea>
+            <CardMedia
+              className={classes.media}
+              image="/image/twitterLogo.jpg"
+              title="background"
+            />
+  
+            <Button
+              variant="outlined"
+              color="primary"
+              className={classes.button}
+              onClick={handleOpen}
+            >
+              Edit Profile
+            </Button>
+  
+            <CardContent className={classes.profileInfo}>
+              <Typography gutterBottom variant="h6" component="h2">
+                {handle}
+              </Typography>
+  
+              <Typography>
+                @{handle}
+              </Typography>
+  
               <Typography variant="body2" color="textSecondary" component="p">
-                <LinkOffOutlinedIcon />
-                {website}
+                {bio}
               </Typography>
-
-              <Typography variant="body2" color="textSecondary" component="p">
-                <DateRangeIcon />
-                {createdAt ? createdAt.split("T")[0] : ""}
+  
+              <Typography className={classes.notes}>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  <LocationOnOutlinedIcon />
+                  {location}
+                </Typography>
+  
+                <Typography variant="body2" color="textSecondary" component="p">
+                  <LinkOffOutlinedIcon />
+                  {website}
+                </Typography>
+  
+                <Typography variant="body2" color="textSecondary" component="p">
+                  <DateRangeIcon />
+                  {createdAt ? createdAt.split("T")[0] : ""}
+                </Typography>
               </Typography>
-            </Typography>
-
-            <Typography className={classes.notes}>
-              <Typography
-                variant="body2"
-                color="textSecondary"
-                component="p"
-                className={classes.note}
-              >
-                {following ? following.length : ""} Followings
+  
+              <Typography className={classes.notes}>
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  component="p"
+                  className={classes.note}
+                >
+                  {following ? following.length : ""} Followings
+                </Typography>
+  
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  component="p"
+                  className={classes.note}
+                >
+                  {followedBy ? followedBy.length : ""} Followers
+                </Typography>
               </Typography>
+            </CardContent>
+          </CardActionArea>
+          <CardActions className={classes.buttons}>
+            <Link
+              component="button"
+              variant="body2"
+              onClick={() => {
+                props.history.push(props.match.url + "/mytweet");
+              }}
+            >
+              Tweets
+            </Link>
+  
+            <Link
+              component="button"
+              variant="body2"
+              onClick={() => {
+                props.history.push(props.match.url + "/mycomment");
+              }}
+            >
+              Tweets & replies
+            </Link>
+  
+            <Link
+              component="button"
+              variant="body2"
+              onClick={() => {
+                props.history.push(props.match.url + "/mylike");
+              }}
+            >
+              Likes
+            </Link>
+          </CardActions>
+  
+          <EditProfile open={open} handleClose={handleClose} />
+  
+  
+        </Card>
+      );
 
-              <Typography
-                variant="body2"
-                color="textSecondary"
-                component="p"
-                className={classes.note}
-              >
-                {followedBy ? followedBy.length : ""} Followers
-              </Typography>
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-        <CardActions className={classes.buttons}>
-          <Link
-            component="button"
-            variant="body2"
-            onClick={() => {
-              props.history.push(props.match.url + "/mytweet");
-            }}
-          >
-            Tweets
-          </Link>
-
-          <Link
-            component="button"
-            variant="body2"
-            onClick={() => {
-              props.history.push(props.match.url + "/mycomment");
-            }}
-          >
-            Tweets & replies
-          </Link>
-
-          <Link
-            component="button"
-            variant="body2"
-            onClick={() => {
-              props.history.push(props.match.url + "/mylike");
-            }}
-          >
-            Likes
-          </Link>
-        </CardActions>
-
-        <EditProfile open={open} handleClose={handleClose} />
-
-
-      </Card>
-    );
+    }
+    
   }
 
   return <div className={classes.root}>{paper}</div>;
@@ -199,8 +300,16 @@ ProfileCard.propTypes = {
 //state from the store, and properties of this object become our props
 const mapStateToProps = (state) => ({
   user: state.user.user,
+  otherUser: state.user.otherUser,
   fetch_errors: state.user.fetch_errors,
 });
 
+const mapActionsToProps = (dispatch) => {
+  return {
+    getOtherUser: (url) =>
+      dispatch(apiGetOtherUserBegan({ url })),
+  };
+};
+
 //connect subscribe/unsubscribe the redux store
-export default connect(mapStateToProps)(withRouter(ProfileCard));
+export default connect(mapStateToProps,mapActionsToProps)(withRouter(ProfileCard));

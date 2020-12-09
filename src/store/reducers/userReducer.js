@@ -6,6 +6,7 @@ const initialState = {
   loading: false,
   errors: "",
   users:[],
+  otherUser:null,
   user: "",
   fetching_errors: "",
   update_error: "",
@@ -70,6 +71,30 @@ export default function (state = initialState, action) {
       };
 
     case actions.apiGetUserFailed.type:
+      console.log("user data failed and error is : ", action.payload);
+      return {
+        ...state,
+
+        fetching_errors: action.payload,
+      };
+
+      case actions.apiGetOtherUserBegan.type:
+      console.log("user start fetching data");
+      return {
+        ...state,
+
+        fetching_errors: "",
+      };
+
+    case actions.apiGetOtherUserSuccess.type:
+      console.log("apiGetOtherUserSuccess fetched as", action.payload);
+
+      return {
+        ...state,
+        otherUser: action.payload.user,
+      };
+
+    case actions.apiGetOtherUserFailed.type:
       console.log("user data failed and error is : ", action.payload);
       return {
         ...state,

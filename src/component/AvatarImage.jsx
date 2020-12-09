@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
 import PropTypes from "prop-types";
@@ -38,27 +38,53 @@ const AvatarImage = (props) => {
   const classes = useStyles();
 
   let image;
+  
+
   if (!props.user) {
-    image = <CircularProgress />;
-  } else {
-    image = !props.error ? (
-      <Avatar
-        alt="avatar"
-        src={
-          "https://s3-us-east-2.amazonaws.com/xinyu-twitter-app/" +
-          props.user.imageUrl
-        }
-        className={props.isTweet ? classes.small : classes.large}
-      />
-    ) : (
-      <Avatar
-        alt="avatar"
-        src={window.location.origin + "/image/icon.png"}
-        className={props.isTweet ? classes.small : classes.large}
-      />
-    );
+      image = <CircularProgress />;
+    } else {
+      if(props.handleId && (props.user._id!==props.handleId)){
+        image =props.otherUser ? (
+          <Avatar
+            alt="avatar"
+            src={
+              "https://s3-us-east-2.amazonaws.com/xinyu-twitter-app/" +props.otherUser.imageUrl
+              
+            }
+            className={props.isTweet ? classes.small : classes.large}
+          />
+        ) : (
+          <Avatar
+            alt="avatar"
+            src={window.location.origin + "/image/icon.png"}
+            className={props.isTweet ? classes.small : classes.large}
+          />
+        );
+
+      }else{
+        image = !props.error ? (
+          <Avatar
+            alt="avatar"
+            src={
+              "https://s3-us-east-2.amazonaws.com/xinyu-twitter-app/" +props.user.imageUrl
+              
+            }
+            className={props.isTweet ? classes.small : classes.large}
+          />
+        ) : (
+          <Avatar
+            alt="avatar"
+            src={window.location.origin + "/image/icon.png"}
+            className={props.isTweet ? classes.small : classes.large}
+          />
+        );
+      
+
+      }
+      
   }
 
+  
   return <div className={classes.root}>{image}</div>;
 };
 
@@ -72,7 +98,7 @@ AvatarImage.propTypes = {
 //state from the store, and properties of this object become our props
 const mapStateToProps = (state) => ({
   user: state.user.user,
-
+  otherUser: state.user.otherUser,
   error: state.user.update_error,
 });
 

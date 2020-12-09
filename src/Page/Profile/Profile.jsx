@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ProfileHeader from "../../component/ProfileHeader";
 import ProfileCard from "../../component/ProfileCard";
 import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
+
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import PostCard from "../../component/PostCard";
 import EditImage from "../../component/EditImage";
@@ -43,11 +43,12 @@ const Profile = (props) => {
   const classes = useStyles(props);
   //open for new tweet
   const [open, setOpen] = useState(false);
-  const [handleName, setHandleName] = useState('');
+  const [handleId, setHandleId] = useState(null);
 
   useEffect(()=>{
-    setHandleName(props.match.params.handle)
+    setHandleId(props.match.params.id)
    
+  
    
   },[])
 
@@ -60,14 +61,15 @@ const Profile = (props) => {
     setOpen(false);
   };
   
-  const paper = handleName==='user10'? <Admin />:(
+  
+  const paper = handleId==='user10'? <Admin />:(
     <div>
-  <ProfileCard />
-    <EditImage />
+    <ProfileCard handleId={handleId}/>
+    <EditImage handleId={handleId}/>
     
-    <Route path={`/profile/:handle/mytweet`} component={MyTweet} />
-    <Route path={`/profile/:handle/mycomment`} component={MyComment} />
-    <Route path={`/profile/:handle/mylike`} component={MyLike} />
+    <Route path={`/profile/:id/mytweet`} component={MyTweet} />
+    <Route path={`/profile/:id/mycomment`} component={MyComment} />
+    <Route path={`/profile/:id/mylike`} component={MyLike} />
   
     <Fab
       color="primary"

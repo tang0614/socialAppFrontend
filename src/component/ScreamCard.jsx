@@ -6,7 +6,6 @@ import Scream from "../Page/Post/Scream";
 import Buttons from "./Buttons";
 // MUI Stuff
 import { makeStyles } from "@material-ui/core/styles";
-
 import Card from "@material-ui/core/Card";
 import MuiLink from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
@@ -89,17 +88,17 @@ const ScreamCard = (props) => {
       <div className={classes.headerItem}>
         <AvatarImage isTweet={true} />
 
-        <Typography>
+        <MuiLink component={Link} to={`/profile/${author}`} color="textPrimary">
           @{props.user.handle}
-        </Typography>
+        </MuiLink>
       </div>
     ) : (
       <div className={classes.headerItem}>
         <AuthorImage imageUrl={author_details[0].imageUrl} />
 
-        <Typography>
-          @{props.user.handle}
-        </Typography>
+        <MuiLink component={Link} to={`/profile/${author}`} color="textPrimary">
+          @{author_details[0].handle}
+        </MuiLink>
       </div>
     );
 
@@ -149,7 +148,8 @@ const ScreamCard = (props) => {
       </div>
 
       <div className={classes.content}>{bodyScream}</div>
-      {isNested ? (
+      
+      {isNested ? 
         <Buttons
           scream={scream}
           handleClickOpen={handleClickOpen}
@@ -157,14 +157,13 @@ const ScreamCard = (props) => {
           handleDeleteOpen={handleDeleteOpen}
           handleDeleteClose={handleDeleteClose}
           retweet={retweet}
-        />
-      ) : (
-        ""
-      )}
-    </Card>
+        />:""}
+        
+    
+   
+      </Card>
   );
-};
-
+      }
 ScreamCard.propTypes = {
   user: PropTypes.string.isRequired,
   screams: PropTypes.string.isRequired,

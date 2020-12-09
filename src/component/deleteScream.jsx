@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { withRouter } from "react-router";
 // MUI Stuff
 import Button from "@material-ui/core/Button";
+
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -77,6 +78,8 @@ const DeleteScream = (props) => {
     </div>
   );
 };
+
+
 
 DeleteScream.propTypes = {
   delete: PropTypes.func.isRequired,
