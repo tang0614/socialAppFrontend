@@ -72,6 +72,7 @@ const useStyles = makeStyles((theme) => ({
   search:{
     display:"flex",
     width: "100%",
+  
 
   },
   news:{
@@ -132,21 +133,18 @@ const Search = (props) => {
       <AppBar position="static" className={classes.appBar}>
         <Toolbar className={classes.toolBar}>
           
-            <Typography variant="h6" className={classes.title}>
-     
-                {props.login?'':'News'}
-            </Typography>
+           
             
 
             <div>
                 <form  onSubmit={search} noValidate autoComplete="off" className={classes.search}>
-                    <TextField  id="filled-basic" label="Search news here..." variant="filled" value={query}  onChange={e => setQuery(e.target.value)}/>
+                    <TextField  id="filled-basic"  variant="filled" value={query}  onChange={e => setQuery(e.target.value)}/>
                     <button>Search</button>
                 </form>
             </div>
             {props.login?'':
             <Button variant="outlined" color="primary"  onClick={handleAuth}>
-                Login/Sign Up Twitter
+                Login/Sign Up 
             </Button>}
             
         </Toolbar>

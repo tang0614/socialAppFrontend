@@ -23,10 +23,13 @@ import { checkExpiration } from "./store/helpers";
 
 
 function App() {
+ 
+
   useEffect(() => {
     const token = localStorage.getItem("IdToken");
     if (token) {
       const currentUser = getCurrentUser();
+      
       if (checkExpiration()) return store.dispatch(logoutUser());
       //still login in ....
       store.dispatch(apiCallSuccess(token));

@@ -12,7 +12,8 @@ import MyLike from "./MyLike";
 import MyComment from "./MyComment";
 import Fab from "@material-ui/core/Fab";
 import Admin from "../Auth/Admin";
-
+// Redux
+import { connect } from "react-redux";
 const useStyles = makeStyles({
   root: {
     position: "relative",
@@ -62,7 +63,7 @@ const Profile = (props) => {
   };
   
   
-  const paper = handleId==='user10'? <Admin />:(
+  const paper = props.user.handle==='user10' && props.user._id===handleId? <Admin />:(
     <div>
     <ProfileCard handleId={handleId}/>
     <EditImage handleId={handleId}/>
@@ -92,4 +93,13 @@ const Profile = (props) => {
 };
 
 //connect subscribe/unsubscribe the redux store
-export default Profile;
+
+
+
+//connect subscribe/unsubscribe the redux store
+const mapStateToProps = (state) => ({
+  user: state.user.user,
+});
+
+export default connect(mapStateToProps)(Profile);
+

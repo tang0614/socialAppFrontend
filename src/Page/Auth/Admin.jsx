@@ -12,9 +12,10 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from "@material-ui/core/Button";
 import DeleteOutline from "@material-ui/icons/DeleteOutline";
+import BlockIcon from '@material-ui/icons/Block';
 //redux
 import { connect } from "react-redux";
-import { apiGetAllUserBegan,apiDeleteUserBegan} from "../../store/actions";
+import { apiGetAllUserBegan,apiDisableUserBegan} from "../../store/actions";
 import { useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
   },
   table: {
-
+    margin:'2rem',
     minWidth: '1rem',
   },
 }));
@@ -36,9 +37,9 @@ const Admin = (props) => {
     props.getAllUsers("./api/users");
   },[])
 
-  const deleteUser = (id) =>{
-      console.log('send to the server to start delete')
-    props.delete(`./api/users/${id}`);
+  const disableUser = (id) =>{
+      console.log('send to the server to start disable')
+    props.disable(`./api/users/disable/${id}`);
   }
 
 
@@ -47,8 +48,8 @@ const Admin = (props) => {
         <Table className={classes.table} aria-label="simple table">
         <TableHead>
             <TableRow>
-            <TableCell align="left">UserName</TableCell>
-            <TableCell align="left">Delete</TableCell>
+            <TableCell >UserName</TableCell>
+            <TableCell> Disable Account</TableCell>
             </TableRow>
         </TableHead>
         <TableBody>
@@ -61,8 +62,8 @@ const Admin = (props) => {
                 </TableCell>
 
                 <TableCell component="th" scope="row">
-                    <Button onClick={()=>deleteUser(user._id)} color="secondary">
-                        <DeleteOutline />
+                    <Button onClick={()=>disableUser(user._id)} color="secondary" disabled={user.disable?true:false} >
+                        <BlockIcon />
                     </Button>
                 </TableCell>
 
@@ -88,8 +89,8 @@ const mapActionsToProps = (dispatch) => {
   return {
     getAllUsers: (url) =>
       dispatch(apiGetAllUserBegan({url})),
-    delete: (url) =>
-      dispatch(apiDeleteUserBegan({url})),
+      disable: (url) =>
+      dispatch(apiDisableUserBegan({url})),
   };
 };
 

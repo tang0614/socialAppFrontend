@@ -6,6 +6,12 @@ export const apiCallSuccess = createAction("apiCallSuccess");
 export const apiCallFailed = createAction("apiCallFailed");
 export const logoutUser = createAction("logoutUser");
 
+
+//disable user 
+export const apiDisableUserBegan = createAction("apiDisableUserBegan");
+export const apiDisableUserSuccess = createAction("apiDisableUserSuccess");
+export const apiDisableUserFailed = createAction("apiDisableUserFailed");
+
 //user get all users request
 export const apiGetAllUserBegan = createAction("apiGetAllUserBegan ");
 export const apiGetAllUserSuccess = createAction("apiGetAllUserSuccess");

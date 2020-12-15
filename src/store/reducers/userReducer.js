@@ -11,6 +11,7 @@ const initialState = {
   fetching_errors: "",
   update_error: "",
   image_loading: false,
+ 
 };
 
 export default function (state = initialState, action) {
@@ -224,6 +225,27 @@ export default function (state = initialState, action) {
         ...state,
       };
 
+      case actions.apiDisableUserBegan.type:
+      return {
+        ...state,
+      };
+
+    case actions.apiDisableUserSuccess.type:
+      console.log('apiDisableUserSuccess action.payload',action.payload)
+      return {
+        ...state,
+        users: action.payload.users,
+      };
+
+    case actions.apiDisableUserFailed.type:
+      
+      return {
+        ...state,
+      };
+
+
+      
+
     case actions.apiPutUnFollowBegan.type:
     case actions.apiPutFollowBegan.type:
       console.log("apiPutFollowBegan");
@@ -245,6 +267,8 @@ export default function (state = initialState, action) {
       return {
         ...state,
       };
+
+      
     default:
       return state;
   }

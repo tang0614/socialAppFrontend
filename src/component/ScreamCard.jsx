@@ -15,8 +15,14 @@ import RoundedCornerIcon from "@material-ui/icons/RoundedCorner";
 import ChatBubbleOutlineSharpIcon from "@material-ui/icons/ChatBubbleOutlineSharp";
 import AvatarImage from "./AvatarImage";
 // Redux
+// Redux
 import { connect } from "react-redux";
-
+import {
+  
+  apiPutUnLikeBegan,
+  apiPutLikeBegan
+  
+} from "../store/actions";
 const useStyles = makeStyles((theme) => ({
   root: {
     boxShadow: "none",
@@ -68,6 +74,17 @@ const ScreamCard = (props) => {
     handleDeleteClose,
     retweet,
   } = props;
+
+  const like = (_id) => {
+    console.log("liking a post");
+    props.putLikePost(`./api/users/like/${_id}`);
+  };
+
+  const unLike = (_id) => {
+    console.log("Unliking a post");
+    props.putUnLikePost(`./api/users/unlike/${_id}`);
+  };
+
 
   dayjs.extend(relativeTime);
   let bodyScream;
@@ -157,6 +174,8 @@ const ScreamCard = (props) => {
           handleDeleteOpen={handleDeleteOpen}
           handleDeleteClose={handleDeleteClose}
           retweet={retweet}
+          like={like}
+          unLike={unLike}
         />:""}
         
     
@@ -175,4 +194,14 @@ const mapStateToProps = (state) => ({
   screams: state.data.screams,
 });
 
-export default connect(mapStateToProps)(ScreamCard);
+const mapActionsToProps = (dispatch) => {
+  return {
+   
+    putLikePost: (url) => dispatch(apiPutLikeBegan({ url })),
+    putUnLikePost: (url) => dispatch(apiPutUnLikeBegan({ url })),
+   
+  };
+};
+
+
+export default connect(mapStateToProps,mapActionsToProps)(ScreamCard);

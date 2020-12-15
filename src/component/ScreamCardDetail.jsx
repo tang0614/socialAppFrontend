@@ -13,7 +13,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 // Redux
 import { connect } from "react-redux";
-import { apiGetOneScreamBegan } from "../store/actions";
+import { apiGetOneScreamBegan,  apiPutUnLikeBegan,apiPutLikeBegan } from "../store/actions";
 
 const useStyles = makeStyles((theme) => ({
   disabled: {
@@ -60,6 +60,17 @@ const ScreamCardDetail = (props) => {
     console.log("scream detail using effect");
     getScreamDetail(scream._id);
   }, [scream]);
+
+  const like = (_id) => {
+    console.log("liking a post");
+    props.putLikePost(`./api/users/like/${_id}`);
+  };
+
+  const unLike = (_id) => {
+    console.log("Unliking a post");
+    props.putUnLikePost(`./api/users/unlike/${_id}`);
+  };
+
 
   const getScreamDetail = (index) => {
     props.getScream(`/api/screams/${index}`);
@@ -111,6 +122,8 @@ const ScreamCardDetail = (props) => {
           handleDeleteOpen={handleDeleteOpen}
           handleDeleteClose={handleDeleteClose}
           retweet={retweet}
+          like={like}
+          unLike={unLike}
         />
       </div>
 
@@ -135,7 +148,10 @@ const mapStateToProps = (state) => ({
 const mapActionsToProps = (dispatch) => {
   return {
     getScream: (url) => dispatch(apiGetOneScreamBegan({ url })),
+    putLikePost: (url) => dispatch(apiPutLikeBegan({ url })),
+    putUnLikePost: (url) => dispatch(apiPutUnLikeBegan({ url }))
   };
 };
+
 
 export default connect(mapStateToProps, mapActionsToProps)(ScreamCardDetail);

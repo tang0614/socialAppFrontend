@@ -12,7 +12,9 @@ export const put_api = ({ dispatch, getState }) => (next) => (action) => {
     action.type !== actions.apiPutLikeBegan.type &&
     action.type !== actions.apiPutUnLikeBegan.type &&
     action.type !== actions.apiPutUnFollowBegan.type &&
-    action.type !== actions.apiPutFollowBegan.type
+    action.type !== actions.apiPutFollowBegan.type &&
+    action.type !== actions.apiDisableUserBegan.type
+    
   )
     return next(action);
 
@@ -118,7 +120,18 @@ export const put_api = ({ dispatch, getState }) => (next) => (action) => {
       .catch((error) => {
         dispatch(actions.apiPutFollowFailed(error.response.data.message));
       });
-  } else {
+  } else if (action.type === actions.apiDisableUserBegan.type) {
+    const { url } = action.payload;
+    http
+      .put(`${url}`)
+      .then((res) => {
+        dispatch(actions.apiDisableUserSuccess(res.data));
+      })
+      .catch((error) => {
+        dispatch(actions.apiDisableUserFailed(error.response.data.message));
+      });
+  } 
+  else {
     const { url, data, history } = action.payload;
 
     http
