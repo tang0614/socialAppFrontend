@@ -15,7 +15,7 @@ const useStyles = makeStyles({
 
     maxWidth: 512,
     margin: "0 auto",
-    marginTop: "300px",
+    marginTop: "250px",
   },
   wrapper: {
     margin: "1rem 0",
@@ -25,7 +25,8 @@ const useStyles = makeStyles({
 
 const MyTweet = (props) => {
   const classes = useStyles(props);
-  console.log('My tweet page','props.screams is',props.screams)
+  console.log('My tweet page','props.handleId is',props.handleId)
+  
   const getScream = (scream, id) => {
 
     if (scream.commentOn) {
@@ -62,7 +63,7 @@ const MyTweet = (props) => {
     paper = <CircularProgress />;
   } else {
     const personal_posts = props.screams.filter(
-      (post) => post.author === props.user._id
+      (post) => post.author === props.handleId
     );
 
     paper = personal_posts.map((scream, id) => getScream(scream, id));
@@ -77,7 +78,7 @@ MyTweet.propTypes = {
 
 const mapStateToProps = (state) => ({
   screams: state.data.screams,
-  user: state.user.user,
+ 
 });
 
 export default connect(mapStateToProps)(MyTweet);

@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import EditProfile from "./EditProfile";
 import { withRouter } from "react-router";
+
 
 //Material UI
 import { makeStyles } from "@material-ui/core/styles";
@@ -16,13 +17,12 @@ import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import LinkOffOutlinedIcon from "@material-ui/icons/LinkOffOutlined";
 import DateRangeIcon from "@material-ui/icons/DateRange";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import MuiLink from "@material-ui/core/Link";
+
 import Link from "@material-ui/core/Link";
-import { Link as RouterLink } from "react-router-dom";
+
 //redux
 import { connect } from "react-redux";
 
-import { apiGetOtherUserBegan } from "../store/actions";
 
 const useStyles = makeStyles({
   root: {
@@ -59,17 +59,9 @@ const useStyles = makeStyles({
 const ProfileCard = (props) => {
   const classes = useStyles(props);
   const [open, setOpen] = React.useState(false);
-
+ 
   
-  useEffect(()=>{
-    if(props.handleId){
-      if(props.user._id!==props.handleId){
-        console.log('use effect is',`/api/users/${props.handleId}`)
-        props.getOtherUser(`/api/users/${props.handleId}`)
-      }
-    }
-    
-  },[props.handleId])
+  
 
   const handleOpen = () => {
     setOpen(true);
@@ -82,28 +74,24 @@ const ProfileCard = (props) => {
   let paper;
   
 
-  if (!props.user) {
+  if (!props.otherUser) {
     paper = <CircularProgress />;
   } else {
-    if(props.user._id!==props.handleId){
-     
-      if(!props.otherUser){
-        paper = <CircularProgress />;
-      }else{
-      //other user's page
-      const {
-        _id,
-        handle,
-        bio,
-        website,
-        location,
-        createdAt,
-        following,
-        followedBy,
-      } = props.otherUser;
 
-      paper = 
-      <Card>
+    const {
+      _id,
+      handle,
+      bio,
+      website,
+      location,
+      createdAt,
+      following,
+      followedBy,
+    } =props.otherUser;
+
+    if(props.user._id!==props.handleId){
+      paper = (
+        <Card>
           <CardActionArea>
             <CardMedia
               className={classes.media}
@@ -163,22 +151,46 @@ const ProfileCard = (props) => {
                 </Typography>
               </Typography>
             </CardContent>
-    
           </CardActionArea>
-          </Card>
-      }
-    }else{
-      const {
-        _id,
-        handle,
-        bio,
-        website,
-        location,
-        createdAt,
-        following,
-        followedBy,
-      } = props.user;
   
+          <CardActions className={classes.buttons}>
+            <Link
+              component="button"
+              variant="body2"
+              onClick={() => {
+                props.history.push(props.match.url + "/mytweet");
+              }}
+            >
+              Tweets
+            </Link>
+  
+            <Link
+              component="button"
+              variant="body2"
+              onClick={() => {
+                props.history.push(props.match.url + "/mycomment");
+              }}
+            >
+              Tweets & replies
+            </Link>
+  
+            <Link
+              component="button"
+              variant="body2"
+              onClick={() => {
+                props.history.push(props.match.url + "/mylike");
+              }}
+            >
+              Likes
+            </Link>
+          </CardActions>
+          
+        </Card>
+      );
+  
+
+    }else{
+
       paper = (
         <Card>
           <CardActionArea>
@@ -248,6 +260,7 @@ const ProfileCard = (props) => {
               </Typography>
             </CardContent>
           </CardActionArea>
+  
           <CardActions className={classes.buttons}>
             <Link
               component="button"
@@ -279,18 +292,22 @@ const ProfileCard = (props) => {
               Likes
             </Link>
           </CardActions>
-  
           <EditProfile open={open} handleClose={handleClose} />
-  
-  
         </Card>
       );
+  
 
     }
     
+
+ 
   }
 
-  return <div className={classes.root}>{paper}</div>;
+
+  return <div className={classes.root}>
+    {paper}
+  
+    </div>;
 };
 
 ProfileCard.propTypes = {
@@ -300,16 +317,10 @@ ProfileCard.propTypes = {
 //state from the store, and properties of this object become our props
 const mapStateToProps = (state) => ({
   user: state.user.user,
-  otherUser: state.user.otherUser,
   fetch_errors: state.user.fetch_errors,
 });
 
-const mapActionsToProps = (dispatch) => {
-  return {
-    getOtherUser: (url) =>
-      dispatch(apiGetOtherUserBegan({ url })),
-  };
-};
+
 
 //connect subscribe/unsubscribe the redux store
-export default connect(mapStateToProps,mapActionsToProps)(withRouter(ProfileCard));
+export default connect(mapStateToProps)(withRouter(ProfileCard));

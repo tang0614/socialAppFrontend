@@ -1,15 +1,14 @@
-import React from "react";
-
+import React, {useState} from "react";
+import Search from "../Search/Search";
 //Material UI
 import { makeStyles } from "@material-ui/core/styles";
 import { IconButton, CssBaseline } from "@material-ui/core";
 import TwitterIcon from "@material-ui/icons/Twitter";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import ButtonBase from "@material-ui/core/ButtonBase";
-import Hidden from "@material-ui/core/Hidden";
 import SignUp from "./SignUp";
 import LogIn from "./LogIn";
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,20 +64,25 @@ const useStyles = makeStyles((theme) => ({
   imageContainer: {
     width: "100%",
     height: "100vh",
+ 
   },
 
   image: {
-    width: "100%",
-    height: "100%",
-    backgroundImage: `url(/image/twitterLogo.jpg)`,
-    backgroundRepeat: "repeat",
+    height: "80vh",
+    overflow:"scroll"
   },
+
+  search:{
+    display:"none"
+  }
 }));
 
 const Auth = (props) => {
   const classes = useStyles(props);
   const [openSignUp, setOpenSignUp] = React.useState(false);
   const [openLogIn, setOpenLogIn] = React.useState(false);
+  const [words, setWords] = useState(null);
+  const [query, setQuery] = useState("");
 
   const handleSignUpClickOpen = () => {
     setOpenSignUp(true);
@@ -94,6 +98,11 @@ const Auth = (props) => {
 
   const handleLogInClose = () => {
     setOpenLogIn(false);
+  };
+
+  const search = (e) => {
+    e.preventDefault();
+    setWords(query)
   };
 
   return (
@@ -145,10 +154,20 @@ const Auth = (props) => {
         </Grid>
 
         <Grid item sm={6} className={classes.imageContainer}>
-          <Hidden xsDown>
-            <ButtonBase className={classes.image}></ButtonBase>
             
-          </Hidden>
+              <div >
+              <br></br>
+              <br></br>
+                <form onSubmit={search} noValidate autoComplete="off"  >
+                      <TextField  id="search-tweet" label="Search news here..." variant="filled" value={query}  onChange={e => setQuery(e.target.value)}/>
+                      <button>Search</button>
+                </form>
+              </div>
+
+              <div className={classes.image} >
+              <Search login={true} hidden={true} words={words} match={{"params":{"key":words}}}/>
+              </div>
+    
         </Grid>
       </Grid>
 

@@ -8,7 +8,6 @@ import { CssBaseline } from "@material-ui/core";
 
 
 import Button from '@material-ui/core/Button';
-import Typography from "@material-ui/core/Typography";
 import TextField from '@material-ui/core/TextField';
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -75,6 +74,11 @@ const useStyles = makeStyles((theme) => ({
   
 
   },
+  noSearch:{
+    display:"none",
+    height:'0px'
+  },
+
   news:{
     width:"100%",
     margin:"1rem auto"
@@ -85,6 +89,8 @@ const useStyles = makeStyles((theme) => ({
 
 async function searchNews(q) {
   q = encodeURIComponent(q);
+
+  
   const response = await fetch(`https://bing-news-search1.p.rapidapi.com/news/search?freshness=Day&textFormat=Raw&safeSearch=Strict&q=${q}`, {
     "method": "GET",
     "headers": {
@@ -99,26 +105,42 @@ async function searchNews(q) {
 
 const Search = (props) => {
   const classes = useStyles(props);
-  const [query, setQuery] = useState('covid19');
+  const [query, setQuery] = useState(null);
+ 
   const [list, setList] = useState(null);
 
-  useEffect(() => {
+
+    useEffect(() => {
+    
+      if(props.match.params.key){
+        let key = props.match.params.key
+        setQuery(key)
+        searchNews(props.match.params.key).then(setList)
+      }else{
+        searchNews('covid19').then(setList)
+      }
+      
+    }, [props.match.params.key])
+  
+
+
+  useEffect(()=>{
     if(props.words){
       setQuery(props.words)
       searchNews(props.words).then(setList);
-    }else{ 
-      searchNews(query).then(setList)
     }
-   
-  }, [props.words,query]);
+  },[props.words])
+ 
 
-  const search = (e) => {
-    console.log('Submit searching news...')
-    e.preventDefault();
-    searchNews(query).then(setList);
-  };
+  const handleSearch = (e)=> {
+    if(e.target.value){
+      props.history.push(`/search/${e.target.value}`)
+    }else{
+      props.history.push(`/search`)
+      setQuery(null)
+    }
 
-
+  }
 
   const handleAuth = ()=>{
     
@@ -129,26 +151,26 @@ const Search = (props) => {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      
+      {!props.hidden?
       <AppBar position="static" className={classes.appBar}>
-        <Toolbar className={classes.toolBar}>
-          
-           
-            
+      <Toolbar className={classes.toolBar}>
 
-            <div>
-                <form  onSubmit={search} noValidate autoComplete="off" className={classes.search}>
-                    <TextField  id="filled-basic"  variant="filled" value={query}  onChange={e => setQuery(e.target.value)}/>
-                    <button>Search</button>
-                </form>
-            </div>
-            {props.login?'':
-            <Button variant="outlined" color="primary"  onClick={handleAuth}>
-                Login/Sign Up 
-            </Button>}
-            
-        </Toolbar>
-      </AppBar>
+        <div>
+          <form noValidate autoComplete="off" className={classes.search}>
+              <TextField  label='search here' id="filled-basic"  variant="filled" value={query}  onChange={handleSearch}/> 
+          </form>
+        </div>
+        
+          
+          {props.login?'':
+          <Button variant="outlined" color="primary"  onClick={handleAuth}>
+              Login/Sign Up 
+          </Button>}
+          
+      </Toolbar>
+    </AppBar>:""
+     }
+      
 
       <div >
       {!list

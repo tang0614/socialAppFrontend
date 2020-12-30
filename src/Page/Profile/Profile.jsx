@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from "react";
 import ProfileHeader from "../../component/ProfileHeader";
 import ProfileCard from "../../component/ProfileCard";
+import { withRouter } from "react-router";
+import MyTweet from "./MyTweet";
+import MyComment from "./MyComment";
+import MyLike from "./MyLike";
+import http from "../../store/httpService";
 import { makeStyles } from "@material-ui/core/styles";
-
+import { Route} from "react-router-dom";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import PostCard from "../../component/PostCard";
 import EditImage from "../../component/EditImage";
-import MyTweet from "./MyTweet";
-import { Route } from "react-router-dom";
-import MyLike from "./MyLike";
-import MyComment from "./MyComment";
 import Fab from "@material-ui/core/Fab";
 import Admin from "../Auth/Admin";
 // Redux
 import { connect } from "react-redux";
+import { apiGetOtherUserBegan } from "../../store/actions";
 const useStyles = makeStyles({
   root: {
     position: "relative",
@@ -45,13 +47,21 @@ const Profile = (props) => {
   //open for new tweet
   const [open, setOpen] = useState(false);
   const [handleId, setHandleId] = useState(null);
+ 
+
 
   useEffect(()=>{
     setHandleId(props.match.params.id)
+    props.getOtherUser(`/api/users/${props.match.params.id}`)
+
    
-  
-   
+    if(!(props.user.handle==='user10' && props.user._id===props.match.params.id)){
+        props.history.push(props.match.url + "/mytweet");
+    } 
+
   },[])
+
+ 
 
   //handle new tweet
   const handleClickOpen = () => {
@@ -65,13 +75,9 @@ const Profile = (props) => {
   
   const paper = props.user.handle==='user10' && props.user._id===handleId? <Admin />:(
     <div>
-    <ProfileCard handleId={handleId}/>
-    <EditImage handleId={handleId}/>
+    <ProfileCard otherUser={props.otherUser} />
+    <EditImage otherUser={props.otherUser} handleId={handleId}/>
     
-    <Route path={`/profile/:id/mytweet`} component={MyTweet} />
-    <Route path={`/profile/:id/mycomment`} component={MyComment} />
-    <Route path={`/profile/:id/mylike`} component={MyLike} />
-  
     <Fab
       color="primary"
       size="medium"
@@ -81,8 +87,14 @@ const Profile = (props) => {
       <AddCircleOutlineIcon fontSize="large" />
     </Fab>
 
+    <PostCard open={open} handleClose={handleClose} {...props} />
 
-    <PostCard open={open} handleClose={handleClose} {...props} /></div>)
+    <Route path={`/profile/:id/mytweet`} render={()=><MyTweet handleId={handleId}/>} />    
+    <Route path={`/profile/:id/mycomment`} render={()=><MyComment handleId={handleId}/>} />
+    <Route path={`/profile/:id/mylike`} render={()=><MyLike otherUser={props.otherUser}/>} />
+    
+    
+    </div>)
 
   return (
     <div className={classes.root}>
@@ -99,7 +111,15 @@ const Profile = (props) => {
 //connect subscribe/unsubscribe the redux store
 const mapStateToProps = (state) => ({
   user: state.user.user,
+  otherUser: state.user.otherUser,
 });
 
-export default connect(mapStateToProps)(Profile);
+const mapActionsToProps = (dispatch) => {
+  return {
+    getOtherUser: (url) =>
+      dispatch(apiGetOtherUserBegan({ url })),
+  };
+};
 
+//connect subscribe/unsubscribe the redux store
+export default connect(mapStateToProps,mapActionsToProps)(withRouter(Profile));

@@ -160,7 +160,7 @@ const Home = (props) => {
           <Screams query={words}/>
         </Grid>
         <Grid item sm={6} className={classes.imageContainer}>
-          <Search login={true} words={words}/>
+          <Search login={true}  words={words} match={{"params":{"key":words}}}/>
         </Grid>
       </Grid>
 

@@ -85,7 +85,7 @@ const Buttons = (props) => {
         </Button>
       </Tooltip>
 
-      <Tooltip onClick={handleLikePost} title={"retweet"}>
+      <Tooltip onClick={handleLikePost} title={"like"}>
         <Button className={likePost ? classes.liked : classes.unLiked}>
           <FavoriteBorderIcon />
         </Button>

@@ -57,8 +57,9 @@ const EditImage = (props) => {
   let paper;
 
   if(props.user._id!==props.handleId){
+    console.log('Edit image, here is a different user')
     //different user
-    paper =<AvatarImage isTweet={false} handleId={props.handleId}/>
+    paper =<AvatarImage isTweet={false} handleId={props.handleId} otherUser={props.otherUser}/>
   }else{
     paper =<div>
        <AvatarImage isTweet={false}/>

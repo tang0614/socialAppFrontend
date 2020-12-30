@@ -15,7 +15,7 @@ const useStyles = makeStyles({
 
     maxWidth: 512,
     margin: "0 auto",
-    marginTop: "300px",
+    marginTop: "250px",
   },
   wrapper: {
     margin: "1rem 0",
@@ -61,7 +61,7 @@ const MyComment = (props) => {
     paper = <CircularProgress />;
   } else {
     const personal_posts = props.screams.filter(
-      (post) => post.author === props.user._id
+      (post) => post.author === props.handleId
     );
 
     paper = personal_posts.map((scream, id) => getScream(scream, id));
@@ -76,7 +76,7 @@ MyComment.propTypes = {
 
 const mapStateToProps = (state) => ({
   screams: state.data.screams,
-  user: state.user.user,
+
 });
 
 export default connect(mapStateToProps)(MyComment);

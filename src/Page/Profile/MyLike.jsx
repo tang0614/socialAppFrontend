@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 //materialUI
 import { makeStyles } from "@material-ui/core/styles";
 
+
 const useStyles = makeStyles({
   root: {
     position: "relative",
@@ -15,7 +16,7 @@ const useStyles = makeStyles({
 
     maxWidth: 512,
     margin: "0 auto",
-    marginTop: "300px",
+    marginTop: "250px",
   },
   wrapper: {
     margin: "1rem 0",
@@ -25,6 +26,7 @@ const useStyles = makeStyles({
 
 const MyLike = (props) => {
   const classes = useStyles(props);
+  
 
   const getScream = (scream, id) => {
     if (scream.commentOn) {
@@ -57,11 +59,11 @@ const MyLike = (props) => {
   };
 
   let paper;
-  if (!props.screams) {
+  if (!props.screams||!props.otherUser) {
     paper = <CircularProgress />;
   } else {
     let likes = [];
-    props.user.like.forEach((element) => {
+    props.otherUser.like.forEach((element) => {
       likes.push(element._id);
     });
 
