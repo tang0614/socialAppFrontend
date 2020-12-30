@@ -44,7 +44,6 @@ function App() {
         <div className="App">
           <Switch>
             <ProtectedRoute path="/home" exact={true} component={Home} />
-            
             <ProtectedRoute path="/profile/:id" component={Profile} />
            
             <Route path="/auth" exact={true} component={Auth} />

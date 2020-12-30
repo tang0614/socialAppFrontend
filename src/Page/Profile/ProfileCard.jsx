@@ -1,6 +1,6 @@
 import React, { useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import EditProfile from "./EditProfile";
+import EditProfile from "../../component/EditProfile";
 import { withRouter } from "react-router";
 
 
@@ -55,6 +55,9 @@ const useStyles = makeStyles({
     right: 0,
     margin: "1em",
   },
+  link:{
+    padding:'0 1rem'
+  }
 });
 const ProfileCard = (props) => {
   const classes = useStyles(props);
@@ -132,23 +135,30 @@ const ProfileCard = (props) => {
               </Typography>
   
               <Typography className={classes.notes}>
-                <Typography
+               
+              <Typography
                   variant="body2"
                   color="textSecondary"
                   component="p"
                   className={classes.note}
                 >
-                  {following ? following.length : ""} Followings
-                </Typography>
+                    <Link className={classes.link} onClick={() => {
+                  props.history.push(props.match.url + "/following");
+                }}> {following ? following.length : ""} Followings</Link>
+              </Typography>
+
+              <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  component="p"
+                  className={classes.note}
+                >
+                <Link className={classes.link}  onClick={() => {
+                props.history.push(props.match.url + "/followedby");
+              }}>  {followedBy ? followedBy.length : ""} Followers</Link>
+              </Typography>
   
-                <Typography
-                  variant="body2"
-                  color="textSecondary"
-                  component="p"
-                  className={classes.note}
-                >
-                  {followedBy ? followedBy.length : ""} Followers
-                </Typography>
+      
               </Typography>
             </CardContent>
           </CardActionArea>
@@ -240,23 +250,27 @@ const ProfileCard = (props) => {
               </Typography>
   
               <Typography className={classes.notes}>
-                <Typography
+              <Typography
                   variant="body2"
                   color="textSecondary"
                   component="p"
                   className={classes.note}
                 >
-                  {following ? following.length : ""} Followings
-                </Typography>
-  
-                <Typography
+                    <Link className={classes.link}  onClick={() => {
+                  props.history.push(props.match.url + "/following");
+                }}> {following ? following.length : ""} Followings</Link>
+              </Typography>
+
+              <Typography
                   variant="body2"
                   color="textSecondary"
                   component="p"
                   className={classes.note}
                 >
-                  {followedBy ? followedBy.length : ""} Followers
-                </Typography>
+                <Link className={classes.link}  onClick={() => {
+                props.history.push(props.match.url + "/followedby");
+              }}>  {followedBy ? followedBy.length : ""} Followers</Link>
+              </Typography>
               </Typography>
             </CardContent>
           </CardActionArea>

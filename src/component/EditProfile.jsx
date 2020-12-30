@@ -8,12 +8,13 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
-import AvatarImage from "./AvatarImage";
+
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 //redux
 import { connect } from "react-redux";
 import { apiPutUserBegan } from "../store/actions";
+import AvatarImage from "./AvatarImage";
 
 const useStyles = makeStyles((theme) => ({
   errorMessage: {
@@ -125,6 +126,7 @@ const EditProfile = (props) => {
           error={bioError ? true : false}
           fullWidth
         />
+    
         <TextField
           id="location"
           name="location"

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import ProfileHeader from "../../component/ProfileHeader";
-import ProfileCard from "../../component/ProfileCard";
+import ProfileCard from "./ProfileCard";
 import { withRouter } from "react-router";
 import MyTweet from "./MyTweet";
 import MyComment from "./MyComment";
 import MyLike from "./MyLike";
-import http from "../../store/httpService";
+import Following from "./Following";
+import FollowedBy from "./FollowedBy";
+
 import { makeStyles } from "@material-ui/core/styles";
 import { Route} from "react-router-dom";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
@@ -59,7 +61,7 @@ const Profile = (props) => {
         props.history.push(props.match.url + "/mytweet");
     } 
 
-  },[])
+  },[props.match.params.id])
 
  
 
@@ -75,7 +77,7 @@ const Profile = (props) => {
   
   const paper = props.user.handle==='user10' && props.user._id===handleId? <Admin />:(
     <div>
-    <ProfileCard otherUser={props.otherUser} />
+    <ProfileCard otherUser={props.otherUser} handleId={handleId}/>
     <EditImage otherUser={props.otherUser} handleId={handleId}/>
     
     <Fab
@@ -91,10 +93,13 @@ const Profile = (props) => {
 
     <Route path={`/profile/:id/mytweet`} render={()=><MyTweet handleId={handleId}/>} />    
     <Route path={`/profile/:id/mycomment`} render={()=><MyComment handleId={handleId}/>} />
-    <Route path={`/profile/:id/mylike`} render={()=><MyLike otherUser={props.otherUser}/>} />
-    
+    <Route path={`/profile/:id/mylike`} render={()=><MyLike otherUser={props.otherUser} />} />
+    <Route path="/profile/:id/following" render={()=><Following  otherUser={props.otherUser}/>}/>
+    <Route path="/profile/:id/followedby" render={()=><FollowedBy otherUser={props.otherUser}/>} />
     
     </div>)
+
+
 
   return (
     <div className={classes.root}>
