@@ -4,7 +4,7 @@ import DeleteScream from "./deleteScream";
 //Material UI
 import Button from "@material-ui/core/Button";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined';
 import RoundedCornerIcon from "@material-ui/icons/RoundedCorner";
 import Tooltip from "@material-ui/core/Tooltip";
 import DeleteOutline from "@material-ui/icons/DeleteOutline";
@@ -85,9 +85,9 @@ const Buttons = (props) => {
         </Button>
       </Tooltip>
 
-      <Tooltip onClick={handleLikePost} title={"like"}>
+      <Tooltip onClick={handleLikePost} title={"save"}>
         <Button className={likePost ? classes.liked : classes.unLiked}>
-          <FavoriteBorderIcon />
+          <SaveOutlinedIcon />
         </Button>
       </Tooltip>
 

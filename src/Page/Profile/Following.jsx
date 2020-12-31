@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import AuthorImage from '../../component/AuthorImage';
 import { Link } from "react-router-dom";
 // MUI Stuff
@@ -6,7 +6,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import MuiLink from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
-
+import GroupAddIcon from "@material-ui/icons/GroupAdd";
+import Tooltip from "@material-ui/core/Tooltip";
+import Button from "@material-ui/core/Button";
+import NameCard from './NameCard';
+//redux
+import { connect } from "react-redux";
 const useStyles = makeStyles((theme) => ({
 
     root: {
@@ -20,7 +25,8 @@ const useStyles = makeStyles((theme) => ({
       header:{
         display: "flex",
         flexDirection: "row",
-        justifyContent:"space-between"
+        justifyContent:"space-between",
+        margin:"1rem 0"
 
       },
 
@@ -36,12 +42,14 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         flexDirection: "column",
         alignItems: "start",
-      }
+      },
+    
     
   }));
 
 const Following = (props)=>{
     const classes = useStyles();
+   
     let paper
     if(props.otherUser){
         paper = props.otherUser.following_details.map(user=>{
@@ -72,9 +80,8 @@ const Following = (props)=>{
              
                 
               </div>
-
-               <button>UnFollow</button>
-
+              
+                <NameCard id={user._id} following={props.user.following.includes(user._id)}/>
             </div>
             )
         })
@@ -91,6 +98,13 @@ const Following = (props)=>{
 
 
 
-  //connect subscribe/unsubscribe the redux store
-  export default Following;
+
+const mapStateToProps = (state) => ({
+    user: state.user.user,
+   
+  });
+  
+
+  
+export default connect(mapStateToProps)(Following);
   

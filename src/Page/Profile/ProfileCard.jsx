@@ -191,7 +191,7 @@ const ProfileCard = (props) => {
                 props.history.push(props.match.url + "/mylike");
               }}
             >
-              Likes
+             Saved Tweets
             </Link>
           </CardActions>
           
@@ -303,7 +303,7 @@ const ProfileCard = (props) => {
                 props.history.push(props.match.url + "/mylike");
               }}
             >
-              Likes
+              Saved Tweets
             </Link>
           </CardActions>
           <EditProfile open={open} handleClose={handleClose} />

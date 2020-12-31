@@ -94,7 +94,7 @@ const Profile = (props) => {
     <Route path={`/profile/:id/mytweet`} render={()=><MyTweet handleId={handleId}/>} />    
     <Route path={`/profile/:id/mycomment`} render={()=><MyComment handleId={handleId}/>} />
     <Route path={`/profile/:id/mylike`} render={()=><MyLike otherUser={props.otherUser} />} />
-    <Route path="/profile/:id/following" render={()=><Following  otherUser={props.otherUser}/>}/>
+    <Route path="/profile/:id/following" render={()=><Following otherUser={props.otherUser} />}/>
     <Route path="/profile/:id/followedby" render={()=><FollowedBy otherUser={props.otherUser}/>} />
     
     </div>)

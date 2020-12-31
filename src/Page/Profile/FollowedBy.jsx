@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import AuthorImage from '../../component/AuthorImage';
 import { Link } from "react-router-dom";
 // MUI Stuff
@@ -6,7 +6,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import MuiLink from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
-
+import NameCard from './NameCard';
+//redux
+import { connect } from "react-redux";
 const useStyles = makeStyles((theme) => ({
 
     root: {
@@ -20,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
       header:{
         display: "flex",
         flexDirection: "row",
-        justifyContent:"space-between"
-
+        justifyContent:"space-between",
+        margin:"1rem 0"
       },
 
     
@@ -29,19 +31,21 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-      
       },
 
       info:{
         display: "flex",
         flexDirection: "column",
         alignItems: "start",
-      }
+      },
+    
     
   }));
 
 const FollowedBy = (props)=>{
     const classes = useStyles();
+    
+
     let paper
     if(props.otherUser){
         paper = props.otherUser.followedBy_details.map(user=>{
@@ -72,8 +76,8 @@ const FollowedBy = (props)=>{
              
                 
               </div>
-
-               <button>Follow</button>
+                
+              <NameCard id={user._id} following={props.user.following.includes(user._id)} />
 
             </div>
             )
@@ -82,9 +86,7 @@ const FollowedBy = (props)=>{
         paper=""
     }
 
-    if(props.otherUser){
-        console.log('props.otherUser.followedBy_details',props.otherUser.followedBy_details)
-    }
+
    
 
     return <Card className={classes.root}>
@@ -95,6 +97,16 @@ const FollowedBy = (props)=>{
 
 
 
-  //connect subscribe/unsubscribe the redux store
-  export default FollowedBy;
+ 
+ 
+  
+const mapStateToProps = (state) => ({
+    user: state.user.user,
+   
+  });
+  
+
+  
+export default connect(mapStateToProps)(FollowedBy);
+  
   
