@@ -1,14 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
 import App from "./App";
-import "./index.css";
-import "bootstrap/dist/css/bootstrap.css";
-import "../node_modules/font-awesome/css/font-awesome.min.css";
-
+import { BrowserRouter } from "react-router-dom";
+import theme from "./theme";
+import { ThemeProvider } from "@material-ui/core/styles";
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <ThemeProvider theme={theme}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </ThemeProvider>,
   document.getElementById("root")
 );
