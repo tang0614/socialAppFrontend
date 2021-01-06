@@ -1,64 +1,66 @@
-import React, { useEffect} from "react";
+import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
+import { getCurrentUser } from "./services/userService";
+import ProtectedRoute from "./components/common/protectedRoute";
+import Movies from "./components/movies";
+// import Customers from "./components/customers";
+import Login from "./components/login";
+import Logout from "./components/logout";
+import SignUp from "./components/signUp";
+import MovieForm from "./components/movieform";
+// import Home from "./components/home";
+import NotFound from "./components/notfound";
+import Nav from "./components/common/nav";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/scss/main.scss";
+
 import "./App.css";
-import Auth from "./Page/Auth/Auth";
-import Home from "./Page/Home/Home";
-import Search from "./Page/Search/Search";
-import NotFound from "./Page/NotFound";
-import ProtectedRoute from "./component/common/protectedRoute";
-import { getCurrentUser } from "./store/helpers";
-import Profile from "./Page/Profile/Profile";
+require("dotenv").config();
 
-//redux
-import { Provider } from "react-redux";
-import store from "./store/store";
+class App extends Component {
+  state = {};
+  componentDidMount() {
+    const user = getCurrentUser();
+    this.setState({ user });
+  }
 
-import {
-  logoutUser,
-  apiCallSuccess,
-  apiGetUserBegan,
+  render() {
+    const { user } = this.state;
 
-} from "./store/actions";
-import { checkExpiration } from "./store/helpers";
-
-
-function App() {
- 
-
-  useEffect(() => {
-    const token = localStorage.getItem("IdToken");
-    if (token) {
-      const currentUser = getCurrentUser();
-      
-      if (checkExpiration()) return store.dispatch(logoutUser());
-      //still login in ....
-      store.dispatch(apiCallSuccess(token));
-      store.dispatch(apiGetUserBegan({ url: `/api/users/${currentUser._id}` }));
-      // store.dispatch(apiGetScreamBegan({ url: `./api/screams` }));
-    }
-  }, []);
-
-  return (
-    <React.Fragment>
-      <Provider store={store}>
-        <div className="App">
+    return (
+      <React.Fragment>
+        <ToastContainer />
+        <Nav user={user} />
+        <main className="container">
           <Switch>
-            <ProtectedRoute path="/home" exact={true} component={Home} />
-            <ProtectedRoute path="/profile/:id" component={Profile} />
-           
-            <Route path="/auth" exact={true} component={Auth} />
-            <Route path="/search" exact={true} component={Search} />
-            <Route path="/search/:key" exact={true} component={Search} />
-            <Route path="/" exact={true}>
-              <Redirect to="/search" />
-            </Route>
-           
-            <Route path="/" component={NotFound} />
-          </Switch>
-        </div>
-      </Provider>
-    </React.Fragment>
-  );
-}
+            <Route path="/signUp" exact={true} component={SignUp}></Route>
+            <Route path="/login" exact={true} component={Login}></Route>
+            <Route path="/logout" exact={true} component={Logout}></Route>
+            {/* <Route path="/customers" exact={true} component={Customers}></Route> */}
+            <ProtectedRoute
+              path="/movies/:id"
+              exact={true}
+              component={MovieForm}
+            />
 
+            <Route
+              path="/movies"
+              exact={true}
+              render={(parameter) => <Movies {...parameter} user={user} />}
+            ></Route>
+
+            {/* <Route path="/home" exact={true} component={Home}></Route> */}
+            <Route path="/" exact={true}>
+              <Redirect to="/movies" />
+            </Route>
+            <Route path="/" component={NotFound}></Route>
+          </Switch>
+        </main>
+      </React.Fragment>
+    );
+  }
+}
+//to pass additional properties to router we need render attribute
+//route props passing in history, matches,location to children component inside their this.props/props
+//render attribute has history, match what react that inject when using routing
 export default App;
