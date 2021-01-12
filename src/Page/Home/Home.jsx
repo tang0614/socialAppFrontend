@@ -7,17 +7,16 @@ import PostCard from "../../component/PostCard";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Button from "@material-ui/core/Button";
 import { CssBaseline } from "@material-ui/core";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import Grid from "@material-ui/core/Grid";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import Fab from "@material-ui/core/Fab";
 import TextField from '@material-ui/core/TextField';
 // Redux
 import { connect } from "react-redux";
 import Search from "../Search/Search";
 import ProfileButton from "../../component/ProfileButton";
+import LoginButton from "../../component/LoginButton";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -102,15 +101,7 @@ const Home = (props) => {
     props.history.push('/auth')
 }
 
-  const loginButton= props.user? 
-  (!props.user.authenticated) 
-  ?
-  <Button variant="outlined" color="primary"  onClick={handleAuth}>
-      Login/Sign Up 
-  </Button>
-  :null
-  :<CircularProgress/>
-
+  
 
 
 
@@ -129,7 +120,7 @@ const Home = (props) => {
                   </form>
             </div>
             
-            {loginButton}
+            <LoginButton/>
         </Toolbar>
       </AppBar>
 

@@ -12,6 +12,7 @@ import TextField from '@material-ui/core/TextField';
 
 // Redux
 import { connect } from "react-redux";
+import LoginButton from "../../component/LoginButton";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -153,20 +154,6 @@ const Search = (props) => {
       } 
   }
 
-  const handleAuth = ()=>{
-    
-      props.history.push('/auth')
-  }
-
-  const loginButton= props.user? 
-  (!props.user.authenticated) 
-  ?
-  <Button variant="outlined" color="primary"  onClick={handleAuth}>
-      Login/Sign Up 
-  </Button>
-  :null
-  :<CircularProgress/>
-
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -180,7 +167,7 @@ const Search = (props) => {
           </form>
         </div>
         
-          {loginButton}
+        <LoginButton/>
     
       </Toolbar>
     </AppBar>:""
