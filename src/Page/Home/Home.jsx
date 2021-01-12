@@ -17,6 +17,8 @@ import { connect } from "react-redux";
 import Search from "../Search/Search";
 import ProfileButton from "../../component/ProfileButton";
 import LoginButton from "../../component/LoginButton";
+import SearchBox from "../../component/SearchBox";
+import Header from "../../component/Header";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,11 +73,10 @@ const Home = (props) => {
   //open for new post
   const [open, setOpen] = React.useState(false);
   const [query, setQuery] = useState("");
-  const [words, setWords] = useState(null);
+  const [words, setWords] = useState(null);//twitter
   const [words_news, setWords_news] = useState(null);
   const [query_news, setQuery_news] = useState("");
 
-  
 
   const handleOpen = () => {
     setOpen(true);
@@ -96,55 +97,24 @@ const Home = (props) => {
     setWords_news(query_news)
   };
 
-  const handleAuth = ()=>{
-    
-    props.history.push('/auth')
-}
-
-  
-
-
-
-
+ 
   return (
     <div className={classes.root}>
-      <CssBaseline />
-      <AppBar position="static" className={classes.appBar}>
-        <Toolbar className={classes.toolbar}>
-        
-            <ProfileButton/>
-            <div>
-                  <form  onSubmit={search} noValidate autoComplete="off" className={classes.search}>
-                      <TextField  id="search-tweet" label="Search..." variant="filled" value={query}  onChange={e => setQuery(e.target.value)}/>
-                      <button>Submit</button>
-                  </form>
-            </div>
-            
-            <LoginButton/>
-        </Toolbar>
-      </AppBar>
-
-      
+      <Header query={query} setQuery={setQuery} submit={search}/>
 
       <Grid container>
+
         <Grid item xs={12} sm={6} container>
           <Screams query={words}/>
         </Grid>
+
         <Grid item sm={6} className={classes.imageContainer}>
-
-        <div >
+          <div >
               <br></br>
               <br></br>
-                <form onSubmit={search_news} noValidate autoComplete="off"  >
-                      <TextField  id="search-tweet" label="Search news here..." variant="filled" value={query_news}  onChange={e => setQuery_news(e.target.value)}/>
-                      <button>Search</button>
-                </form>
-              </div>
-
-              <div className={classes.image} >
-              <Search  hidden={true} words={words_news} match={{"params":{"key":words_news}}}/>
-              </div>
-         
+              <SearchBox query={query_news} setQuery={setQuery_news} submit={search_news}/>
+          </div>
+          <Search  hidden={true} words={words_news} match={{"params":{"key":words_news}}}/>
         </Grid>
       </Grid>
 

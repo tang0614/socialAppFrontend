@@ -13,6 +13,7 @@ import TextField from '@material-ui/core/TextField';
 // Redux
 import { connect } from "react-redux";
 import LoginButton from "../../component/LoginButton";
+import SearchBox from "../../component/SearchBox";
 
 const useStyles = makeStyles((theme) => ({
   root: {
