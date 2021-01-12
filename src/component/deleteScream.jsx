@@ -56,6 +56,7 @@ const DeleteScream = (props) => {
     }, 1000);
 
     handleClose();
+  
   };
 
   return (

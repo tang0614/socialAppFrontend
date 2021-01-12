@@ -51,11 +51,11 @@ const Buttons = (props) => {
     handleDeleteClose,
     retweet,
     like,
-    unLike,
+    unLike
   } = props;
 
   const handleLikePost = () => {
-    console.log("handleLikePost");
+
 
     if (likePost) {
       unLike(scream._id);
@@ -72,21 +72,21 @@ const Buttons = (props) => {
   ) : (
     <div className={classes.buttons}>
       <Tooltip onClick={handleClickOpen} title={"comment"}>
-        <Button>
+        <Button  disabled={props.authenticated?false:true}>
           {scream.comments.length}
           <ChatBubbleOutlineIcon />
         </Button>
       </Tooltip>
 
       <Tooltip onClick={retweet} title={"retweet"}>
-        <Button>
+        <Button  disabled={props.authenticated?false:true}>
           {scream.retweets.length}
           <RoundedCornerIcon />
         </Button>
       </Tooltip>
 
       <Tooltip onClick={handleLikePost} title={"save"}>
-        <Button className={likePost ? classes.liked : classes.unLiked}>
+        <Button className={likePost ? classes.liked : classes.unLiked}  disabled={props.authenticated?false:true}>
           <SaveOutlinedIcon />
         </Button>
       </Tooltip>
@@ -97,6 +97,7 @@ const Buttons = (props) => {
           handleOpen={handleDeleteOpen}
           handleClose={handleDeleteClose}
           open={openDelete}
+        
         />
       ) : (
         <Tooltip title={"delete disabled"} className={classes.disabled}>
@@ -115,6 +116,7 @@ Buttons.propTypes = {
 
 const mapStateToProps = (state) => ({
   user: state.user.user,
+  authenticated:state.user.authenticated
 });
 
 export default connect(mapStateToProps)(Buttons);

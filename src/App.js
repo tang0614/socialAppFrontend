@@ -29,6 +29,7 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem("IdToken");
     if (token) {
+      // only having token following will be executed
       const currentUser = getCurrentUser();
       if (checkExpiration()){
         return store.dispatch(logoutUser());
@@ -45,14 +46,14 @@ function App() {
       <Provider store={store}>
         <div className="App">
           <Switch>
-            <ProtectedRoute path="/home" exact={true} component={Home} />
+            <Route path="/home" exact={true} component={Home} />
             <ProtectedRoute path="/profile/:id" component={Profile} />
-           
             <Route path="/auth" exact={true} component={Auth} />
             <Route path="/search" exact={true} component={Search} />
             <Route path="/search/:key" exact={true} component={Search} />
+
             <Route path="/" exact={true}>
-              <Redirect to="/search" />
+              <Redirect to="/home" />
             </Route>
            
             <Route path="/" component={NotFound} />

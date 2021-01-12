@@ -165,7 +165,7 @@ const Auth = (props) => {
               </div>
 
               <div className={classes.image} >
-              <Search login={true} hidden={true} words={words} match={{"params":{"key":words}}}/>
+              <Search hidden={true} words={words} match={{"params":{"key":words}}}/>
               </div>
     
         </Grid>

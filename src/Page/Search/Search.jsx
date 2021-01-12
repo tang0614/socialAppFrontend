@@ -6,9 +6,13 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import { CssBaseline } from "@material-ui/core";
 
-
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+
+// Redux
+import { connect } from "react-redux";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: "#fff",
@@ -90,17 +94,21 @@ const useStyles = makeStyles((theme) => ({
 async function searchNews(q) {
   q = encodeURIComponent(q);
 
+  q = encodeURIComponent(q);
+
   
   const response = await fetch(`https://bing-news-search1.p.rapidapi.com/news/search?freshness=Day&textFormat=Raw&safeSearch=Strict&q=${q}`, {
     "method": "GET",
     "headers": {
       "x-rapidapi-host": "bing-news-search1.p.rapidapi.com",
-      "x-rapidapi-key": "d97eb54ab1mshb9af7c0754bf4b0p161d9ajsna9a555999fb1",
+      "x-rapidapi-key": "1f170f89b9msh55c94e67bd213d4p1ab56djsnc92e39862c03",
       "x-bingapis-sdk": "true"
     }
   });
   const body = await response.json();
   return body.value;
+ 
+ 
 }
 
 const Search = (props) => {
@@ -108,14 +116,17 @@ const Search = (props) => {
   const [query, setQuery] = useState(null);
  
   const [list, setList] = useState(null);
-
+ 
 
     useEffect(() => {
-    
       if(props.match.params.key){
         let key = props.match.params.key
         setQuery(key)
-        searchNews(props.match.params.key).then(setList)
+        searchNews(props.match.params.key)
+        .then((articles)=>{
+          setList(articles)
+        })
+       
       }else{
         searchNews('covid19').then(setList)
       }
@@ -125,6 +136,7 @@ const Search = (props) => {
 
 
   useEffect(()=>{
+   
     if(props.words){
       setQuery(props.words)
       searchNews(props.words).then(setList);
@@ -133,13 +145,12 @@ const Search = (props) => {
  
 
   const handleSearch = (e)=> {
-    if(e.target.value){
-      props.history.push(`/search/${e.target.value}`)
-    }else{
-      props.history.push(`/search`)
-      setQuery(null)
-    }
-
+      if(e.target.value){
+        props.history.push(`/search/${e.target.value}`)
+      }else{
+        props.history.push(`/search`)
+        setQuery(null)
+      } 
   }
 
   const handleAuth = ()=>{
@@ -147,6 +158,14 @@ const Search = (props) => {
       props.history.push('/auth')
   }
 
+  const loginButton= props.user? 
+  (!props.user.authenticated) 
+  ?
+  <Button variant="outlined" color="primary"  onClick={handleAuth}>
+      Login/Sign Up 
+  </Button>
+  :null
+  :<CircularProgress/>
 
   return (
     <div className={classes.root}>
@@ -161,12 +180,8 @@ const Search = (props) => {
           </form>
         </div>
         
-          
-          {props.login?'':
-          <Button variant="outlined" color="primary"  onClick={handleAuth}>
-              Login/Sign Up 
-          </Button>}
-          
+          {loginButton}
+    
       </Toolbar>
     </AppBar>:""
      }
@@ -224,4 +239,14 @@ function Item({ item }) {
   );
 }
 
-export default Search;
+
+
+//connect subscribe/unsubscribe the redux store
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+
+//connect subscribe/unsubscribe the redux store
+export default connect(mapStateToProps)(Search);
+

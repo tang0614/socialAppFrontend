@@ -124,6 +124,7 @@ const ScreamCardDetail = (props) => {
           retweet={retweet}
           like={like}
           unLike={unLike}
+        
         />
       </div>
 

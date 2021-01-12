@@ -88,6 +88,8 @@ input:focus {
 }
 .item .thumbnail {
   float: right;
+  width: 40%;
+  max-width: 200px;
   box-shadow: 0px 1px 1px 1px #0002;
   border-radius: 12px;
   margin-left: 1em;

@@ -26,7 +26,7 @@ const Screams = (props) => {
   }, [props.totalRetweet, props.totalComment]);
 
   const getScream = (scream, id) => {
-    console.log("getScream is ", scream);
+   
     if (scream.commentOn) {
       const commented_id = scream.commentOn;
 
@@ -51,7 +51,7 @@ const Screams = (props) => {
         </div>
       );
     } else {
-      console.log("passing scream, not comment, not tweet is ", scream);
+    
       return <Scream key={id + "scream"} scream={scream} isComment={false} />;
     }
   };
@@ -61,7 +61,7 @@ const Screams = (props) => {
     paper = <CircularProgress />;
   } else {
     let data = props.screams
-    console.log('props.query',props.query)
+
     if(props.query){
       data = data.filter((scream, id) => scream.body.toLowerCase().includes(props.query.toLowerCase()));
     }

@@ -29,7 +29,7 @@ const AuthorImage = (props) => {
 
   const url = props.imageUrl
     ? "https://s3-us-east-2.amazonaws.com/xinyu-twitter-app/" + props.imageUrl
-    : window.location.origin + "/image/icon.png";
+    : window.location.origin + "/image/default.png";
 
   return (
     <div className={classes.root}>

@@ -58,17 +58,16 @@ const Profile = (props) => {
     const token = localStorage.getItem("IdToken");
     http.setJwt(token);
 
-    setHandleId(props.match.params.id)
     props.getOtherUser(`/api/users/${props.match.params.id}`)
-    
-   
-    if(!(props.currentUser.handle==='user10' && props.currentUser._id===props.match.params.id)){
-        props.history.push(props.match.url + "/mytweet");
-    } 
+
+    setHandleId(props.match.params.id)
+    if(!(props.user.handle==='user10' && props.user._id===props.match.params.id)){
+      props.history.push(props.match.url + "/mytweet");
+    }
 
   },[props.match.params.id])
 
- 
+
 
   //handle new tweet
   const handleClickOpen = () => {
@@ -80,7 +79,7 @@ const Profile = (props) => {
   };
   
   
-  const paper = props.currentUser.handle==='user10' && props.currentUser._id===handleId? <Admin />:(
+  const paper = props.user.handle==='user10' && props.user._id===handleId? <Admin />:(
     <div>
     <ProfileCard otherUser={props.otherUser} handleId={handleId}/>
     <EditImage otherUser={props.otherUser} handleId={handleId}/>
@@ -120,6 +119,7 @@ const Profile = (props) => {
 
 //connect subscribe/unsubscribe the redux store
 const mapStateToProps = (state) => ({
+  user:state.user,
   otherUser: state.user.otherUser,
 });
 

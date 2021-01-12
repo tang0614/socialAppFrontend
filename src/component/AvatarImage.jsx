@@ -41,7 +41,11 @@ const AvatarImage = (props) => {
   
 
   if (!props.user) {
-      image = <CircularProgress />;
+      image =  <Avatar
+      alt="avatar"
+      src={window.location.origin + "/image/default.png"}
+      className={props.isTweet ? classes.small : classes.large}
+    />;
     } else {
       if(props.handleId && (props.user._id!==props.handleId)){
         image =props.otherUser ? (
@@ -56,7 +60,7 @@ const AvatarImage = (props) => {
         ) : (
           <Avatar
             alt="avatar"
-            src={window.location.origin + "/image/icon.png"}
+            src={window.location.origin + "/image/default.png"}
             className={props.isTweet ? classes.small : classes.large}
           />
         );
@@ -74,7 +78,7 @@ const AvatarImage = (props) => {
         ) : (
           <Avatar
             alt="avatar"
-            src={window.location.origin + "/image/icon.png"}
+            src={window.location.origin + "/image/default.png"}
             className={props.isTweet ? classes.small : classes.large}
           />
         );

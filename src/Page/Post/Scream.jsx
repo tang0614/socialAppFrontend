@@ -16,6 +16,7 @@ import Slide from "@material-ui/core/Slide";
 import Tooltip from "@material-ui/core/Tooltip";
 import GroupAddIcon from "@material-ui/icons/GroupAdd";
 import EmojiNatureTwoToneIcon from "@material-ui/icons/EmojiNatureTwoTone";
+import CircularProgress from "@material-ui/core/CircularProgress";
 // Redux
 import { connect } from "react-redux";
 import {
@@ -119,6 +120,7 @@ const Scream = (props) => {
   };
 
   const handleCloseFull = () => {
+    console.log(' handleCloseFull setOpen_full')
     setOpen_full(false);
   };
 
@@ -169,22 +171,29 @@ const Scream = (props) => {
       />
     </div>
   ) : (
-    <Button className={classes.fullScreen_button} onClick={handleClickOpenFull}>
+
+    <Button className={classes.fullScreen_button} 
+    disabled={props.authenticated?false:true}
+    onClick={handleClickOpenFull}>
       <ScreamCard
         scream={scream}
         isComment={props.isComment}
         isRetweet={props.isRetweet}
       />
     </Button>
+ 
+    
   );
-
+  
+  
+  console.log('scream open_full', open_full)
   
 
   return (
     <div>
       <Card className={classes.root}>
         <div className={classes.add}>
-          <Button>
+          <Button  disabled={props.authenticated?false:true}>
             <EmojiNatureTwoToneIcon />
           </Button>
           {scream.author === props.user._id || props.isRetweet ? (
@@ -195,7 +204,7 @@ const Scream = (props) => {
               className={follow ? classes.follow : ""}
               onClick={followHandler}
             >
-              <Button>
+              <Button  disabled={props.authenticated?false:true}>
                 <GroupAddIcon />
               </Button>
             </Tooltip>
@@ -254,6 +263,7 @@ Scream.propTypes = {
 
 //connect subscribe/unsubscribe the redux store
 const mapStateToProps = (state) => ({
+  authenticated:state.user.authenticated,
   user: state.user.user,
 });
 

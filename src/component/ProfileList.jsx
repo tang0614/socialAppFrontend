@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router";
 //Material UI
 import { makeStyles } from "@material-ui/core/styles";
 import ListItem from "@material-ui/core/ListItem";
@@ -43,6 +44,7 @@ const ProfileList = (props) => {
 
   //go to a new page
   const handleProfile = (_id) => {
+    console.log('profile List props', props)
     props.history.push(`/profile/${_id}`);
   };
 
@@ -130,4 +132,4 @@ const mapActionsToProps = (dispatch) => {
 };
 
 //connect subscribe/unsubscribe the redux store
-export default connect(mapStateToProps, mapActionsToProps)(ProfileList);
+export default connect(mapStateToProps, mapActionsToProps)(withRouter(ProfileList));
