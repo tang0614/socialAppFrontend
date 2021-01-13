@@ -39,9 +39,10 @@ const Home = (props) => {
       <CssBaseline />
       <AppBar position="static" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
-          <ProfileButton/>
-          <SearchBox query={props.query} setQuery={props.setQuery} submit={props.search}/>
-          <LoginButton/>
+           
+            <ProfileButton/>
+            <SearchBox query={props.query} setQuery={props.setQuery} submit={props.search}/>
+            <LoginButton />
         </Toolbar>
       </AppBar>
     </div>

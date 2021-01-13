@@ -70,7 +70,6 @@ const PostCard = (props) => {
       open={open}
       onClose={handleClose}
       aria-labelledby="form-dialog-title"
-      fullWidth={"100%"}
     >
       <Button
         className={classes.cancelIcon}

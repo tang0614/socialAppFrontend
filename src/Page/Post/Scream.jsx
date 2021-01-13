@@ -16,7 +16,6 @@ import Slide from "@material-ui/core/Slide";
 import Tooltip from "@material-ui/core/Tooltip";
 import GroupAddIcon from "@material-ui/icons/GroupAdd";
 import EmojiNatureTwoToneIcon from "@material-ui/icons/EmojiNatureTwoTone";
-import CircularProgress from "@material-ui/core/CircularProgress";
 // Redux
 import { connect } from "react-redux";
 import {
@@ -120,7 +119,6 @@ const Scream = (props) => {
   };
 
   const handleCloseFull = () => {
-    console.log(' handleCloseFull setOpen_full')
     setOpen_full(false);
   };
 
@@ -129,7 +127,6 @@ const Scream = (props) => {
   };
 
   const retweet = () => {
-    console.log("retweeting");
     const userData = {
       body: "retweet" + scream._id,
     };
@@ -153,12 +150,10 @@ const Scream = (props) => {
   };
 
   const like = (_id) => {
-    console.log("liking a post");
     props.putLikePost(`./api/users/like/${_id}`);
   };
 
   const unLike = (_id) => {
-    console.log("Unliking a post");
     props.putUnLikePost(`./api/users/unlike/${_id}`);
   };
 
@@ -185,10 +180,6 @@ const Scream = (props) => {
     
   );
   
-  
-  console.log('scream open_full', open_full)
-  
-
   return (
     <div>
       <Card className={classes.root}>

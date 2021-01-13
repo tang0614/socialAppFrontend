@@ -6,19 +6,19 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { connect } from "react-redux";
 
 const LoginButton = (props) =>{
+    console.log('LoginButton')
     const handleAuth = ()=>{
         props.history.push('/auth')
       }
-
-    const loginButton= (!props.user)?
-        (!props.user.authenticated) 
-        ?
+    const loginButton= (props.user)?
       
+        (props.user.authenticated)?
+        null:
         <Button variant="outlined" color="primary"  onClick={handleAuth}>
-            Login/Sign Up 
+        Login/Sign Up 
         </Button>
         :<CircularProgress/>
-        :null
+
       
     return(
         <div>
@@ -27,11 +27,9 @@ const LoginButton = (props) =>{
     )
 }
 
-//state from the store, and properties of this object become our props
 const mapStateToProps = (state) => ({
     user: state.user,
-  });
+});
   
-//connect subscribe/unsubscribe the redux store
 export default connect(mapStateToProps)(withRouter(LoginButton));
 

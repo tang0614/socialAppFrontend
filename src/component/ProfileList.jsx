@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { withRouter } from "react-router";
 //Material UI
 import { makeStyles } from "@material-ui/core/styles";
@@ -36,15 +35,11 @@ const useStyles = makeStyles((theme) => ({
 const ProfileList = (props) => {
   const classes = useStyles();
   const { handle, following, followedBy, imageUrl, _id } = props.user;
-
-  //logout current user
+  
   const handleLogout = () => {
     props.logout();
   };
-
-  //go to a new page
   const handleProfile = (_id) => {
-    console.log('profile List props', props)
     props.history.push(`/profile/${_id}`);
   };
 
@@ -112,11 +107,6 @@ const ProfileList = (props) => {
       )}
     </List>
   );
-};
-
-ProfileList.propTypes = {
-  user: PropTypes.object.isRequired,
-  logout: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
