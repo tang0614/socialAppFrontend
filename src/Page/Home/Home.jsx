@@ -9,6 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import Grid from "@material-ui/core/Grid";
 import Fab from "@material-ui/core/Fab";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,6 +39,7 @@ const Home = (props) => {
   const [query_news, setQuery_news] = useState("");
 
   const handleOpen = () => {
+    if(!props.authenticated) props.history.push('/auth')
     setOpen(true);
   };
 
@@ -88,4 +90,12 @@ const Home = (props) => {
 };
 
 
-export default Home;
+//connect subscribe/unsubscribe the redux store
+const mapStateToProps = (state) => ({
+  authenticated:state.user.authenticated,
+
+});
+
+
+export default connect(mapStateToProps)(Home);
+

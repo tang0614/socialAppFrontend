@@ -71,11 +71,10 @@ const ProfileButton = (props) =>{
         </>
     )
 }
-//state from the store, and properties of this object become our props
+
 const mapStateToProps = (state) => ({
     user: state.user,
-  });
-  
-//connect subscribe/unsubscribe the redux store
+});
+
 export default connect(mapStateToProps)(ProfileButton);
 

@@ -25,7 +25,6 @@ const Screams = (props) => {
   }, [props.totalRetweet, props.totalComment]);
 
   const getScream = (scream, id) => {
-   
     if (scream.commentOn) {
       const commented_id = scream.commentOn;
       const commentedScream = props.screams.find(
@@ -67,14 +66,11 @@ const Screams = (props) => {
   return <div className={classes.screams}>{paper}</div>;
 };
 
-//state from the store, and properties of this object become our props
 const mapStateToProps = (state) => ({
   screams: state.data.screams, //cannot query state.data.screams-scream is object
   totalRetweet: state.data.totalRetweet,
   totalComment: state.data.totalComment,
 });
-
-
 
 const mapActionsToProps = (dispatch) => {
   return {
@@ -82,5 +78,4 @@ const mapActionsToProps = (dispatch) => {
   };
 };
 
-//connect subscribe/unsubscribe the redux store
 export default connect(mapStateToProps, mapActionsToProps)(Screams);

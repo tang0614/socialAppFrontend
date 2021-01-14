@@ -37,7 +37,7 @@ const Comment = (props) => {
     const userData = {
       body,
     };
-
+    
     props.postComment("./api/screams", userData);
 
     try {
