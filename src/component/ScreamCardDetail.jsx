@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import PropTypes from "prop-types";
 import ScreamCard from "./ScreamCard";
 import Buttons from "./Buttons";
 
@@ -13,7 +12,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 // Redux
 import { connect } from "react-redux";
-import { apiGetOneScreamBegan,  apiPutUnLikeBegan,apiPutLikeBegan } from "../store/actions";
+import { apiGetOneScreamBegan} from "../store/actions";
 
 const useStyles = makeStyles((theme) => ({
   disabled: {
@@ -53,24 +52,11 @@ const ScreamCardDetail = (props) => {
     openDelete,
     handleDeleteOpen,
     handleDeleteClose,
-    retweet,
   } = props;
 
   useEffect(() => {
-    console.log("scream detail using effect");
     getScreamDetail(scream._id);
   }, [scream]);
-
-  const like = (_id) => {
-    console.log("liking a post");
-    props.putLikePost(`./api/users/like/${_id}`);
-  };
-
-  const unLike = (_id) => {
-    console.log("Unliking a post");
-    props.putUnLikePost(`./api/users/unlike/${_id}`);
-  };
-
 
   const getScreamDetail = (index) => {
     props.getScream(`/api/screams/${index}`);
@@ -91,7 +77,6 @@ const ScreamCardDetail = (props) => {
           openDelete={openDelete}
           handleDeleteOpen={handleDeleteOpen}
           handleDeleteClose={handleDeleteClose}
-          retweet={retweet}
         />
       );
     })
@@ -121,22 +106,11 @@ const ScreamCardDetail = (props) => {
           openDelete={openDelete}
           handleDeleteOpen={handleDeleteOpen}
           handleDeleteClose={handleDeleteClose}
-          retweet={retweet}
-          like={like}
-          unLike={unLike}
-        
         />
       </div>
-
       {comments}
     </div>
   );
-};
-
-ScreamCardDetail.propTypes = {
-  scream: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
-  getScream: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -148,11 +122,8 @@ const mapStateToProps = (state) => ({
 
 const mapActionsToProps = (dispatch) => {
   return {
-    getScream: (url) => dispatch(apiGetOneScreamBegan({ url })),
-    putLikePost: (url) => dispatch(apiPutLikeBegan({ url })),
-    putUnLikePost: (url) => dispatch(apiPutUnLikeBegan({ url }))
+    getScream: (url) => dispatch(apiGetOneScreamBegan({ url }))
   };
 };
-
 
 export default connect(mapStateToProps, mapActionsToProps)(ScreamCardDetail);

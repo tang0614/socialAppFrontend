@@ -9,9 +9,15 @@ import RoundedCornerIcon from "@material-ui/icons/RoundedCorner";
 import Tooltip from "@material-ui/core/Tooltip";
 import DeleteOutline from "@material-ui/icons/DeleteOutline";
 import { makeStyles } from "@material-ui/core/styles";
-
 // Redux
 import { connect } from "react-redux";
+import { getComment } from "../store/helpers";
+import {
+  apiPutRetweetBegan,
+  apiPutUnLikeBegan,
+  apiPutLikeBegan,
+  apiPostCommentBegan
+} from "../store/actions";
 
 const useStyles = makeStyles((theme) => ({
   buttons: {
@@ -27,13 +33,18 @@ const useStyles = makeStyles((theme) => ({
   liked: {
     color: "#1DA1F2",
   },
-  unliked: {},
 }));
 
 const Buttons = (props) => {
   const classes = useStyles(props);
-  const [likePost, setLikePost] = useState("");
-
+  const {
+    scream,
+    handleClickOpen,
+    openDelete,
+    handleDeleteOpen,
+    handleDeleteClose
+  } = props;
+ 
   useEffect(() => {
     const re = props.user.like
       ? props.user.like.filter((element) => {
@@ -43,20 +54,10 @@ const Buttons = (props) => {
     setLikePost(re.length > 0);
   }, [props.user.like]);
 
-  const {
-    scream,
-    handleClickOpen,
-    openDelete,
-    handleDeleteOpen,
-    handleDeleteClose,
-    retweet,
-    like,
-    unLike
-  } = props;
-
+  const [likePost, setLikePost] = useState("");
+  const like = (_id) => {props.putLikePost(`./api/users/like/${_id}`);};
+  const unLike = (_id) => {props.putUnLikePost(`./api/users/unlike/${_id}`);};
   const handleLikePost = () => {
-
-
     if (likePost) {
       unLike(scream._id);
       setLikePost(false);
@@ -64,9 +65,28 @@ const Buttons = (props) => {
       like(scream._id);
       setLikePost(true);
     }
-    //here like post is false because setLikePost is async call
   };
 
+  const retweet = () => {
+    const userData = {
+      body: "retweet" + scream._id,
+    };
+    props.postComment("./api/screams", userData);
+    try {
+      setTimeout(() => {
+        const retweet_id = getComment();
+        const userData = {
+          retweet_id: retweet_id,
+          retweeted_id: scream._id,
+        };
+        props.putRetweetDetail(`./api/screams/retweet`, userData);
+      }, 1000);
+    } catch (err) {
+      alert("internet error, fail to retweet");
+    }
+  };
+  
+ 
   const buttons = scream.body.startsWith("retweet") ? (
     ""
   ) : (
@@ -109,14 +129,20 @@ const Buttons = (props) => {
   return <div>{buttons}</div>;
 };
 
-Buttons.propTypes = {
-  scream: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
-};
-
 const mapStateToProps = (state) => ({
   user: state.user.user,
   authenticated:state.user.authenticated
 });
 
-export default connect(mapStateToProps)(Buttons);
+const mapActionsToProps = (dispatch) => {
+  return {
+    postComment: (url, userData, handle) =>
+    dispatch(apiPostCommentBegan({ url, userData, handle })),
+    putRetweetDetail: (url, userData) =>
+      dispatch(apiPutRetweetBegan({ url, userData })),
+    putLikePost: (url) => dispatch(apiPutLikeBegan({ url })),
+    putUnLikePost: (url) => dispatch(apiPutUnLikeBegan({ url }))
+  };
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(Buttons);

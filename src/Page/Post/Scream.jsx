@@ -3,7 +3,6 @@ import ScreamCard from "../../component/ScreamCard";
 import Comment from "../../component/comment";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { getComment } from "../../store/helpers";
 import ScreamCardDetail from "../../component/ScreamCardDetail";
 import Buttons from "../../component/Buttons";
 // MUI Stuff
@@ -14,12 +13,6 @@ import Dialog from "@material-ui/core/Dialog";
 import Slide from "@material-ui/core/Slide";
 // Redux
 import { connect } from "react-redux";
-import {
-  apiPostCommentBegan,
-  apiPutRetweetBegan,
-  apiPutUnLikeBegan,
-  apiPutLikeBegan,
-} from "../../store/actions";
 import ScreamHeader from "../../component/ScreamHeader";
 
 const useStyles = makeStyles((theme) => ({
@@ -29,28 +22,7 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
     boxShadow: "none",
     borderBottom: "1px dotted #cccccc",
-  },
-  disabled: {
-    color: "#cccccc",
-    cursor: "none",
-  },
-  buttons: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    alignItems: "center",
-  },
-  retweet_buttons: {
-    width: 250,
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    alignItems: "center",
-  },
-  fullScreenScreamCard: {
-    marginTop: "4rem",
-  },
- 
+  }
 }));
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -64,39 +36,18 @@ const Scream = (props) => {
   const [open, setOpen] = useState(false);
   const [open_full, setOpen_full] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
-
-
+  
   const handleDeleteOpen = () => {setOpenDelete(true);};
   const handleDeleteClose = () => {setOpenDelete(false);};
+
   const handleClickOpen = () =>  {setOpen(true)};
   const handleClickClose = () => {setOpen(false);};
+
   const handleCloseFull = () => {setOpen_full(false);};
-  const handleClickOpenFull = () => {setOpen_full(true);};
-
-  const like = (_id) => {props.putLikePost(`./api/users/like/${_id}`);};
-  const unLike = (_id) => {props.putUnLikePost(`./api/users/unlike/${_id}`);};
-
-  const retweet = () => {
-    const userData = {
-      body: "retweet" + scream._id,
-    };
-    props.postComment("./api/screams", userData);
-    try {
-      setTimeout(() => {
-        const retweet_id = getComment();
-        const userData = {
-          retweet_id: retweet_id,
-          retweeted_id: scream._id,
-        };
-        props.putRetweetDetail(`./api/screams/retweet`, userData);
-      }, 1000);
-    } catch (err) {
-      alert("internet error, fail to retweet");
-    }
-  };
+  const handleOpenFull = () => {setOpen_full(true);};
 
   const screamCard = props.isRetweet ? (
-    <div className={classes.retweet_card}>
+    <div>
       <ScreamCard
         scream={scream}
         isComment={props.isComment}
@@ -104,9 +55,9 @@ const Scream = (props) => {
       />
     </div>
   ) : (
-    <Button className={classes.fullScreen_button} 
+    <Button 
     disabled={props.authenticated?false:true}
-    onClick={handleClickOpenFull}>
+    onClick={handleOpenFull}>
       <ScreamCard
         scream={scream}
         isComment={props.isComment}
@@ -126,9 +77,6 @@ const Scream = (props) => {
           openDelete={openDelete}
           handleDeleteOpen={handleDeleteOpen}
           handleDeleteClose={handleDeleteClose}
-          retweet={retweet}
-          like={like}
-          unLike={unLike}
         />
         <Comment
           open={open}
@@ -151,7 +99,6 @@ const Scream = (props) => {
           openDelete={openDelete}
           handleDeleteOpen={handleDeleteOpen}
           handleDeleteClose={handleDeleteClose}
-          retweet={retweet}
         />
       </Dialog>
     </div>
@@ -165,15 +112,4 @@ const mapStateToProps = (state) => ({
   auth: state.user.authenticated,
 });
 
-const mapActionsToProps = (dispatch) => {
-  return {
-    postComment: (url, userData, handle) =>
-      dispatch(apiPostCommentBegan({ url, userData, handle })),
-    putRetweetDetail: (url, userData) =>
-      dispatch(apiPutRetweetBegan({ url, userData })),
-    putLikePost: (url) => dispatch(apiPutLikeBegan({ url })),
-    putUnLikePost: (url) => dispatch(apiPutUnLikeBegan({ url }))
-  };
-};
-
-export default connect(mapStateToProps, mapActionsToProps)(Scream);
+export default connect(mapStateToProps)(Scream);
