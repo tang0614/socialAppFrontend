@@ -173,9 +173,7 @@ const ProfileCard = (props) => {
             onClick={() => {
               props.history.push(props.match.url + "/mytweet");
             }}
-          >
-            Tweets
-          </Link>
+          >Tweets</Link>
 
           <Link
             component="button"
@@ -183,9 +181,7 @@ const ProfileCard = (props) => {
             onClick={() => {
               props.history.push(props.match.url + "/mycomment");
             }}
-          >
-            Tweets & replies
-          </Link>
+          >Tweets & replies</Link>
 
           <Link
             component="button"
@@ -193,9 +189,7 @@ const ProfileCard = (props) => {
             onClick={() => {
               props.history.push(props.match.url + "/mylike");
             }}
-          >
-            Saved Tweets
-          </Link>
+          >Saved Tweets</Link>
         </CardActions>
         <EditProfile open={open} handleClose={handleClose} />
       </Card>

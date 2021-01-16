@@ -41,6 +41,7 @@ const EditProfile = (props) => {
     setBio(bio);
     setLocation(location);
     setWebsite(website);
+    //this block get updated whenever bio, location or website change
   }, [props.user]);
 
   const handleServer = () => {
