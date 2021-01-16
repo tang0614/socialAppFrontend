@@ -61,15 +61,22 @@ const MyLike = (props) => {
   if (!props.screams||!props.otherUser) {
     paper = <CircularProgress />;
   } else {
+    let data
+    if (props.otherUser._id!==props.user._id){
+      data = props.otherUser.like
+    }else{
+      data = props.user.like
+    }
+
     let likes = [];
-    props.otherUser.like.forEach((element) => {
+    data.forEach((element) => {
       likes.push(element._id);
     });
-
     const liked_posts = props.screams.filter((post) =>
       likes.includes(post._id)
     );
     paper = liked_posts.map((scream, id) => getScream(scream, id));
+    
   }
 
   return <div className={classes.root}>{paper}</div>;
