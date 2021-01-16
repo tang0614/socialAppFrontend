@@ -57,13 +57,13 @@ const Home = (props) => {
     setNews(query_news)
   };
 
- 
+  
   return (
     <div className={classes.root}>
-      <Header query={query} setQuery={setQuery} submit={searchTwitter}/>
+      <Header query={query} setQuery={setQuery} search={searchTwitter}/>
       <Grid container>
         <Grid item xs={12} sm={6} container>
-          <Screams query={query_twitter}/>
+          <Screams query={query_twitter}/> 
         </Grid>
         <Grid item sm={6} className={classes.Container}>
           <div >

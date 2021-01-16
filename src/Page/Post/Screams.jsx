@@ -51,7 +51,7 @@ const Screams = (props) => {
       return <Scream key={id + "scream"} scream={scream} isComment={false} />;
     }
   };
-
+  
   let paper;
   if (!props.screams) {
     paper = <CircularProgress />;
