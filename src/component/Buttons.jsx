@@ -40,9 +40,6 @@ const Buttons = (props) => {
   const {
     scream,
     handleClickOpen,
-    openDelete,
-    handleDeleteOpen,
-    handleDeleteClose
   } = props;
  
   useEffect(() => {
@@ -54,7 +51,12 @@ const Buttons = (props) => {
     setLikePost(re.length > 0);
   }, [props.user.like]);
 
+
   const [likePost, setLikePost] = useState("");
+  const [openDelete, setOpenDelete] = useState(false); // delete scream window
+  
+  const handleDeleteOpen = () => {setOpenDelete(true);};
+  const handleDeleteClose = () => {setOpenDelete(false);};
   const like = (_id) => {props.putLikePost(`./api/users/like/${_id}`);};
   const unLike = (_id) => {props.putUnLikePost(`./api/users/unlike/${_id}`);};
   const handleLikePost = () => {

@@ -34,12 +34,7 @@ const Scream = (props) => {
   dayjs.extend(relativeTime);
   const scream = props.scream;
   const [open, setOpen] = useState(false);
-  const [open_full, setOpen_full] = useState(false);
-  const [openDelete, setOpenDelete] = useState(false);
-  
-  const handleDeleteOpen = () => {setOpenDelete(true);};
-  const handleDeleteClose = () => {setOpenDelete(false);};
-
+  const [open_full, setOpen_full] = useState(false); //
   const handleClickOpen = () =>  {setOpen(true)};
   const handleClickClose = () => {setOpen(false);};
 
@@ -74,9 +69,6 @@ const Scream = (props) => {
         <Buttons
           scream={scream}
           handleClickOpen={handleClickOpen}
-          openDelete={openDelete}
-          handleDeleteOpen={handleDeleteOpen}
-          handleDeleteClose={handleDeleteClose}
         />
         <Comment
           open={open}
@@ -96,9 +88,6 @@ const Scream = (props) => {
           handleCloseFull={handleCloseFull}
           scream={scream}
           handleClickOpen={handleClickOpen}
-          openDelete={openDelete}
-          handleDeleteOpen={handleDeleteOpen}
-          handleDeleteClose={handleDeleteClose}
         />
       </Dialog>
     </div>

@@ -49,7 +49,6 @@ const ScreamCardDetail = (props) => {
     handleCloseFull,
     scream,
     handleClickOpen,
-    openDelete,
     handleDeleteOpen,
     handleDeleteClose,
   } = props;
@@ -74,9 +73,6 @@ const ScreamCardDetail = (props) => {
           isComment={true}
           isNested={true}
           handleClickOpen={handleClickOpen}
-          openDelete={openDelete}
-          handleDeleteOpen={handleDeleteOpen}
-          handleDeleteClose={handleDeleteClose}
         />
       );
     })
@@ -103,9 +99,6 @@ const ScreamCardDetail = (props) => {
         <Buttons
           scream={scream}
           handleClickOpen={handleClickOpen}
-          openDelete={openDelete}
-          handleDeleteOpen={handleDeleteOpen}
-          handleDeleteClose={handleDeleteClose}
         />
       </div>
       {comments}

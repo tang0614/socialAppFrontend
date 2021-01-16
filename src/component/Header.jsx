@@ -38,8 +38,7 @@ const Header = (props) => {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="static" className={classes.appBar}>
-        <Toolbar className={classes.toolbar}>
-           
+        <Toolbar className={classes.toolbar}>       
             <ProfileButton/>
             <SearchBox query={props.query} setQuery={props.setQuery} submit={props.search}/>
             <LoginButton />

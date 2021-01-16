@@ -61,29 +61,14 @@ const useStyles = makeStyles((theme) => ({
 const ScreamCard = (props) => {
   const classes = useStyles(props);
 
-  const { createdAt, _id, body, author_details, author } = props.scream;
+  const { createdAt, body, author_details, author } = props.scream;
 
   const {
     isComment,
     isNested,
-
     scream,
-    handleClickOpen,
-    openDelete,
-    handleDeleteOpen,
-    handleDeleteClose,
-    retweet,
+    handleClickOpen
   } = props;
-
-  const like = (_id) => {
-    console.log("liking a post");
-    props.putLikePost(`./api/users/like/${_id}`);
-  };
-
-  const unLike = (_id) => {
-    console.log("Unliking a post");
-    props.putUnLikePost(`./api/users/unlike/${_id}`);
-  };
 
 
   dayjs.extend(relativeTime);
@@ -163,45 +148,19 @@ const ScreamCard = (props) => {
           </Typography>
         </div>
       </div>
-
-      <div className={classes.content}>{bodyScream}</div>
-      
+      <div className={classes.content}>{bodyScream}</div>   
       {isNested ? 
         <Buttons
           scream={scream}
           handleClickOpen={handleClickOpen}
-          openDelete={openDelete}
-          handleDeleteOpen={handleDeleteOpen}
-          handleDeleteClose={handleDeleteClose}
-          retweet={retweet}
-          like={like}
-          unLike={unLike}
         />:""}
-        
-    
-   
       </Card>
   );
-      }
-ScreamCard.propTypes = {
-  user: PropTypes.string.isRequired,
-  screams: PropTypes.string.isRequired,
-};
+  }
 
 //connect subscribe/unsubscribe the redux store
 const mapStateToProps = (state) => ({
   user: state.user.user,
   screams: state.data.screams,
 });
-
-const mapActionsToProps = (dispatch) => {
-  return {
-   
-    putLikePost: (url) => dispatch(apiPutLikeBegan({ url })),
-    putUnLikePost: (url) => dispatch(apiPutUnLikeBegan({ url })),
-   
-  };
-};
-
-
-export default connect(mapStateToProps,mapActionsToProps)(ScreamCard);
+export default connect(mapStateToProps)(ScreamCard);
