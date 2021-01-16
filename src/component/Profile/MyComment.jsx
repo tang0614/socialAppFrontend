@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Scream from "../Post/Scream";
+import Scream from "../../Page/Post/Scream";
 // REdux
 import { connect } from "react-redux";
 
 //materialUI
 import { makeStyles } from "@material-ui/core/styles";
-
 
 const useStyles = makeStyles({
   root: {
@@ -24,14 +22,13 @@ const useStyles = makeStyles({
   },
 });
 
-const MyLike = (props) => {
+const MyComment = (props) => {
   const classes = useStyles(props);
-  
 
   const getScream = (scream, id) => {
+    
     if (scream.commentOn) {
       const commented_id = scream.commentOn;
-
       const commentedScream = props.screams.find(
         (scream) => scream._id === commented_id
       );
@@ -53,37 +50,26 @@ const MyLike = (props) => {
         </div>
       );
     } else {
-      console.log("passing scream, not comment, not tweet is ", scream);
-      return <Scream key={id + "scream"} scream={scream} isComment={false} />;
+      return "";
     }
   };
 
   let paper;
-  if (!props.screams||!props.otherUser) {
+  if (!props.screams) {
     paper = <CircularProgress />;
   } else {
-    let likes = [];
-    props.otherUser.like.forEach((element) => {
-      likes.push(element._id);
-    });
-
-    const liked_posts = props.screams.filter((post) =>
-      likes.includes(post._id)
+    const personal_posts = props.screams.filter(
+      (post) => post.author === props.handleId
     );
-    paper = liked_posts.map((scream, id) => getScream(scream, id));
+
+    paper = personal_posts.map((scream, id) => getScream(scream, id));
   }
-
   return <div className={classes.root}>{paper}</div>;
-};
-
-MyLike.propTypes = {
-  screams: PropTypes.array.isRequired,
-  users: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   screams: state.data.screams,
-  user: state.user.user,
+
 });
 
-export default connect(mapStateToProps)(MyLike);
+export default connect(mapStateToProps)(MyComment);

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 //redux
 import { connect } from "react-redux";
-import { apiPostCommentBegan, apiPutCommentBegan } from "../store/actions";
+import { apiPostCommentBegan, apiPutCommentBegan } from "../../store/actions";
 //Material UI
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
@@ -11,7 +11,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import CloseIcon from "@material-ui/icons/Close";
 import ScreamCard from "./ScreamCard";
-import { getComment } from "../store/helpers";
+import { getComment } from "../../store/helpers";
 
 const useStyles = makeStyles((theme) => ({
   cancelIcon: {

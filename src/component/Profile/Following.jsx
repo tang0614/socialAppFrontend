@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import AuthorImage from '../../component/AuthorImage';
+import AuthorImage from '../AuthorImage';
 import { Link } from "react-router-dom";
 // MUI Stuff
 import { makeStyles } from "@material-ui/core/styles";
@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: "row",
         justifyContent:"space-between",
         margin:"1rem 0"
+
       },
 
     
@@ -32,23 +33,19 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: "row",
         alignItems: "center",
       },
-
       info:{
         display: "flex",
         flexDirection: "column",
         alignItems: "start",
-      },
-    
-    
+      }
   }));
 
-const FollowedBy = (props)=>{
+const Following = (props)=>{
     const classes = useStyles();
-    
-
+   
     let paper
     if(props.otherUser){
-        paper = props.otherUser.followedBy_details.map(user=>{
+        paper = props.otherUser.following_details.map(user=>{
             return(
             <div className={classes.header}>
             <div className={classes.headerItem}>
@@ -76,37 +73,25 @@ const FollowedBy = (props)=>{
              
                 
               </div>
-                
-              <NameCard id={user._id} following={props.user.following.includes(user._id)} />
-
+              
+                <NameCard id={user._id} following={props.user.following.includes(user._id)}/>
             </div>
             )
         })
     }else{
         paper=""
     }
-
-
    
-
     return <Card className={classes.root}>
         {paper}
     </Card>
 }
 
 
-
-
- 
- 
-  
 const mapStateToProps = (state) => ({
     user: state.user.user,
    
-  });
+});
   
-
-  
-export default connect(mapStateToProps)(FollowedBy);
-  
+export default connect(mapStateToProps)(Following);
   

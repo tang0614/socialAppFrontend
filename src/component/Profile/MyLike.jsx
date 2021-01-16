@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Scream from "../Post/Scream";
+import Scream from "../../Page/Post/Scream";
 // REdux
 import { connect } from "react-redux";
 
 //materialUI
 import { makeStyles } from "@material-ui/core/styles";
+
 
 const useStyles = makeStyles({
   root: {
@@ -23,12 +23,11 @@ const useStyles = makeStyles({
   },
 });
 
-const MyTweet = (props) => {
+const MyLike = (props) => {
   const classes = useStyles(props);
-  console.log('My tweet page','props.handleId is',props.handleId)
   
-  const getScream = (scream, id) => {
 
+  const getScream = (scream, id) => {
     if (scream.commentOn) {
       const commented_id = scream.commentOn;
 
@@ -59,26 +58,27 @@ const MyTweet = (props) => {
   };
 
   let paper;
-  if (!props.screams) {
+  if (!props.screams||!props.otherUser) {
     paper = <CircularProgress />;
   } else {
-    const personal_posts = props.screams.filter(
-      (post) => post.author === props.handleId
-    );
+    let likes = [];
+    props.otherUser.like.forEach((element) => {
+      likes.push(element._id);
+    });
 
-    paper = personal_posts.map((scream, id) => getScream(scream, id));
+    const liked_posts = props.screams.filter((post) =>
+      likes.includes(post._id)
+    );
+    paper = liked_posts.map((scream, id) => getScream(scream, id));
   }
 
   return <div className={classes.root}>{paper}</div>;
 };
 
-MyTweet.propTypes = {
-  screams: PropTypes.array.isRequired,
-};
 
 const mapStateToProps = (state) => ({
   screams: state.data.screams,
- 
+  user: state.user.user,
 });
 
-export default connect(mapStateToProps)(MyTweet);
+export default connect(mapStateToProps)(MyLike);

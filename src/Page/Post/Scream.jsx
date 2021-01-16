@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import ScreamCard from "../../component/ScreamCard";
-import PostScream from "../../component/PostScream";
+import ScreamCard from "../../component/Scream/ScreamCard";
+import PostScream from "../../component/Scream/PostScream";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import ScreamCardDetail from "../../component/ScreamCardDetail";
-import Buttons from "../../component/Buttons";
+import ScreamCardDetail from "../../component/Scream/ScreamCardDetail";
+import Buttons from "../../component/Scream/Buttons";
 // MUI Stuff
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -13,7 +13,7 @@ import Dialog from "@material-ui/core/Dialog";
 import Slide from "@material-ui/core/Slide";
 // Redux
 import { connect } from "react-redux";
-import ScreamHeader from "../../component/ScreamHeader";
+import ScreamHeader from "../../component/Scream/ScreamHeader";
 
 const useStyles = makeStyles((theme) => ({
   root: {

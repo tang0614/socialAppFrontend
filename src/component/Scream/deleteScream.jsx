@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import { withRouter } from "react-router";
 // MUI Stuff
 import Button from "@material-ui/core/Button";
@@ -11,8 +10,7 @@ import DeleteOutline from "@material-ui/icons/DeleteOutline";
 import Tooltip from "@material-ui/core/Tooltip";
 // REdux
 import { connect } from "react-redux";
-import { apiDeleteBegan, apiUncommentBegan } from "../store/actions";
-import { TagFacesTwoTone } from "@material-ui/icons";
+import { apiDeleteBegan, apiUncommentBegan } from "../../store/actions";
 
 const DeleteScream = (props) => {
   const { handleOpen, handleClose, open, scream } = props;
@@ -26,16 +24,13 @@ const DeleteScream = (props) => {
       } else if (element.retweetOn && element.retweetOn.includes(target._id)) {
         ids.push(element._id);
         findCommentOn(element, ids);
-       
       } else if (!element.commentOn) {
-      
         return;
       }
     });
     return ids;
   }
   const deleteScream = () => {
-    console.log("deleting scream");
 
     let ids = [scream._id];
 
@@ -46,8 +41,6 @@ const DeleteScream = (props) => {
       };
       props.uncomment(`./api/screams/uncomment`, source);
     }
-
-    console.log('should be deleted scream is',scream)
     ids = findCommentOn(scream, ids);
   
     const data = { ids };
@@ -80,13 +73,6 @@ const DeleteScream = (props) => {
   );
 };
 
-
-
-DeleteScream.propTypes = {
-  delete: PropTypes.func.isRequired,
-  uncomment: PropTypes.func.isRequired,
-  screams: PropTypes.string.isRequired,
-};
 
 //connect subscribe/unsubscribe the redux store
 const mapStateToProps = (state) => ({

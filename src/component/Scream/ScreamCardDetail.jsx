@@ -11,7 +11,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 // Redux
 import { connect } from "react-redux";
-import { apiGetOneScreamBegan} from "../store/actions";
+import { apiGetOneScreamBegan} from "../../store/actions";
 
 const ScreamCardDetail = (props) => {
   const {

@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 // MUI Stuff
-
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
-
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 //redux
 import { connect } from "react-redux";
-import { apiPutUserBegan } from "../store/actions";
-import AvatarImage from "./AvatarImage";
+import { apiPutUserBegan } from "../../store/actions";
+import AvatarImage from "../AvatarImage";
 
 const useStyles = makeStyles((theme) => ({
   errorMessage: {
@@ -161,12 +158,6 @@ const EditProfile = (props) => {
       </DialogActions>
     </Dialog>
   );
-};
-
-EditProfile.propTypes = {
-  user: PropTypes.object.isRequired,
-  update: PropTypes.func.isRequired,
-  errors: PropTypes.string.isRequired,
 };
 
 //state from the store, and properties of this object become our props

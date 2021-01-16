@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import DeleteScream from "./deleteScream";
 //Material UI
 import Button from "@material-ui/core/Button";
@@ -11,13 +10,13 @@ import DeleteOutline from "@material-ui/icons/DeleteOutline";
 import { makeStyles } from "@material-ui/core/styles";
 // Redux
 import { connect } from "react-redux";
-import { getComment } from "../store/helpers";
+import { getComment } from "../../store/helpers";
 import {
   apiPutRetweetBegan,
   apiPutUnLikeBegan,
   apiPutLikeBegan,
   apiPostCommentBegan
-} from "../store/actions";
+} from "../../store/actions";
 
 const useStyles = makeStyles((theme) => ({
   buttons: {

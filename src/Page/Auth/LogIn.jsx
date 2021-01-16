@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
-
 // MUI Stuff
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -125,12 +123,6 @@ const LogIn = (props) => {
       </DialogActions>
     </Dialog>
   );
-};
-
-LogIn.propTypes = {
-  login: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
-  errors: PropTypes.string.isRequired,
 };
 
 //state from the store, and properties of this object become our props

@@ -1,5 +1,5 @@
 import React from 'react'
-import ProfileList from './ProfileList';
+import ProfileList from './Profile/ProfileList';
 import AvatarImage from './AvatarImage';
 //Material-UI
 import { Button } from '@material-ui/core';

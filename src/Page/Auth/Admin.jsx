@@ -1,5 +1,4 @@
-import React, { useReducer, useState } from "react";
-import PropTypes from "prop-types";
+import React from "react";
 
 // MUI Stuff
 import { makeStyles } from "@material-ui/core/styles";
@@ -11,7 +10,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from "@material-ui/core/Button";
-import DeleteOutline from "@material-ui/icons/DeleteOutline";
 import BlockIcon from '@material-ui/icons/Block';
 
 //redux
@@ -39,7 +37,6 @@ const Admin = (props) => {
   },[])
 
   const disableUser = (id) =>{
-      console.log('send to the server to start disable')
     props.disable(`./api/users/disable/${id}`);
   }
 
@@ -77,8 +74,6 @@ const Admin = (props) => {
   </TableContainer>
   )
 };
-
-
 
 //state from the store, and properties of this object become our props
 const mapStateToProps = (state) => ({

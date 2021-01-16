@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Scream from "../Post/Scream";
+import Scream from "../../Page/Post/Scream";
 // REdux
 import { connect } from "react-redux";
 
@@ -23,11 +22,12 @@ const useStyles = makeStyles({
   },
 });
 
-const MyComment = (props) => {
+const MyTweet = (props) => {
   const classes = useStyles(props);
-
+  console.log('My tweet page','props.handleId is',props.handleId)
+  
   const getScream = (scream, id) => {
-    
+
     if (scream.commentOn) {
       const commented_id = scream.commentOn;
 
@@ -52,7 +52,8 @@ const MyComment = (props) => {
         </div>
       );
     } else {
-      return "";
+      console.log("passing scream, not comment, not tweet is ", scream);
+      return <Scream key={id + "scream"} scream={scream} isComment={false} />;
     }
   };
 
@@ -70,13 +71,9 @@ const MyComment = (props) => {
   return <div className={classes.root}>{paper}</div>;
 };
 
-MyComment.propTypes = {
-  screams: PropTypes.array.isRequired,
-};
-
 const mapStateToProps = (state) => ({
   screams: state.data.screams,
-
+ 
 });
 
-export default connect(mapStateToProps)(MyComment);
+export default connect(mapStateToProps)(MyTweet);

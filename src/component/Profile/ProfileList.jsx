@@ -6,7 +6,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Typography from "@material-ui/core/Typography";
-import AvatarImage from "./AvatarImage";
+import AvatarImage from "../AvatarImage";
 import List from "@material-ui/core/List";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
@@ -14,7 +14,7 @@ import ContactsOutlinedIcon from "@material-ui/icons/ContactsOutlined";
 
 //redux
 import { connect } from "react-redux";
-import { logoutUser } from "../store/actions";
+import { logoutUser } from "../../store/actions";
 
 const useStyles = makeStyles((theme) => ({
   inline: {

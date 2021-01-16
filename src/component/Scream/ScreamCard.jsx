@@ -1,5 +1,5 @@
 import React from "react";
-import Scream from "../Page/Post/Scream";
+import Scream from "../../Page/Post/Scream";
 import Buttons from "./Buttons";
 // MUI Stuff
 import { makeStyles } from "@material-ui/core/styles";

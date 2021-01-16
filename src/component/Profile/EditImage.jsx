@@ -1,8 +1,7 @@
 import React from "react";
-import PropTypes from "prop-types";
 //Material UI
 import { makeStyles } from "@material-ui/core/styles";
-import AvatarImage from "./AvatarImage";
+import AvatarImage from "../AvatarImage";
 import Button from "@material-ui/core/Button";
 import EditLocationOutlinedIcon from "@material-ui/icons/EditLocationOutlined";
 import Popover from "@material-ui/core/Popover";
@@ -10,7 +9,7 @@ import Typography from "@material-ui/core/Typography";
 
 //redux
 import { connect } from "react-redux";
-import { apiPutUserBegan } from "../store/actions";
+import { apiPutUserBegan } from "../../store/actions";
 
 const useStyles = makeStyles({
   editImage: {
@@ -117,17 +116,11 @@ const EditImage = (props) => {
   );
 };
 
-EditImage.propTypes = {
-
-  update: PropTypes.func.isRequired,
-};
-
 //state from the store, and properties of this object become our props
 const mapStateToProps = (state) => ({
   user: state.user.user,
   
 });
-
 
 //takes dispatch from the store and dispatch an action
 const mapActionsToProps = (dispatch) => {

@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import AuthorImage from "./AuthorImage";
+import AuthorImage from "../AuthorImage";
 // MUI Stuff
 import { makeStyles } from "@material-ui/core/styles";
 import MuiLink from "@material-ui/core/Link";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import AvatarImage from "./AvatarImage";
+import AvatarImage from "../AvatarImage";
 // Redux
 // Redux
 import { connect } from "react-redux";

@@ -4,7 +4,6 @@ import relativeTime from "dayjs/plugin/relativeTime";
 
 // MUI Stuff
 import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
 import Button from "@material-ui/core/Button";
 import Tooltip from "@material-ui/core/Tooltip";
 import GroupAddIcon from "@material-ui/icons/GroupAdd";
@@ -14,9 +13,8 @@ import { connect } from "react-redux";
 import {
     apiPutUnFollowBegan,
     apiPutFollowBegan,
-  } from "../store/actions";
+  } from "../../store/actions";
   
-
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 512,

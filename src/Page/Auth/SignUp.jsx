@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
-
 // MUI Stuff
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -30,7 +28,6 @@ const SignUp = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeat_password, setrepeat_password] = useState("");
-
   const [handleError, setHandleError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -47,6 +44,7 @@ const SignUp = (props) => {
     };
     props.signup("./api/users", userData, props.history);
   };
+  
   const handleSignUpSubmit = (event) => {
     event.preventDefault();
     handleServer();
@@ -165,12 +163,6 @@ const SignUp = (props) => {
       </DialogActions>
     </Dialog>
   );
-};
-
-SignUp.propTypes = {
-  signup: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
-  errors: PropTypes.string.isRequired,
 };
 
 //state from the store, and properties of this object become our props
