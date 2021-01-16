@@ -96,6 +96,7 @@ const EditProfile = (props) => {
     }
   };
 
+ 
   return (
     <Dialog
       open={open}

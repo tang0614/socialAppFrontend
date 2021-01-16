@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState} from "react";
 import EditProfile from "../../component/Profile/EditProfile";
 import { withRouter } from "react-router";
 //Material UI
@@ -57,139 +57,150 @@ const useStyles = makeStyles({
 const ProfileCard = (props) => {
   const classes = useStyles(props);
   const [open, setOpen] = React.useState(false);
+
   const handleOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
+  let handle, bio, website, location, createdAt,following,followedBy
 
-  let paper;
-  if (!props.otherUser) {
-    paper = <CircularProgress />;
-  } else {
-    const {
-      handle,
-      bio,
-      website,
-      location,
-      createdAt,
-      following,
-      followedBy,
-    } =props.otherUser;
+  if(props.otherUser && props.user._id!==props.handleId){
 
-    paper = (
-        <Card>
-          <CardActionArea>
-            <CardMedia
-              className={classes.media}
-              image="/image/twitterLogo.jpg"
-              title="background"
-            />
-            {(props.user._id!==props.handleId)
-            ?null
-            :<Button
-              variant="outlined"
-              color="primary"
-              className={classes.button}
-              onClick={handleOpen}
-              >
-              Edit Profile
-            </Button>
-            }
-            
-            <CardContent className={classes.profileInfo}>
-              <Typography gutterBottom variant="h6" component="h2">
-                {handle}
-              </Typography>
-  
-              <Typography>
-                @{handle}
-              </Typography>
-  
-              <Typography variant="body2" color="textSecondary" component="p">
-                {bio}
-              </Typography>
-  
-              <Typography className={classes.notes}>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  <LocationOnOutlinedIcon />
-                  {location}
-                </Typography>
-  
-                <Typography variant="body2" color="textSecondary" component="p">
-                  <LinkOffOutlinedIcon />
-                  {website}
-                </Typography>
-  
-                <Typography variant="body2" color="textSecondary" component="p">
-                  <DateRangeIcon />
-                  {createdAt ? createdAt.split("T")[0] : ""}
-                </Typography>
-              </Typography>
-  
-              <Typography className={classes.notes}>
-              <Typography
-                  variant="body2"
-                  color="textSecondary"
-                  component="p"
-                  className={classes.note}
-                >
-                    <Link className={classes.link}  onClick={() => {
-                  props.history.push(props.match.url + "/following");
-                }}> {following ? following.length : ""} Followings</Link>
-              </Typography>
-
-              <Typography
-                  variant="body2"
-                  color="textSecondary"
-                  component="p"
-                  className={classes.note}
-                >
-                <Link className={classes.link}  onClick={() => {
-                props.history.push(props.match.url + "/followedby");
-              }}>  {followedBy ? followedBy.length : ""} Followers</Link>
-              </Typography>
-              </Typography>
-            </CardContent>
-          </CardActionArea>
-  
-          <CardActions className={classes.buttons}>
-            <Link
-              component="button"
-              variant="body2"
-              onClick={() => {
-                props.history.push(props.match.url + "/mytweet");
-              }}
-            >
-              Tweets
-            </Link>
-  
-            <Link
-              component="button"
-              variant="body2"
-              onClick={() => {
-                props.history.push(props.match.url + "/mycomment");
-              }}
-            >
-              Tweets & replies
-            </Link>
-  
-            <Link
-              component="button"
-              variant="body2"
-              onClick={() => {
-                props.history.push(props.match.url + "/mylike");
-              }}
-            >
-              Saved Tweets
-            </Link>
-          </CardActions>
-          <EditProfile open={open} handleClose={handleClose} />
-        </Card>
-      );
+    handle = props.otherUser.handle
+    bio = props.otherUser.bio
+    website = props.otherUser.website
+    location =props.otherUser.location     
+    createdAt =props.otherUser.createdAt
+    following = props.otherUser.following
+    followedBy=props.otherUser.followedBy
+      
+  }else{
+    handle = props.user.handle
+    bio = props.user.bio
+    website = props.user.website
+    location =props.user.location     
+    createdAt =props.user.createdAt
+    following = props.user.following
+    followedBy=props.user.followedBy
   }
-  return <div className={classes.root}>{paper}</div>
+    
+  return <div className={classes.root}>{
+
+    (!props.otherUser)
+    ?<CircularProgress/>
+    :
+      <Card>
+        <CardActionArea>
+          <CardMedia
+            className={classes.media}
+            image="/image/twitterLogo.jpg"
+            title="background"
+          />
+          {(props.handleId!==props.user._id)
+          ?null
+          : <Button
+            variant="outlined"
+            color="primary"
+            className={classes.button}
+            onClick={handleOpen}
+            >
+            Edit Profile
+          </Button>
+          }
+               
+          <CardContent className={classes.profileInfo}>
+            <Typography gutterBottom variant="h6" component="h2">
+              {handle}
+            </Typography>
+
+            <Typography>
+              @{handle}
+            </Typography>
+
+            <Typography variant="body2" color="textSecondary" component="p">
+              {bio}
+            </Typography>
+
+            <Typography className={classes.notes}>
+              <Typography variant="body2" color="textSecondary" component="p">
+                <LocationOnOutlinedIcon />
+                {location}
+              </Typography>
+
+              <Typography variant="body2" color="textSecondary" component="p">
+                <LinkOffOutlinedIcon />
+                {website}
+              </Typography>
+
+              <Typography variant="body2" color="textSecondary" component="p">
+                <DateRangeIcon />
+                {createdAt ? createdAt.split("T")[0] : ""}
+              </Typography>
+            </Typography>
+
+            <Typography className={classes.notes}>
+            <Typography
+                variant="body2"
+                color="textSecondary"
+                component="p"
+                className={classes.note}
+              >
+                  <Link className={classes.link}  onClick={() => {
+                props.history.push(props.match.url + "/following");
+              }}> {following ? following.length : ""} Followings</Link>
+            </Typography>
+
+            <Typography
+                variant="body2"
+                color="textSecondary"
+                component="p"
+                className={classes.note}
+              >
+              <Link className={classes.link}  onClick={() => {
+              props.history.push(props.match.url + "/followedby");
+            }}>  {followedBy ? followedBy.length : ""} Followers</Link>
+            </Typography>
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+
+        <CardActions className={classes.buttons}>
+          <Link
+            component="button"
+            variant="body2"
+            onClick={() => {
+              props.history.push(props.match.url + "/mytweet");
+            }}
+          >
+            Tweets
+          </Link>
+
+          <Link
+            component="button"
+            variant="body2"
+            onClick={() => {
+              props.history.push(props.match.url + "/mycomment");
+            }}
+          >
+            Tweets & replies
+          </Link>
+
+          <Link
+            component="button"
+            variant="body2"
+            onClick={() => {
+              props.history.push(props.match.url + "/mylike");
+            }}
+          >
+            Saved Tweets
+          </Link>
+        </CardActions>
+        <EditProfile open={open} handleClose={handleClose} />
+      </Card>
+    
+  }</div>
 };
 
 //state from the store, and properties of this object become our props

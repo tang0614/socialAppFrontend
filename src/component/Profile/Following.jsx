@@ -7,6 +7,7 @@ import MuiLink from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import Card from "@material-ui/core/Card";
 import NameCard from './NameCard';
+import CircularProgress from "@material-ui/core/CircularProgress";
 //redux
 import { connect } from "react-redux";
 const useStyles = makeStyles((theme) => ({
@@ -42,48 +43,51 @@ const useStyles = makeStyles((theme) => ({
 
 const Following = (props)=>{
     const classes = useStyles();
-   
-    let paper
-    if(props.otherUser){
-        paper = props.otherUser.following_details.map(user=>{
-            return(
-            <div className={classes.header}>
-            <div className={classes.headerItem}>
-               
-                <AuthorImage imageUrl={user.imageUrl} />
-                
-                <div className={classes.info}>
-                    <Typography
-                        variant="caption"
-                        color="textPrimary"
-                    >
-                        {user.handle}
-                    </Typography>
-                    
-                    <MuiLink component={Link} to={`/profile/${user._id}`} color="textPrimary">
-                    @{user.handle}
-                    </MuiLink>
-                    <Typography
-                        variant="caption"
-                        color="textSecondary"
-                    >
-                        {user.bio}
-                    </Typography>
-                </div>
-             
-                
-              </div>
-              
-                <NameCard id={user._id} following={props.user.following.includes(user._id)}/>
-            </div>
-            )
-        })
+    let following_details;
+  
+    if(props.otherUser && props.otherUser._id!==props.user._id){
+        following_details =props.otherUser.following_details         
     }else{
-        paper=""
+        following_details =props.user.following_details
     }
-   
+
     return <Card className={classes.root}>
-        {paper}
+        
+        {   !(props.otherUser)
+            ?<CircularProgress/>
+            :following_details.map(user=>{
+                return(
+                <div className={classes.header}>
+                <div className={classes.headerItem}>
+                   
+                    <AuthorImage imageUrl={user.imageUrl} />
+                    
+                    <div className={classes.info}>
+                        <Typography
+                            variant="caption"
+                            color="textPrimary"
+                        >
+                            {user.handle}
+                        </Typography>
+                        
+                        <MuiLink component={Link} to={`/profile/${user._id}`} color="textPrimary">
+                        @{user.handle}
+                        </MuiLink>
+                        <Typography
+                            variant="caption"
+                            color="textSecondary"
+                        >
+                            {user.bio}
+                        </Typography>
+                    </div>
+                 
+                    
+                  </div>
+                  
+                    <NameCard id={user._id} following={props.user.following.includes(user._id)}/>
+                </div>)
+        })
+    }
     </Card>
 }
 

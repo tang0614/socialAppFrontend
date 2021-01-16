@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { withRouter } from "react-router";
 // MUI Stuff
 import Button from "@material-ui/core/Button";
-
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -33,7 +32,6 @@ const DeleteScream = (props) => {
   const deleteScream = () => {
 
     let ids = [scream._id];
-
     if (scream.commentOn) {
       const source = {
         comment_id: scream._id,
