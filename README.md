@@ -13,5 +13,6 @@
 
 
 ### Screens
-![](https://imgflip.com/gif/4u3njq)
+<img src="https://github.com/tang0614/socialAppFrontend/blob/master/public/image/1.gif" width="300">
+
 
