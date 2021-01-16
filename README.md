@@ -13,9 +13,5 @@
 
 
 ### Screens
-
-<a href="https://imgflip.com/gif/4u3njq">Update Profile</a></p></div>
-<a href="https://imgflip.com/gif/4u3nsc">Send Tweets</a></p></div>
-
-
+![](https://imgflip.com/gif/4u3njq)
 
