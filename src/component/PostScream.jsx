@@ -2,7 +2,6 @@ import React, { useState } from "react";
 //redux
 import { connect } from "react-redux";
 import { apiPostCommentBegan, apiPutCommentBegan } from "../store/actions";
-
 //Material UI
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
@@ -24,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Comment = (props) => {
+const PostScream = (props) => {
   const classes = useStyles(props);
   const { handleClose, open } = props;
   const { _id } = props.scream;
@@ -132,4 +131,4 @@ const mapActionsToProps = (dispatch) => {
 };
 
 //connect subscribe/unsubscribe the redux store
-export default connect(mapStateToProps, mapActionsToProps)(Comment);
+export default connect(mapStateToProps, mapActionsToProps)(PostScream);

@@ -1,28 +1,16 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import AuthorImage from "./AuthorImage";
+import React from "react";
 import Scream from "../Page/Post/Scream";
 import Buttons from "./Buttons";
 // MUI Stuff
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import MuiLink from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import RoundedCornerIcon from "@material-ui/icons/RoundedCorner";
-import ChatBubbleOutlineSharpIcon from "@material-ui/icons/ChatBubbleOutlineSharp";
-import AvatarImage from "./AvatarImage";
-// Redux
 // Redux
 import { connect } from "react-redux";
-import {
-  
-  apiPutUnLikeBegan,
-  apiPutLikeBegan
-  
-} from "../store/actions";
+import ScreamCardAuthor from "./ScreamCardAuthor";
+import ScreamCardCaptain from "./ScreamCardCaptain";
 const useStyles = makeStyles((theme) => ({
   root: {
     boxShadow: "none",
@@ -32,112 +20,44 @@ const useStyles = makeStyles((theme) => ({
   notes: {
     textAlign: "start",
   },
-
   header: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
   },
-
-  headerItem: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-  },
-
   content: {
     width: "250px",
     textAlign: "start",
     padding: "1rem 0 ",
   },
-  icon: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-  },
 }));
 
 const ScreamCard = (props) => {
   const classes = useStyles(props);
-
-  const { createdAt, body, author_details, author } = props.scream;
-
-  const {
-    isComment,
-    isNested,
-    scream,
-    handleClickOpen
-  } = props;
-
-
   dayjs.extend(relativeTime);
+
+  const { createdAt, body, author_details } = props.scream;
+  const {isComment, isNested, scream, handleClickOpen} = props;
+
   let bodyScream;
   if (body.startsWith("retweet")) {
     const scream_id = body.split("retweet")[1];
-
     const commentedScream = props.screams.find(
       (scream) => scream._id === scream_id
     );
-
     bodyScream = <Scream scream={commentedScream} isRetweet={true} />;
   } else {
     bodyScream = <Typography variant="body2">{body}</Typography>;
   }
 
-  const paperInHeader =
-    author === props.user._id ? (
-      <div className={classes.headerItem}>
-        <AvatarImage isTweet={true} />
-
-        <MuiLink component={Link} to={`/profile/${author}`} color="textPrimary">
-          @{props.user.handle}
-        </MuiLink>
-      </div>
-    ) : (
-      <div className={classes.headerItem}>
-        <AuthorImage imageUrl={author_details[0].imageUrl} />
-
-        <MuiLink component={Link} to={`/profile/${author}`} color="textPrimary">
-          @{author_details[0].handle}
-        </MuiLink>
-      </div>
-    );
-
-  const header = body.startsWith("retweet") ? "" : paperInHeader;
   return (
     <Card className={classes.root}>
-      <div className={classes.notes}>
-        {isComment ? (
-          <Typography
-            variant="caption"
-            color="textSecondary"
-            className={classes.icon}
-          >
-            <ChatBubbleOutlineSharpIcon />
-            {(author_details?author_details[0].handle:props.user.handle) + " replying"}
-          </Typography>
-        ) : (
-          ""
-        )}
 
-        {body.startsWith("retweet") ? (
-          <Typography
-            variant="caption"
-            color="textSecondary"
-            className={classes.icon}
-          >
-            <RoundedCornerIcon />
-            {(author_details?author_details[0].handle:props.user.handle)+ " retweet"}
-          </Typography>
-        ) : (
-          ""
-        )}
-      </div>
+      <ScreamCardCaptain body={body} author_details={author_details} isComment={isComment} />
 
       <div className={classes.header}>
-        {header}
-
+        <ScreamCardAuthor scream={props.scream}/>
         <div>
           <Typography
             variant="caption"
@@ -148,6 +68,7 @@ const ScreamCard = (props) => {
           </Typography>
         </div>
       </div>
+
       <div className={classes.content}>{bodyScream}</div>   
       {isNested ? 
         <Buttons

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ScreamCard from "../../component/ScreamCard";
-import Comment from "../../component/comment";
+import PostScream from "../../component/PostScream";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import ScreamCardDetail from "../../component/ScreamCardDetail";
@@ -32,14 +32,19 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const Scream = (props) => {
   const classes = useStyles(props);
   dayjs.extend(relativeTime);
+
   const scream = props.scream;
   const [open, setOpen] = useState(false);
-  const [open_full, setOpen_full] = useState(false); //
+  const [open_full, setOpen_full] = useState(false); 
+
   const handleClickOpen = () =>  {setOpen(true)};
   const handleClickClose = () => {setOpen(false);};
 
   const handleCloseFull = () => {setOpen_full(false);};
-  const handleOpenFull = () => {setOpen_full(true);};
+  const handleOpenFull = () => {
+
+    setOpen_full(true);
+  };
 
   const screamCard = props.isRetweet ? (
     <div>
@@ -70,7 +75,7 @@ const Scream = (props) => {
           scream={scream}
           handleClickOpen={handleClickOpen}
         />
-        <Comment
+        <PostScream
           open={open}
           handleClose={handleClickClose}
           scream={scream}
@@ -85,8 +90,8 @@ const Scream = (props) => {
         TransitionComponent={Transition}
       >
         <ScreamCardDetail
-          handleCloseFull={handleCloseFull}
           scream={scream}
+          handleCloseFull={handleCloseFull}
           handleClickOpen={handleClickOpen}
         />
       </Dialog>
