@@ -1,5 +1,4 @@
 ## Full-stack Twitter Social Media App in React
-*This is inspired by Meth-Meth-Methods's [super mario game](https://github.com/meth-meth-method/super-mario)*
 
 ### Running
 * clone this repo
