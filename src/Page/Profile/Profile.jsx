@@ -57,10 +57,9 @@ const Profile = (props) => {
     props.getOtherUser(`/api/users/${props.match.params.id}`)
 
     setHandleId(props.match.params.id)
-    if(!(props.user.handle==='user10' && props.user._id===props.match.params.id)){
+    if(!(props.user.handle==='user10' && props.user._id===handleId)){
       props.history.push(props.match.url + "/mytweet");
     }
-
   },[props.match.params.id])
 
 
@@ -106,7 +105,7 @@ const Profile = (props) => {
 
 //connect subscribe/unsubscribe the redux store
 const mapStateToProps = (state) => ({
-  user:state.user,
+  user:state.user.user,
   otherUser: state.user.otherUser,
 });
 

@@ -60,8 +60,7 @@ export const put_api = ({ dispatch, getState }) => (next) => (action) => {
       });
   } else if (action.type === actions.apiUncommentBegan.type) {
     const { url, userData } = action.payload;
-    console.log("actions.apiUncommentBegan url is", url);
-    console.log("actions.apiUncommentBegan userData is", userData);
+
     http
       .put(`${url}`, userData)
       .then((res) => {
@@ -138,7 +137,7 @@ export const put_api = ({ dispatch, getState }) => (next) => (action) => {
       .put(`${url}`, data)
       .then((res) => {
         dispatch(actions.apiDeleteSuccess({ ids: data.ids }));
-        history.push("/home");
+        //history.push("/home");
       })
       .catch((error) => {
         dispatch(actions.apiDeleteFailed(error.response.data.message));

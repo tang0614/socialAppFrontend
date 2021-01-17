@@ -40,9 +40,8 @@ const EditProfile = (props) => {
     const { bio, location, website } = props.user;
     setBio(bio);
     setLocation(location);
-    setWebsite(website);
-    //this block get updated whenever bio, location or website change
-  }, [props.user]);
+    setWebsite(website); 
+  }, []);
 
   const handleServer = () => {
     const userData = {
@@ -51,7 +50,6 @@ const EditProfile = (props) => {
       website,
     };
     props.update("./api/users/details", userData, handleClose);
-    //error check
   };
 
   const handleLogInSubmit = (event) => {

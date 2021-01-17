@@ -24,8 +24,7 @@ const useStyles = makeStyles({
 
 const MyTweet = (props) => {
   const classes = useStyles(props);
-  console.log('My tweet page','props.handleId is',props.handleId)
-  
+ 
   const getScream = (scream, id) => {
 
     if (scream.commentOn) {
@@ -52,7 +51,6 @@ const MyTweet = (props) => {
         </div>
       );
     } else {
-      console.log("passing scream, not comment, not tweet is ", scream);
       return <Scream key={id + "scream"} scream={scream} isComment={false} />;
     }
   };

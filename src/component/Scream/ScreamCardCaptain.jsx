@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   notes: {
+  
     textAlign: "start",
   },
   icon: {

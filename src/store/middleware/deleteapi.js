@@ -7,8 +7,6 @@ export const delete_api = ({ dispatch }) => (next) => (action) => {
   )
     return next(action);
     next(action);
-
-  
     const { url} = action.payload;
   
     let id = url.split('/').pop()
@@ -16,8 +14,7 @@ export const delete_api = ({ dispatch }) => (next) => (action) => {
       .delete(`${url}`)
       .then((res) => dispatch(actions.apiDeleteUserSuccess({id:id})))
       .catch((error) => {
-        console.log(error);
-
+  
         dispatch(actions.apiDeleteUserFailed(error.response.data.message));
       });
   

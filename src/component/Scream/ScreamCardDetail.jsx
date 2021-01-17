@@ -59,7 +59,7 @@ const ScreamCardDetail = (props) => {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <div >
+      <div style={{marginTop:"2rem"}} >
         <ScreamCard scream={scream} />
         <Buttons
           scream={scream}

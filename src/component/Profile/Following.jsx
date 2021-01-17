@@ -28,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
 
       },
 
-    
       headerItem: {
         display: "flex",
         flexDirection: "row",
@@ -79,11 +78,8 @@ const Following = (props)=>{
                         >
                             {user.bio}
                         </Typography>
-                    </div>
-                 
-                    
-                  </div>
-                  
+                    </div>   
+                  </div>     
                     <NameCard id={user._id} following={props.user.following.includes(user._id)}/>
                 </div>)
         })
@@ -91,10 +87,8 @@ const Following = (props)=>{
     </Card>
 }
 
-
 const mapStateToProps = (state) => ({
     user: state.user.user,
-   
 });
   
 export default connect(mapStateToProps)(Following);

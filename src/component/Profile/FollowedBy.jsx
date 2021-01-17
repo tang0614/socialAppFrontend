@@ -55,7 +55,7 @@ const FollowedBy = (props)=>{
     return(
         <Card className={classes.root}>
         
-        {   !(props.otherUser)
+        {   (!props.otherUser)
             ?<CircularProgress/>
             :followedBy_details.map(user=>{
                 return(

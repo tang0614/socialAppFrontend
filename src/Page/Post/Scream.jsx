@@ -68,8 +68,7 @@ const Scream = (props) => {
   return (
     <div>
       <Card className={classes.root}>
-      
-        <ScreamHeader scream={scream} />
+    
         {screamCard}
         <Buttons
           scream={scream}
@@ -89,6 +88,7 @@ const Scream = (props) => {
         onClose={handleCloseFull}
         TransitionComponent={Transition}
       >
+        <ScreamHeader scream={scream} />
         <ScreamCardDetail
           scream={scream}
           handleCloseFull={handleCloseFull}
