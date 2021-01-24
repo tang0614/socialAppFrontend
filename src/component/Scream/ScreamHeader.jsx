@@ -46,14 +46,14 @@ const ScreamHeader = (props) => {
 
 
   useEffect(() => {
-    const re = props.user.following
-      ? props.user.following.filter((element) => {
+    const re = props.following
+      ? props.following.filter((element) => {
           return element === props.scream.author;
         })
       : "";
 
     setFollow(re.length > 0);
-  }, [props.user.following]);
+  }, [props.following]);
 
   const followHandler = () => {
     if (follow) {
@@ -70,7 +70,7 @@ const ScreamHeader = (props) => {
           <Button  disabled={props.authenticated?false:true}>
             <EmojiNatureTwoToneIcon />
           </Button>
-          {props.scream.author === props.user._id || props.isRetweet ? (
+          {props.scream.author === props._id || props.isRetweet ? (
             ""
           ) : ( 
             <Tooltip
@@ -91,7 +91,8 @@ const ScreamHeader = (props) => {
 //connect subscribe/unsubscribe the redux store
 const mapStateToProps = (state) => ({
   authenticated:state.user.authenticated,
-  user: state.user.user,
+  following: state.user.user.following,
+  _id:state.user.user._id,
 });
 
 const mapActionsToProps = (dispatch) => {

@@ -28,7 +28,7 @@ const useStyles = makeStyles({
 
 const EditImage = (props) => {
   const classes = useStyles(props);
-
+  console.log('EditImage is rerendered!!!!')
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openPop = Boolean(anchorEl);
 
@@ -55,8 +55,8 @@ const EditImage = (props) => {
   };
   let paper;
 
-  if(props.user._id!==props.handleId){
-    console.log('Edit image, here is a different user')
+  if(props.id!==props.handleId){
+  
     //different user
     paper =<AvatarImage isTweet={false} handleId={props.handleId} otherUser={props.otherUser}/>
   }else{
@@ -118,7 +118,8 @@ const EditImage = (props) => {
 
 //state from the store, and properties of this object become our props
 const mapStateToProps = (state) => ({
-  user: state.user.user,
+  id: state.user.user['_id'],
+
   
 });
 

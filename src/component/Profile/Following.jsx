@@ -44,19 +44,19 @@ const Following = (props)=>{
     const classes = useStyles();
     let following_details;
   
-    if(props.otherUser && props.otherUser._id!==props.user._id){
+    if(props.otherUser && props.otherUser._id!==props._id){
         following_details =props.otherUser.following_details         
     }else{
-        following_details =props.user.following_details
+        following_details =props.following_details
     }
 
     return <Card className={classes.root}>
         
         {   !(props.otherUser)
             ?<CircularProgress/>
-            :following_details.map(user=>{
+            :following_details.map((user, id)=>{
                 return(
-                <div className={classes.header}>
+                <div className={classes.header} key={id}>
                 <div className={classes.headerItem}>
                    
                     <AuthorImage imageUrl={user.imageUrl} />
@@ -80,7 +80,7 @@ const Following = (props)=>{
                         </Typography>
                     </div>   
                   </div>     
-                    <NameCard id={user._id} following={props.user.following.includes(user._id)}/>
+                    <NameCard id={user._id} following={props.following.includes(user._id)}/>
                 </div>)
         })
     }
@@ -88,7 +88,7 @@ const Following = (props)=>{
 }
 
 const mapStateToProps = (state) => ({
-    user: state.user.user,
+    following: state.user.user.following,
 });
   
 export default connect(mapStateToProps)(Following);

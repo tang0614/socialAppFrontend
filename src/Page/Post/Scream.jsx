@@ -46,6 +46,7 @@ const Scream = (props) => {
     setOpen_full(true);
   };
 
+
   const screamCard = props.isRetweet ? (
     <div>
       <ScreamCard
@@ -68,7 +69,7 @@ const Scream = (props) => {
   return (
     <div>
       <Card className={classes.root}>
-    
+      
         {screamCard}
         <Buttons
           scream={scream}
@@ -102,8 +103,10 @@ const Scream = (props) => {
 //connect subscribe/unsubscribe the redux store
 const mapStateToProps = (state) => ({
   authenticated:state.user.authenticated,
-  user: state.user.user,
+
   auth: state.user.authenticated,
 });
+
+
 
 export default connect(mapStateToProps)(Scream);

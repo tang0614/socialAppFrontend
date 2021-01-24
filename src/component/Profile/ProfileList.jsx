@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ProfileList = (props) => {
   const classes = useStyles();
-  const { handle, following, followedBy, imageUrl, _id } = props.user;
+
   
   const handleLogout = () => {
     props.logout();
@@ -47,14 +47,14 @@ const ProfileList = (props) => {
     <List>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <AvatarImage imageUrl={imageUrl} isTweet={false} />
+          <AvatarImage imageUrl={props.imageUrl} isTweet={false} />
           <Typography
             component="span"
             variant="body2"
             className={classes.inline}
             color="textPrimary"
           >
-            @ {handle}
+            @ {props.handle}
           </Typography>
         </ListItemAvatar>
       </ListItem>
@@ -70,7 +70,7 @@ const ProfileList = (props) => {
                   component="p"
                   className={classes.note}
                 >
-                  {following.length} Followings
+                  {props.following.length} Followings
                 </Typography>
                 <Typography
                   variant="body2"
@@ -78,7 +78,7 @@ const ProfileList = (props) => {
                   component="p"
                   className={classes.note}
                 >
-                  {followedBy.length} Followers
+                  {props.followedBy.length} Followers
                 </Typography>
               </Typography>
             </React.Fragment>
@@ -86,7 +86,7 @@ const ProfileList = (props) => {
         />
       </ListItem>
 
-      <ListItem button key={"Profile"} onClick={()=>handleProfile(_id)}>
+      <ListItem button key={"Profile"} onClick={()=>handleProfile(props._id)}>
         <ListItemIcon>
           <ContactsOutlinedIcon />
         </ListItemIcon>
@@ -110,7 +110,12 @@ const ProfileList = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  user: state.user.user,
+
+  handle: state.user.user.handle,
+  following: state.user.user.following,
+  followedBy: state.user.user.followedBy,
+  imageUrl: state.user.user.imageUrl,
+  _id: state.user.user._id,
   errors: state.user.fetching_errors,
 });
 

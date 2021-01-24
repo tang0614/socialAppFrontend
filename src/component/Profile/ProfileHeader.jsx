@@ -53,6 +53,5 @@ const ProfileHeader = (props) => {
   );
 };
 
-ProfileHeader.propTypes = {};
 
 export default ProfileHeader;

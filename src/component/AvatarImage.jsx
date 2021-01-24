@@ -1,8 +1,6 @@
-import React, { useEffect, useState} from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
-import PropTypes from "prop-types";
-import CircularProgress from "@material-ui/core/CircularProgress";
 //redux
 import { connect } from "react-redux";
 
@@ -36,18 +34,17 @@ const useStyles = makeStyles((theme) => ({
 
 const AvatarImage = (props) => {
   const classes = useStyles();
-
-  let image;
   
+  let image;
 
-  if (!props.user) {
+  if (!props._id) {
       image =  <Avatar
       alt="avatar"
       src={window.location.origin + "/image/default.png"}
       className={props.isTweet ? classes.small : classes.large}
     />;
     } else {
-      if(props.handleId && (props.user._id!==props.handleId)){
+      if(props.handleId && (props._id!==props.handleId)){
         image =props.otherUser ? (
           <Avatar
             alt="avatar"
@@ -70,7 +67,7 @@ const AvatarImage = (props) => {
           <Avatar
             alt="avatar"
             src={
-              "https://s3-us-east-2.amazonaws.com/xinyu-twitter-app/" +props.user.imageUrl
+              "https://s3-us-east-2.amazonaws.com/xinyu-twitter-app/" +props.imageUrl
               
             }
             className={props.isTweet ? classes.small : classes.large}
@@ -82,26 +79,19 @@ const AvatarImage = (props) => {
             className={props.isTweet ? classes.small : classes.large}
           />
         );
-      
-
-      }
-      
+    
+      } 
   }
-
-  
+ 
   return <div className={classes.root}>{image}</div>;
 };
 
-AvatarImage.propTypes = {
-  user: PropTypes.string.isRequired,
-
-  error: PropTypes.string.isRequired,
-  isTweet: PropTypes.bool.isRequired,
-};
 
 //state from the store, and properties of this object become our props
 const mapStateToProps = (state) => ({
-  user: state.user.user,
+
+  imageUrl:state.user.user.imageUrl,
+  _id:state.user.user._id,
   otherUser: state.user.otherUser,
   error: state.user.update_error,
 });

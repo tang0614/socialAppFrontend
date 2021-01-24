@@ -116,9 +116,8 @@ const PostScream = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  comment_id: state.data.comment_id,
-  fetch_loading: state.user.fetch_loading,
-  fetch_errors: state.user.fetch_errors,
+ 
+ 
 });
 
 const mapActionsToProps = (dispatch) => {

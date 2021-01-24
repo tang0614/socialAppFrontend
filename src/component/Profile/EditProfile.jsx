@@ -37,10 +37,10 @@ const EditProfile = (props) => {
   const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
-    const { bio, location, website } = props.user;
-    setBio(bio);
-    setLocation(location);
-    setWebsite(website); 
+  
+    setBio(props.bio);
+    setLocation(props.location);
+    setWebsite(props.website); 
   }, []);
 
   const handleServer = () => {
@@ -162,7 +162,9 @@ const EditProfile = (props) => {
 
 //state from the store, and properties of this object become our props
 const mapStateToProps = (state) => ({
-  user: state.user.user,
+  bio: state.user.user.bio,
+  location: state.user.user.location,
+  website: state.user.user.website,
   errors: state.user.update_error,
 });
 

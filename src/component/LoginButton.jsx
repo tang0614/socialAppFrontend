@@ -10,9 +10,9 @@ const LoginButton = (props) =>{
     const handleAuth = ()=>{
         props.history.push('/auth')
       }
-    const loginButton= (props.user)?
+    const loginButton= (props.authenticated)?
       
-        (props.user.authenticated)?
+        (props.authenticated)?
         null:
         <Button variant="outlined" color="primary"  onClick={handleAuth}>
         Login/Sign Up 
@@ -28,7 +28,7 @@ const LoginButton = (props) =>{
 }
 
 const mapStateToProps = (state) => ({
-    user: state.user,
+    authenticated: state.user.authenticated,
 });
   
 export default connect(mapStateToProps)(withRouter(LoginButton));

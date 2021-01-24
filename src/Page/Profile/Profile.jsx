@@ -50,6 +50,7 @@ const Profile = (props) => {
   const [open, setOpen] = useState(false);
   const [handleId, setHandleId] = useState(null);
 
+
   useEffect(()=>{
     const token = localStorage.getItem("IdToken");
     http.setJwt(token);
@@ -57,7 +58,7 @@ const Profile = (props) => {
     props.getOtherUser(`/api/users/${props.match.params.id}`)
 
     setHandleId(props.match.params.id)
-    if(!(props.user.handle==='user10' && props.user._id===handleId)){
+    if(!(props.handle==='user10' && props._id===handleId)){
       props.history.push(props.match.url + "/mytweet");
     }
   },[props.match.params.id])
@@ -72,11 +73,13 @@ const Profile = (props) => {
     setOpen(false);
   };
   
-  
-  const paper = props.user.handle==='user10' && props.user._id===handleId? <Admin />:(
+
+  const paper = props.handle==='user10' && props._id===handleId? <Admin />:(
     <div>
     <ProfileCard otherUser={props.otherUser} handleId={handleId}/>
+
     <EditImage otherUser={props.otherUser} handleId={handleId}/>
+
     <PostCard open={open} handleClose={handleClose} {...props} />
 
 
@@ -105,7 +108,8 @@ const Profile = (props) => {
 
 //connect subscribe/unsubscribe the redux store
 const mapStateToProps = (state) => ({
-  user:state.user.user,
+  handle:state.user.user.handle,
+  _id: state.user.user._id,
   otherUser: state.user.otherUser,
 });
 

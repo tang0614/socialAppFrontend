@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import AuthorImage from '../AuthorImage';
 import { Link } from "react-router-dom";
 // MUI Stuff
@@ -46,10 +46,10 @@ const FollowedBy = (props)=>{
 
     let followedBy_details;
   
-    if(props.otherUser && props.otherUser._id!==props.user._id){
+    if(props.otherUser && props.otherUser._id!==props._id){
         followedBy_details =props.otherUser.followedBy_details
     }else{
-        followedBy_details =props.user.followedBy_details
+        followedBy_details =props.followedBy_details
     }
 
     return(
@@ -57,9 +57,9 @@ const FollowedBy = (props)=>{
         
         {   (!props.otherUser)
             ?<CircularProgress/>
-            :followedBy_details.map(user=>{
+            :followedBy_details.map((user,id)=>{
                 return(
-                <div className={classes.header}>
+                <div className={classes.header} key={id}>
                 <div className={classes.headerItem}>            
                     <AuthorImage imageUrl={user.imageUrl} />                
                     <div className={classes.info}>
@@ -81,7 +81,7 @@ const FollowedBy = (props)=>{
                         </Typography>
                     </div>            
                   </div>            
-                  <NameCard id={user._id} following={props.user.following.includes(user._id)} />
+                  <NameCard id={user._id} following={props.following.includes(user._id)} />
                 </div>
                 )
             })
@@ -92,7 +92,7 @@ const FollowedBy = (props)=>{
 }
   
 const mapStateToProps = (state) => ({
-    user: state.user.user,  
+    following: state.user.user.following,  
 });
    
 export default connect(mapStateToProps)(FollowedBy);

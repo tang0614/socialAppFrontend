@@ -42,13 +42,13 @@ const Buttons = (props) => {
   } = props;
  
   useEffect(() => {
-    const re = props.user.like
-      ? props.user.like.filter((element) => {
+    const re = props.like
+      ? props.like.filter((element) => {
           return element._id === scream._id;
         })
       : "";
     setLikePost(re.length > 0);
-  }, [props.user.like]);
+  }, [props.like]);
 
 
   const [likePost, setLikePost] = useState("");
@@ -112,7 +112,7 @@ const Buttons = (props) => {
         </Button>
       </Tooltip>
 
-      {scream.author === props.user._id||props.user.isAdmin ? (
+      {scream.author === props._id||props.isAdmin ? (
         <DeleteScream
           scream={scream}
           handleOpen={handleDeleteOpen}
@@ -131,7 +131,9 @@ const Buttons = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  user: state.user.user,
+  like: state.user.user.like,
+  _id:state.user.user._id,
+  isAdmin:state.user.user.isAdmin,
   authenticated:state.user.authenticated
 });
 

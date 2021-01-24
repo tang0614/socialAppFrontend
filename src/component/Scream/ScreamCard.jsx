@@ -54,7 +54,7 @@ const ScreamCard = (props) => {
   return (
     <Card className={classes.root}>
 
-      <ScreamCardCaptain body={body} author_details={author_details} isComment={isComment} />
+      <ScreamCardCaptain body={body} scream={props.scream} author_details={author_details} isComment={isComment} />
 
       <div className={classes.header}>
         <ScreamCardAuthor scream={props.scream}/>
@@ -81,7 +81,7 @@ const ScreamCard = (props) => {
 
 //connect subscribe/unsubscribe the redux store
 const mapStateToProps = (state) => ({
-  user: state.user.user,
+  
   screams: state.data.screams,
 });
 export default connect(mapStateToProps)(ScreamCard);

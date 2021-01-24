@@ -54,7 +54,7 @@ const ProfileButton = (props) =>{
     const button = <Button
                         onClick={toggleDrawer("left", true)}
                         className={classes.menuIcon}
-                        disabled={props.user.authenticated?false:true}>
+                        disabled={props.authenticated?false:true}>
                         <AvatarImage isTweet={false} />
                     </Button>
                     
@@ -73,7 +73,7 @@ const ProfileButton = (props) =>{
 }
 
 const mapStateToProps = (state) => ({
-    user: state.user,
+  authenticated: state.user.authenticated,
 });
 
 export default connect(mapStateToProps)(ProfileButton);

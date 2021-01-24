@@ -72,7 +72,6 @@ const ScreamCardDetail = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  user: state.user.user,
   post: state.data.post,
   screams: state.data.screams,
   post_loading: state.data.post_loading,

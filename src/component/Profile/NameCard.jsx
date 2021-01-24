@@ -56,17 +56,14 @@ const NameCard = (props) => {
 
 
 //connect subscribe/unsubscribe the redux store
-const mapStateToProps = (state) => ({
-    user: state.user.user,
-   
-});
+
   
-const mapActionsToProps = (dispatch) => {
+  const mapActionsToProps = (dispatch) => {
     return {
+   
       putFollow: (url) => dispatch(apiPutFollowBegan({ url })),
       putUnFollow: (url) => dispatch(apiPutUnFollowBegan({ url })),
     };
-};
+  };
   
-export default connect(mapStateToProps, mapActionsToProps)(NameCard);
-  
+  export default connect(null, mapActionsToProps)(NameCard);

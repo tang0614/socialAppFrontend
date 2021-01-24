@@ -32,7 +32,7 @@ const Screams = (props) => {
       );
 
       return (
-        <div key={scream._id + "Scream"}  className={classes.wrapper}>
+        <div key={id}  className={classes.wrapper}>
           {scream.body.startsWith("retweet") ? (
             <Scream key={id + "Scream"} scream={scream} isComment={false} />
           ) : (

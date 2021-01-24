@@ -25,11 +25,11 @@ const ScreamCardAuthor = (props) => {
   const { body, author_details, author } = props.scream;
 
   const paperInHeader =
-    author === props.user._id ? (
+    author === props._id ? (
       <div className={classes.headerItem}>
         <AvatarImage isTweet={true} />
         <MuiLink component={Link} to={`/profile/${author}`} color="textPrimary">
-          @{props.user.handle}
+          @{props.handle}
         </MuiLink>
       </div>
     ) : (
@@ -47,7 +47,8 @@ const ScreamCardAuthor = (props) => {
 
 //connect subscribe/unsubscribe the redux store
 const mapStateToProps = (state) => ({
-  user: state.user.user,
+  _id: state.user.user._id,
+  handle: state.user.user.handle,
   screams: state.data.screams,
 });
 export default connect(mapStateToProps)(ScreamCardAuthor);

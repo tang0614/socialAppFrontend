@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React  from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Scream from "../../Page/Post/Scream";
 // REdux
@@ -62,10 +62,10 @@ const MyLike = (props) => {
     paper = <CircularProgress />;
   } else {
     let data
-    if (props.otherUser._id!==props.user._id){
+    if (props.otherUser._id!==props._id){
       data = props.otherUser.like
     }else{
-      data = props.user.like
+      data = props.like
     }
 
     let likes = [];
@@ -85,7 +85,8 @@ const MyLike = (props) => {
 
 const mapStateToProps = (state) => ({
   screams: state.data.screams,
-  user: state.user.user,
+  like: state.user.user.like,
+  _id:state.user.user._id,
 });
 
 export default connect(mapStateToProps)(MyLike);
